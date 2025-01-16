@@ -2,6 +2,7 @@ namespace Models;
 
 class User
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Mail { get; set; }
     public string Password { get; set; }
@@ -29,7 +30,7 @@ class User
     //Mostrar información
     public void ShowUserInformation() 
     {
-        Console.WriteLine($"Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated} ");
+        Console.WriteLine($"Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated:g} ");
     }
 
 
