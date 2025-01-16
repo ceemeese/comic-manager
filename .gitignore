@@ -1,0 +1,22 @@
+# Ignore bin and obj directories
+bin/
+obj/
+
+# Ignore the Visual Studio temporary files
+.vs/
+.vscode/
+
+# Ignore the user-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Ignore the compiled files
+*.dll
+*.exe
+*.pdb
+*.db
+*.suo
+*.user
+*.cache
