@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Models;
+
+var user = new User("Cris", "cris@sanvalero.com", "pass", "999999999" );
+user.ShowUserInformation();
