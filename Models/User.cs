@@ -9,8 +9,7 @@ class User
     public DateTime DateCreated { get; private set; }
     public string Telephone { get; set; }
     public bool IsAdmin { get; set; } = false;
-
-    //TODO LISTA COMICS
+    public List<Comic> Comics { get; set; } = new List<Comic>();
     
 
 
@@ -31,6 +30,18 @@ class User
     public void ShowUserInformation() 
     {
         Console.WriteLine($"Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated:g} ");
+
+        if (Comics != null && Comics.Any()) 
+        {
+            Console.WriteLine("Cómics:");
+            foreach (var comic in Comics) 
+            {
+                Console.WriteLine($"Título: {comic.Name}, Autor: {comic.Author}");
+            }
+        }
+        else{
+            Console.WriteLine("Este usuario no tiene cómics registrados");
+        }
     }
 
 

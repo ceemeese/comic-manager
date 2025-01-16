@@ -1,3 +1,5 @@
+using System.ComponentModel.Design;
+
 namespace Models;
 
 class Genre
@@ -7,8 +9,7 @@ class Genre
     public string Description { get; set; } = "";  
     public int Priority{ get; set; }
     public string Icon { get; set; }
-
-    //TODO LISTA COMICS
+    public List<Comic> Comics { get; set; } = new List<Comic>();
     
 
     public Genre (string name, string description, int priority, string icon) {
@@ -20,7 +21,19 @@ class Genre
 
     public void ShowGenreInformation()
     {
-        Console.WriteLine($"Nombre: {Name}, Description: {Description}, Icono: {Icon} ");
+        Console.WriteLine($"Nombre: {Name}, Description: {Description}, Icono: {Icon},");
+
+        if (Comics != null && Comics.Any()) 
+        {
+            Console.WriteLine("Cómics:");
+            foreach (var comic in Comics) 
+            {
+                Console.WriteLine($"Título: {comic.Name}, Autor: {comic.Author}");
+            }
+        }
+        else{
+            Console.WriteLine("No hay cómics en este género");
+        }
     }
 }
 

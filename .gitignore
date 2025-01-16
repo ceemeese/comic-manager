@@ -1,6 +1,8 @@
 # Ignore bin and obj directories
 bin
 obj
+**/bin/
+**/obj/
 
 # Ignore the Visual Studio temporary files
 .vs/
