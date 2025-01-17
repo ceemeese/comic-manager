@@ -4,10 +4,12 @@ using Models;
 class MenuApp
 {
     private List<Genre> genres;
+    private List<Comic> comics;
 
     public MenuApp()
     {
         genres = new List<Genre>();
+        comics = new List<Comic>();
     }
 
     public void ShowMenu()
@@ -255,6 +257,7 @@ class MenuApp
             
             Comic comic= new Comic(name, author, publisher, yearPublished, price, isRead, isForAdults, selectedGenres, selectedType);
             comic.ShowComicInformation();
+            comics.Add(comic);
                 
         }
         catch (InvalidComicException ex) 
@@ -266,5 +269,9 @@ class MenuApp
         {
             var messageError = "ExceptionError:" + ex.Message;
         }
-    }          
+    }      
+
+
+
+
 }   
