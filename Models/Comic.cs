@@ -54,7 +54,7 @@ class Comic
         string read = IsRead ? "Sí" : "No";
         string adults = IsForAdults ? "Sí" : "No"; 
 
-        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}");
+        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}, Tipo de Cómic: {Type}");
         if (Genres.Any())
         {
             Console.WriteLine("Géneros:");

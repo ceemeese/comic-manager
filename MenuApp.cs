@@ -43,6 +43,7 @@ class MenuApp
                     addComic();
                     break;
                 case 3:
+                    showAllGenres();
                     break;
                 case 4:
                     break;
@@ -246,7 +247,6 @@ class MenuApp
                 if (int.TryParse(Console.ReadLine(), out int comicTypeSelection) && comicTypeSelection > 0 && comicTypeSelection <= Enum.GetValues(typeof(Comic.ComicType)).Length)
                 {
                     selectedType = (Comic.ComicType)comicTypeSelection; // Casting del integer al enum
-                    Console.WriteLine($"Has seleccionado: {selectedType}");
                     break;
                 }
                 else
@@ -257,6 +257,12 @@ class MenuApp
             
             Comic comic= new Comic(name, author, publisher, yearPublished, price, isRead, isForAdults, selectedGenres, selectedType);
             comic.ShowComicInformation();
+
+            foreach (var genre in selectedGenres)
+            {
+                genre.Comics.Add(comic);
+            }
+
             comics.Add(comic);
                 
         }
@@ -270,6 +276,19 @@ class MenuApp
             var messageError = "ExceptionError:" + ex.Message;
         }
     }      
+
+
+
+
+
+    public void showAllGenres()
+    {
+        Console.WriteLine("\nListado de Géneros:");
+        foreach (var genre in genres)
+        {
+            genre.ShowGenreInformation();
+        }
+    }
 
 
 
