@@ -1,5 +1,6 @@
 namespace Models; 
 using Models;
+using System.Text.RegularExpressions;
 
 class MenuApp
 {
@@ -49,6 +50,7 @@ class MenuApp
                     showAllComics();
                     break;
                 case 5:
+                    userRegister();
                     break;
                 case 6:
                     Console.WriteLine("¡Hasta pronto!");
@@ -298,6 +300,84 @@ class MenuApp
         {
             comic.ShowComicInformation();
         }
+    }
+
+
+
+    private static bool IsValid(string email)
+    { 
+        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+        return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+    }
+
+
+    public void userRegister()
+    {
+
+        try
+        {
+            Console.WriteLine("___NUEVO USUARIO___");
+            Console.WriteLine("Nombre: ");
+            string name = Console.ReadLine();
+
+            //Validacion mail
+            string mail;
+            while(true)
+            {
+                Console.WriteLine("Correo: ");
+                mail = Console.ReadLine();
+                if (IsValid(mail))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Error: El correo no es válido.");
+                }
+            }
+
+
+            string password;
+            while(true)
+            {
+                Console.WriteLine("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres): ");
+                password = Console.ReadLine();
+
+                var hasNumber = new Regex(@"[0-9]+");
+                var hasUpperChar = new Regex(@"[A-Z]+");
+                var hasMinimum8Chars = new Regex(@".{8,}");
+
+                var isValidated = hasNumber.IsMatch(password) && hasUpperChar.IsMatch(password) && hasMinimum8Chars.IsMatch(password);
+                
+                if (isValidated)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Error: La contraseña no és válida.");
+                }
+            }
+
+            Console.WriteLine("Teléfono: ");
+            string telephone = Console.ReadLine();
+
+            User user = new User(name, mail, password, telephone);
+            Console.WriteLine("Usuario registrado correctamente");
+            user.ShowUserInformation();
+        } 
+        catch (InvalidUserException ex) 
+        {
+            var messageError = "InvalidUserException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch(Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+        
+        
+        
     }
 
 
