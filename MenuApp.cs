@@ -1,4 +1,4 @@
-using Models; 
+namespace Models; 
 
 class MenuApp
 {
@@ -27,6 +27,7 @@ class MenuApp
             switch (option)
             {
                 case 1:
+                    addGenre();
                     break;
                 case 2:
                     break;
@@ -46,5 +47,58 @@ class MenuApp
             }
         }
         while(option != 6);
+    }
+
+
+
+    public void addGenre()
+    {
+        try
+        {
+            Console.WriteLine("___NUEVO GÉNERO___");
+            Console.WriteLine("Nombre: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Description: ");
+            string description = Console.ReadLine();
+
+            int priority;
+            while (true)
+            {
+                Console.WriteLine("Prioridad: ");
+                if (int.TryParse(Console.ReadLine(), out priority) && priority > 0)
+                {
+                    break;
+                }
+                Console.WriteLine("Error: La prioridad debe ser un número positivo.");
+            }
+
+
+            string icon;
+            while (true)
+            {
+                Console.WriteLine("Icono: ");
+                icon = Console.ReadLine();
+
+                if (icon.StartsWith('#'))
+                {
+                    break; 
+                }
+                Console.WriteLine("Error: El icono debe empezar por '#'.");
+            }
+            
+
+            Genre genre = new Genre(name, description, priority, icon);
+            genre.ShowGenreInformation();
+
+        }
+        catch (InvalidGenreException ex) 
+        {
+            var messageError = "InvalidGenreException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch(Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
     }
 }
