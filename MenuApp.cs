@@ -46,6 +46,7 @@ class MenuApp
                     showAllGenres();
                     break;
                 case 4:
+                    showAllComics();
                     break;
                 case 5:
                     break;
@@ -287,6 +288,15 @@ class MenuApp
         foreach (var genre in genres)
         {
             genre.ShowGenreInformation();
+        }
+    }
+
+    public void showAllComics()
+    {
+        Console.WriteLine("\nListado de Cómics:");
+        foreach (var comic in comics)
+        {
+            comic.ShowComicInformation();
         }
     }
 
