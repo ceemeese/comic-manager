@@ -1,5 +1,13 @@
 namespace Models;
 
+class InvalidComicException: Exception 
+{
+    public InvalidComicException(string message = ""):base(message) 
+    {
+
+    }
+}
+
 class Comic 
 {
     public int Id { get; set; }
@@ -41,9 +49,12 @@ class Comic
     }
 
 
-    public void ShowComicInformatión()
+    public void ShowComicInformation()
     {
-        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}");
+        string read = IsRead ? "Sí" : "No";
+        string adults = IsForAdults ? "Sí" : "No"; 
+
+        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}");
         if (Genres.Any())
         {
             Console.WriteLine("Géneros:");
