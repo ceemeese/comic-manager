@@ -5,6 +5,7 @@ using Utils;
 
 class UserService
 {
+    public static List<User> users = new List<User>();
 
 
     public UserService()
@@ -14,7 +15,7 @@ class UserService
 
 
 
-    public static void addUser()
+    public static void AddUser()
     {
 
         try
@@ -62,6 +63,7 @@ class UserService
             User user = new User(name, mail, password, telephone);
             Console.WriteLine("Usuario registrado correctamente");
             user.ShowUserInformation();
+            users.Add(user);
         } 
         catch (InvalidUserException ex) 
         {
@@ -71,6 +73,16 @@ class UserService
         catch(Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
+
+
+    public static void ShowAllUsers()
+    {
+        Console.WriteLine("\nListado de Usuarios:");
+        foreach (var user in users)
+        {
+            user.ShowUserInformation();
         }
     }
 }
