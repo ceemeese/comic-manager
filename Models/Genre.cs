@@ -10,15 +10,19 @@ class InvalidGenreException: Exception
 
 class Genre
 {
-    public int Id { get; set; }
+    //Variable para autoincremento
+    private static int nextId = 0;
+
+    public int Id { get; private set; }
     public string Name { get; set; }
-    public string Description { get; set; } = "";  
+    public string Description { get; set; }  
     public int Priority{ get; set; }
     public string Icon { get; set; }
     public List<Comic> Comics { get; set; } = new List<Comic>();
     
 
     public Genre (string name, string description, int priority, string icon) {
+        Id = nextId++;
         Name = name;
         Description = description;
         Priority = priority;
@@ -27,7 +31,7 @@ class Genre
 
     public void ShowGenreInformation()
     {
-        Console.WriteLine($"Nombre: {Name}, Description: {Description}, Icono: {Icon},");
+        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Description: {Description}, Icono: {Icon},");
 
         if (Comics != null && Comics.Any()) 
         {
