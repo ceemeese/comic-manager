@@ -14,7 +14,7 @@ class UserService
 
 
 
-    public static void userRegister()
+    public static void addUser()
     {
 
         try
