@@ -184,6 +184,7 @@ class MenuApp
                     UserService.ShowAllUsers();
                     break;
                 case 3:
+                    UserService.SearchUser();
                     break;
                 case 4:
                     break;

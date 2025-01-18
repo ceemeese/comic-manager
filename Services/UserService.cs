@@ -85,4 +85,33 @@ class UserService
             user.ShowUserInformation();
         }
     }
+
+
+
+    public static void SearchUser()
+    {
+        try 
+        {
+            Console.WriteLine("Introduce el correo del usuario:");
+            string mail = Console.ReadLine();
+            User user = users.Find(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase));
+            if (user != null)
+            {
+                user.ShowUserInformation();
+            }
+            else
+            {
+                Console.WriteLine("Usuario no encontrado.");
+            }
+        }
+        catch (InvalidUserException ex) 
+        {
+            var messageError = "InvalidUserException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
 }
