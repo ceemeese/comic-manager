@@ -63,7 +63,7 @@ class GenreService
             var messageError = "InvalidGenreException:" + ex.Message;
             Console.WriteLine(messageError);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
         }
@@ -79,20 +79,33 @@ class GenreService
             genre.ShowGenreInformation();
         }
     }
+     
 
 
     public static void SearchGenre()
     {
-        Console.WriteLine("Introduce el nombre de la categoría:");
-        string name = Console.ReadLine();
-        Genre genre = genres.Find(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        if (genre != null)
+        try 
         {
-            genre.ShowGenreInformation();
+            Console.WriteLine("Introduce el nombre de la categoría:");
+            string name = Console.ReadLine();
+            Genre genre = genres.Find(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            if (genre != null)
+            {
+                genre.ShowGenreInformation();
+            }
+            else
+            {
+                Console.WriteLine("Género no encontrado.");
+            }
         }
-        else
+        catch (InvalidGenreException ex) 
         {
-            Console.WriteLine("Género no encontrado.");
+            var messageError = "InvalidGenreException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
         }
     }
 
@@ -100,23 +113,37 @@ class GenreService
     public static void DeleteGenre()
     {
         ShowAllGenres();
-        Console.WriteLine("Selecciona el ID de la categoría a eliminar:");
-
-        if (int.TryParse(Console.ReadLine(), out int IdSelected))
+    
+        try
         {
-            Genre genre = genres.Find(g => g.Id.Equals(IdSelected));
-            if (genre != null){
-                genres.Remove(genre);
-                Console.WriteLine("Género eliminado correctamente");
-                ShowAllGenres();
-            }
-            else{
-                Console.WriteLine("No hay ningún género con el ID introducido");
-            }
+            Console.WriteLine("Selecciona el ID de la categoría a eliminar:");
+
+            if (int.TryParse(Console.ReadLine(), out int IdSelected))
+            {
+                Genre genre = genres.Find(g => g.Id.Equals(IdSelected));
+                if (genre != null){
+                    genres.Remove(genre);
+                    Console.WriteLine("Género eliminado correctamente");
+                    ShowAllGenres();
+                }
+                else{
+                    Console.WriteLine("No hay ningún género con el ID introducido");
+                }
+            }   
         }
+        catch(InvalidGenreException ex)
+        {
+            var messageError = "InvalidGenreException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
+        
 
             
 
 
-    }
 }
