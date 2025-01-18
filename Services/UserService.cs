@@ -114,4 +114,38 @@ class UserService
             var messageError = "ExceptionError:" + ex.Message;
         }
     }
+
+
+
+    public static void DeleteUser()
+    {
+        ShowAllUsers();
+    
+        try
+        {
+            Console.WriteLine("Selecciona el ID del usuario a eliminar:");
+
+            if (int.TryParse(Console.ReadLine(), out int IdSelected))
+            {
+                User user = users.Find(u => u.Id.Equals(IdSelected));
+                if (user != null){
+                    users.Remove(user);
+                    Console.WriteLine("Usuario eliminado correctamente");
+                    ShowAllUsers();
+                }
+                else{
+                    Console.WriteLine("No hay ningún usuario con el ID introducido");
+                }
+            }   
+        }
+        catch(InvalidComicException ex)
+        {
+            var messageError = "InvalidComicException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
 }

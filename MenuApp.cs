@@ -187,6 +187,7 @@ class MenuApp
                     UserService.SearchUser();
                     break;
                 case 4:
+                    UserService.DeleteUser();
                     break;
                 case 5:
                     Console.WriteLine("Volviendo..");
