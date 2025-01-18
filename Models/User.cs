@@ -1,5 +1,13 @@
 namespace Models;
 
+class InvalidUserException: Exception 
+{
+    public InvalidUserException(string message = ""):base(message) 
+    {
+
+    }
+}
+
 class User
 {
     public int Id { get; set; }

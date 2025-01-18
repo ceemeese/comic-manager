@@ -1,6 +1,12 @@
-using System.ComponentModel.Design;
-
 namespace Models;
+
+class InvalidGenreException: Exception 
+{
+    public InvalidGenreException(string message = ""):base(message) 
+    {
+
+    }
+}
 
 class Genre
 {

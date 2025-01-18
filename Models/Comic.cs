@@ -1,5 +1,13 @@
 namespace Models;
 
+class InvalidComicException: Exception 
+{
+    public InvalidComicException(string message = ""):base(message) 
+    {
+
+    }
+}
+
 class Comic 
 {
     public int Id { get; set; }
@@ -10,7 +18,7 @@ class Comic
     public decimal Price { get; set; }
     public bool IsRead { get; set; } = false;
     public bool IsForAdults { get; set; } = true;
-    public List<Genre> Genres { get; set; }
+    public List<Genre> Genres { get; set; } = new List<Genre>();
     public ComicType Type { get; set; }
     
 
@@ -41,16 +49,23 @@ class Comic
     }
 
 
-    public void ShowComicInformatión()
+    public void ShowComicInformation()
     {
-        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}");
-        if (Genres.Any())
+        string read = IsRead ? "Sí" : "No";
+        string adults = IsForAdults ? "Sí" : "No"; 
+
+        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}, Tipo de Cómic: {Type} ");
+        if (Genres != null && Genres.Any()) // Verifica que Genres no sea nulo
         {
             Console.WriteLine("Géneros:");
             foreach (var genre in Genres)
             {
                 Console.WriteLine($"- {genre.Name}");
             }
+        }
+        else
+        {
+            Console.WriteLine("Este cómic no tiene géneros asociados.");
         }
     }
 
