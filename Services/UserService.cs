@@ -5,6 +5,7 @@ using Utils;
 
 class UserService
 {
+    public static List<User> users = new List<User>();
 
 
     public UserService()
@@ -14,7 +15,7 @@ class UserService
 
 
 
-    public static void addUser()
+    public static void AddUser()
     {
 
         try
@@ -62,6 +63,7 @@ class UserService
             User user = new User(name, mail, password, telephone);
             Console.WriteLine("Usuario registrado correctamente");
             user.ShowUserInformation();
+            users.Add(user);
         } 
         catch (InvalidUserException ex) 
         {
@@ -69,6 +71,79 @@ class UserService
             Console.WriteLine(messageError);
         }
         catch(Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
+
+
+    public static void ShowAllUsers()
+    {
+        Console.WriteLine("\nListado de Usuarios:");
+        foreach (var user in users)
+        {
+            user.ShowUserInformation();
+        }
+    }
+
+
+
+    public static void SearchUser()
+    {
+        try 
+        {
+            Console.WriteLine("Introduce el correo del usuario:");
+            string mail = Console.ReadLine();
+            User user = users.Find(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase));
+            if (user != null)
+            {
+                user.ShowUserInformation();
+            }
+            else
+            {
+                Console.WriteLine("Usuario no encontrado.");
+            }
+        }
+        catch (InvalidUserException ex) 
+        {
+            var messageError = "InvalidUserException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
+
+
+
+    public static void DeleteUser()
+    {
+        ShowAllUsers();
+    
+        try
+        {
+            Console.WriteLine("Selecciona el ID del usuario a eliminar:");
+
+            if (int.TryParse(Console.ReadLine(), out int IdSelected))
+            {
+                User user = users.Find(u => u.Id.Equals(IdSelected));
+                if (user != null){
+                    users.Remove(user);
+                    Console.WriteLine("Usuario eliminado correctamente");
+                    ShowAllUsers();
+                }
+                else{
+                    Console.WriteLine("No hay ningún usuario con el ID introducido");
+                }
+            }   
+        }
+        catch(InvalidComicException ex)
+        {
+            var messageError = "InvalidComicException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
         }

@@ -10,6 +10,7 @@ class InvalidUserException: Exception
 
 class User
 {
+    private static int nextId = 1;
     public int Id { get; set; }
     public string Name { get; set; }
     public string Mail { get; set; }
@@ -25,6 +26,8 @@ class User
     //Constructor
     public User(string name, string mail, string password, string telephone) 
     {
+        Id = nextId;
+        nextId++;
         Name = name;
         Mail = mail;
         Password = password;
@@ -37,7 +40,7 @@ class User
     //Mostrar información
     public void ShowUserInformation() 
     {
-        Console.WriteLine($"Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated:g} ");
+        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated:g} ");
 
         if (Comics != null && Comics.Any()) 
         {

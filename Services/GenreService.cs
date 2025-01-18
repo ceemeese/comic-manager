@@ -86,7 +86,7 @@ class GenreService
     {
         try 
         {
-            Console.WriteLine("Introduce el nombre de la categoría:");
+            Console.WriteLine("Introduce el nombre del género:");
             string name = Console.ReadLine();
             Genre genre = genres.Find(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             if (genre != null)

@@ -178,13 +178,16 @@ class MenuApp
             switch (option)
             {
                 case 1:
-                    UserService.addUser();
+                    UserService.AddUser();
                     break;
                 case 2:
+                    UserService.ShowAllUsers();
                     break;
                 case 3:
+                    UserService.SearchUser();
                     break;
                 case 4:
+                    UserService.DeleteUser();
                     break;
                 case 5:
                     Console.WriteLine("Volviendo..");
