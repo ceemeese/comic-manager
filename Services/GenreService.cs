@@ -14,7 +14,7 @@ class GenreService
 
 
 
-    public static void addGenre()
+    public static void AddGenre()
     {
         try
         {
@@ -71,12 +71,28 @@ class GenreService
 
 
 
-    public static void showAllGenres()
+    public static void ShowAllGenres()
     {
         Console.WriteLine("\nListado de Géneros:");
         foreach (var genre in genres)
         {
             genre.ShowGenreInformation();
+        }
+    }
+
+
+    public static void SearchGenre()
+    {
+        Console.WriteLine("Introduce el nombre de la categoría:");
+        string name = Console.ReadLine();
+        Genre genre = genres.Find(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        if (genre != null)
+        {
+            genre.ShowGenreInformation();
+        }
+        else
+        {
+            Console.WriteLine("Género no encontrado.");
         }
     }
 }
