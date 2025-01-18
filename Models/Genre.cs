@@ -11,7 +11,7 @@ class InvalidGenreException: Exception
 class Genre
 {
     //Variable para autoincremento
-    private static int nextId = 0;
+    private static int nextId = 1;
 
     public int Id { get; private set; }
     public string Name { get; set; }
@@ -22,7 +22,8 @@ class Genre
     
 
     public Genre (string name, string description, int priority, string icon) {
-        Id = nextId++;
+        Id = nextId;
+        nextId++;
         Name = name;
         Description = description;
         Priority = priority;

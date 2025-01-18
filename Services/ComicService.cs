@@ -87,7 +87,7 @@ class ComicService
                 Console.WriteLine("Géneros disponibles: ");
                 for (int i = 0; i < GenreService.genres.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {GenreService.genres[i].Name}");
+                    Console.WriteLine($"{GenreService.genres[i].Id}. {GenreService.genres[i].Name}");
                 }
 
                 Console.WriteLine("Introduce los números de los géneros separados por comas (ejemplo: 1,3,5):");
@@ -96,7 +96,7 @@ class ComicService
 
                 if (string.IsNullOrWhiteSpace(answer))
                 {
-                    Console.WriteLine("Error: No has seleccionado ninguna categoría. Intentelo de nuevo.");
+                    Console.WriteLine("Error: No has seleccionado ningún género. Intentelo de nuevo.");
                     continue;
                 }
 
@@ -107,9 +107,10 @@ class ComicService
 
                 foreach (string index in genreIndexArray)
                 {
-                    if (int.TryParse(index.Trim(), out int genreIndex) && genreIndex > 0 && genreIndex <= GenreService.genres.Count)
+                    if (int.TryParse(index.Trim(), out int genreId) && genreId > 0 && GenreService.genres.Any(g => g.Id == genreId))
                     {
-                        selectedGenres.Add(GenreService.genres[genreIndex - 1]);
+                        Genre genre = GenreService.genres.FirstOrDefault(g => g.Id == genreId);
+                        selectedGenres.Add(genre);
                     }
                     else
                     {
@@ -213,7 +214,42 @@ class ComicService
                 Console.WriteLine("Cómic no encontrado.");
             }
         }
-        catch (InvalidGenreException ex) 
+        catch (InvalidComicException ex) 
+        {
+            var messageError = "InvalidComicException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
+        }
+    }
+
+
+
+
+    public static void DeleteComic()
+    {
+        ShowAllComics();
+    
+        try
+        {
+            Console.WriteLine("Selecciona el ID del comic a eliminar:");
+
+            if (int.TryParse(Console.ReadLine(), out int IdSelected))
+            {
+                Comic comic = comics.Find(c => c.Id.Equals(IdSelected));
+                if (comic != null){
+                    comics.Remove(comic);
+                    Console.WriteLine("Cómic eliminado correctamente");
+                    ShowAllComics();
+                }
+                else{
+                    Console.WriteLine("No hay ningún cómic con el ID introducido");
+                }
+            }   
+        }
+        catch(InvalidComicException ex)
         {
             var messageError = "InvalidComicException:" + ex.Message;
             Console.WriteLine(messageError);

@@ -10,7 +10,10 @@ class InvalidComicException: Exception
 
 class Comic 
 {
-    public int Id { get; set; }
+    //Variable para autoincremento
+    private static int nextId = 1;
+
+    public int Id { get; private set; }
     public string Name { get; set; }
     public string Author { get; set; }
     public string Publisher { get; set; }
@@ -37,6 +40,8 @@ class Comic
     //Constructor
     public Comic (string name, string author, string publisher, int yearPublished, decimal price, bool isRead, bool isForAdults, List<Genre> genres, ComicType type)
     {
+        Id = nextId;
+        nextId++;
         Name = name;
         Author = author;
         Publisher = publisher;
@@ -54,7 +59,7 @@ class Comic
         string read = IsRead ? "Sí" : "No";
         string adults = IsForAdults ? "Sí" : "No"; 
 
-        Console.WriteLine($"Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}, Tipo de Cómic: {Type} ");
+        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}, Tipo de Cómic: {Type} ");
         if (Genres != null && Genres.Any()) // Verifica que Genres no sea nulo
         {
             Console.WriteLine("Géneros:");

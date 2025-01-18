@@ -137,6 +137,7 @@ class MenuApp
                     ComicService.SearchComic();
                     break;
                 case 4:
+                    ComicService.DeleteComic();
                     break;
                 case 5:
                     Console.WriteLine("Volviendo..");
