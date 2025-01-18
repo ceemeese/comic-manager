@@ -12,7 +12,7 @@ class ComicService
     }
 
 
-    public static void addComic() 
+    public static void AddComic() 
     {
         try
         {
@@ -179,7 +179,7 @@ class ComicService
 
 
 
-    public static void showAllComics()
+    public static void ShowAllComics()
     {
         Console.WriteLine("\nListado de Cómics:");
         foreach (var comic in comics)
@@ -192,6 +192,35 @@ class ComicService
             {
                 Console.WriteLine("Cósmico nulo encontrado en la lista.");
             }
+        }
+    }
+
+
+    
+    public static void SearchComic()
+    {
+        try 
+        {
+            Console.WriteLine("Introduce el nombre de cómic:");
+            string name = Console.ReadLine();
+            Comic comic = comics.Find(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            if (comic != null)
+            {
+                comic.ShowComicInformation();
+            }
+            else
+            {
+                Console.WriteLine("Cómic no encontrado.");
+            }
+        }
+        catch (InvalidGenreException ex) 
+        {
+            var messageError = "InvalidComicException:" + ex.Message;
+            Console.WriteLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            var messageError = "ExceptionError:" + ex.Message;
         }
     }
 

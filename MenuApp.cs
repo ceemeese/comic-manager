@@ -33,13 +33,13 @@ class MenuApp
             switch (option)
             {
                 case 1:
-                    showGenreMenu();
+                    ShowGenreMenu();
                     break;
                 case 2:
-                    showComicMenu();
+                    ShowComicMenu();
                     break;
                 case 3:
-                    showUserMenu();
+                    ShowUserMenu();
                     break;
                 case 4:
                     Console.WriteLine("¡Hasta pronto!");
@@ -56,7 +56,7 @@ class MenuApp
 
 
 
-    private void showGenreMenu()
+    private void ShowGenreMenu()
     {
         int option = 0;
 
@@ -105,7 +105,7 @@ class MenuApp
 
 
 
-    private void showComicMenu()
+    private void ShowComicMenu()
     {
         int option = 0;
 
@@ -128,12 +128,13 @@ class MenuApp
             switch (option)
             {
                 case 1:
-                    ComicService.addComic();
+                    ComicService.AddComic();
                     break;
                 case 2:
-                    ComicService.showAllComics();
+                    ComicService.ShowAllComics();
                     break;
                 case 3:
+                    ComicService.SearchComic();
                     break;
                 case 4:
                     break;
@@ -153,7 +154,7 @@ class MenuApp
 
 
 
-    private void showUserMenu()
+    private void ShowUserMenu()
     {
         int option = 0;
 
