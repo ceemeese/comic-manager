@@ -95,4 +95,28 @@ class GenreService
             Console.WriteLine("Género no encontrado.");
         }
     }
+
+
+    public static void DeleteGenre()
+    {
+        ShowAllGenres();
+        Console.WriteLine("Selecciona el ID de la categoría a eliminar:");
+
+        if (int.TryParse(Console.ReadLine(), out int IdSelected))
+        {
+            Genre genre = genres.Find(g => g.Id.Equals(IdSelected));
+            if (genre != null){
+                genres.Remove(genre);
+                Console.WriteLine("Género eliminado correctamente");
+                ShowAllGenres();
+            }
+            else{
+                Console.WriteLine("No hay ningún género con el ID introducido");
+            }
+        }
+
+            
+
+
+    }
 }

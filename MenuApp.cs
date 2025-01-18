@@ -88,6 +88,7 @@ class MenuApp
                     GenreService.SearchGenre();
                     break;
                 case 4:
+                    GenreService.DeleteGenre();
                     break;
                 case 5:
                     Console.WriteLine("Volviendo..");
