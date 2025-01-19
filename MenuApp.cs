@@ -1,5 +1,3 @@
-namespace Models; 
-using Models;
 using Services;
 
 class MenuApp

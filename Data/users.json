@@ -1,0 +1,12 @@
+[
+  {
+    "Id": 1,
+    "Name": "User",
+    "Mail": "1@mail.com",
+    "Password": "a1Aaaaaa",
+    "DateCreated": "2025-01-19T11:52:17.518903+01:00",
+    "Telephone": "5555555",
+    "IsAdmin": false,
+    "Comics": null
+  }
+]

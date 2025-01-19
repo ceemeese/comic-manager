@@ -1,0 +1,25 @@
+[
+  {
+    "Id": 1,
+    "Name": "comic1",
+    "Author": "1",
+    "Publisher": "1",
+    "YearPublished": 2023,
+    "Price": 1,
+    "IsRead": false,
+    "IsForAdults": false,
+    "Genres": [
+      {
+        "Id": 1,
+        "Name": "hola",
+        "Description": "1",
+        "Priority": 1,
+        "Icon": "#1",
+        "Comics": [
+          "comic1"
+        ]
+      }
+    ],
+    "Type": 1
+  }
+]

@@ -1,9 +1,12 @@
 namespace Services;
+
 using Models;
+using Utils;
 
 class GenreService
 {
     public static List<Genre> genres = new List<Genre>();
+    private const string GenresFileName = "genres.json";
 
     
     public GenreService()
@@ -56,6 +59,7 @@ class GenreService
             genres.Add(genre);
 
             Console.WriteLine("Género añadido correctamente.");
+            JsonUtils.SaveDataToJson(genres, GenresFileName);
 
         }
         catch (InvalidGenreException ex) 
@@ -125,6 +129,7 @@ class GenreService
                     genres.Remove(genre);
                     Console.WriteLine("Género eliminado correctamente");
                     ShowAllGenres();
+                    JsonUtils.SaveDataToJson(genres, GenresFileName);
                 }
                 else{
                     Console.WriteLine("No hay ningún género con el ID introducido");

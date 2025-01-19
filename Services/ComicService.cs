@@ -1,9 +1,11 @@
 namespace Services;
+
 using Models;
+using Utils;
 
 class ComicService
 {
-    private static List<Comic> comics = new List<Comic>();
+    public static List<Comic> comics = new List<Comic>();
 
 
     public ComicService()
@@ -154,7 +156,7 @@ class ComicService
 
             foreach (var genre in selectedGenres)
             {
-                genre.Comics.Add(comic);
+                genre.Comics.Add(comic.Name);
             }
 
             if (comics == null)
@@ -164,6 +166,8 @@ class ComicService
             }
 
             comics.Add(comic);
+            JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
+            JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
                 
         }
         catch (InvalidComicException ex) 
@@ -243,6 +247,9 @@ class ComicService
                     comics.Remove(comic);
                     Console.WriteLine("Cómic eliminado correctamente");
                     ShowAllComics();
+                    JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
+                    JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
+
                 }
                 else{
                     Console.WriteLine("No hay ningún cómic con el ID introducido");

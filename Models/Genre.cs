@@ -18,7 +18,7 @@ class Genre
     public string Description { get; set; }  
     public int Priority{ get; set; }
     public string Icon { get; set; }
-    public List<Comic> Comics { get; set; } = new List<Comic>();
+    public List<string> Comics { get; set; }
     
 
     public Genre (string name, string description, int priority, string icon) {
@@ -28,6 +28,7 @@ class Genre
         Description = description;
         Priority = priority;
         Icon = icon;
+        Comics = Comics = new List<string>();
     }
 
     public void ShowGenreInformation()
@@ -39,7 +40,7 @@ class Genre
             Console.WriteLine("Cómics:");
             foreach (var comic in Comics) 
             {
-                Console.WriteLine($"Título: {comic.Name}, Autor: {comic.Author}");
+                Console.WriteLine($"- {comic}");
             }
         }
         else{
