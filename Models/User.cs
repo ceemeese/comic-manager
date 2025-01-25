@@ -18,7 +18,7 @@ class User
     public DateTime DateCreated { get; private set; }
     public string Telephone { get; set; }
     public bool IsAdmin { get; set; } = false;
-    public List<Comic> Comics { get; set; } = new List<Comic>();
+    public List<string> Comics { get; set; }
     
 
 
@@ -47,7 +47,7 @@ class User
             Console.WriteLine("Cómics:");
             foreach (var comic in Comics) 
             {
-                Console.WriteLine($"Título: {comic.Name}, Autor: {comic.Author}");
+                Console.WriteLine($"Título: {comic}, Autor: {comic}");
             }
         }
         else{
