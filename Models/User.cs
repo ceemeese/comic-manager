@@ -18,7 +18,7 @@ class User
     public DateTime DateCreated { get; private set; }
     public string Telephone { get; set; }
     public bool IsAdmin { get; set; } = false;
-    public List<string> Comics { get; set; }
+    public List<Comic> PersonalComics { get; set; }
     
 
 
@@ -34,6 +34,7 @@ class User
         DateCreated = DateTime.Now;
         Telephone = telephone;
         IsAdmin = false;
+        PersonalComics = new List<Comic>();
     }
 
 
@@ -42,10 +43,10 @@ class User
     {
         Console.WriteLine($"ID: {Id}, Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated:g} ");
 
-        if (Comics != null && Comics.Any()) 
+        if (PersonalComics != null && PersonalComics.Count != 0) 
         {
             Console.WriteLine("Cómics:");
-            foreach (var comic in Comics) 
+            foreach (var comic in PersonalComics) 
             {
                 Console.WriteLine($"Título: {comic}, Autor: {comic}");
             }
@@ -54,6 +55,5 @@ class User
             Console.WriteLine("Este usuario no tiene cómics registrados");
         }
     }
-
 
 }

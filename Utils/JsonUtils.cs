@@ -30,7 +30,6 @@ public static class JsonUtils
             string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../"));
 
             string fullFileName = Path.Combine(path, "Data", fileName);
-            Console.WriteLine(fullFileName);
 
             string jsonContent = File.ReadAllText(fullFileName);
             return JsonSerializer.Deserialize<List<T>>(jsonContent);

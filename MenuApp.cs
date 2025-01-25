@@ -1,3 +1,4 @@
+using Models;
 using Services;
 
 
@@ -115,12 +116,14 @@ class MenuApp
             Console.WriteLine("2. Listar cómics");
             Console.WriteLine("3. Buscar cómic");
             Console.WriteLine("4. Eliminar cómic");
-            Console.WriteLine("5. Volver al menú principal");
+            Console.WriteLine("5. Añadir cómic a lista personal");
+            Console.WriteLine("6. Otro");
+            Console.WriteLine("7. Volver al menú principal");
             Console.WriteLine("Selecciona una opción:");
 
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
+            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 7)
             {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5).");
+                Console.WriteLine("Error: Por favor selecciona una opción válida (1-7).");
                     continue;
             }
 
@@ -139,6 +142,12 @@ class MenuApp
                     ComicService.DeleteComic();
                     break;
                 case 5:
+                    UserService.AddComicToUserList();
+                    break;
+                case 6:
+                    //TODO
+                    break;
+                case 7:
                     Console.WriteLine("Volviendo..");
                     break;
                 default:
@@ -147,7 +156,7 @@ class MenuApp
             }
 
         }
-        while (option != 5);
+        while (option != 7);
 
     }
 

@@ -33,9 +33,13 @@ class ComicService
 
 
             Console.WriteLine("Autor: ");
-            string author
-            = Console.ReadLine();
+            string author = Console.ReadLine();
 
+            if (comics.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && c.Author.Equals(author, StringComparison.OrdinalIgnoreCase)))
+            {
+            Console.WriteLine("Error: Ya existe un cómic con el mismo nombre y autor en la lista global.");
+            return;
+            }
 
             Console.WriteLine("Editorial: ");
             string publisher = Console.ReadLine();
