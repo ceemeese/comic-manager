@@ -5,9 +5,8 @@ using Utils;
 
 class UserService
 {
-    public static List<User> users = new List<User>();
-
-    private const string UsersFileName = "users.json";
+    public static List<User> users = JsonUtils.LoadDataJson<User>(Constants.UsersFileName) ?? new List<User>();
+    //public static List<User> users = new List<User>();
 
 
     public UserService()
@@ -66,7 +65,7 @@ class UserService
             Console.WriteLine("Usuario registrado correctamente");
             user.ShowUserInformation();
             users.Add(user);
-            JsonUtils.SaveDataToJson(users, UsersFileName);
+            JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
         } 
         catch (InvalidUserException ex) 
         {
@@ -135,7 +134,7 @@ class UserService
                     users.Remove(user);
                     Console.WriteLine("Usuario eliminado correctamente");
                     ShowAllUsers();
-                    JsonUtils.SaveDataToJson(users, UsersFileName);
+                    JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
                 }
                 else{
                     Console.WriteLine("No hay ningún usuario con el ID introducido");

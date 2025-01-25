@@ -1,22 +1,22 @@
 [
   {
     "Id": 1,
-    "Name": "comic1",
-    "Author": "1",
-    "Publisher": "1",
+    "Name": "Comic",
+    "Author": "comic",
+    "Publisher": "comic",
     "YearPublished": 2023,
-    "Price": 1,
+    "Price": 3,
     "IsRead": false,
     "IsForAdults": false,
     "Genres": [
       {
         "Id": 1,
-        "Name": "hola",
-        "Description": "1",
-        "Priority": 1,
+        "Name": "Hola",
+        "Description": "Hola",
+        "Priority": 3,
         "Icon": "#1",
         "Comics": [
-          "comic1"
+          "Comic"
         ]
       }
     ],

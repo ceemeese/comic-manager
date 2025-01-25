@@ -1,4 +1,2 @@
-﻿using Models;
-
-var menuApp = new MenuApp();
+﻿var menuApp = new MenuApp();
 menuApp.ShowMenu();
