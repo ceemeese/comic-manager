@@ -160,18 +160,22 @@ class UserService
     }
 
 
-    public static void AddComicToUserList() 
+    public static void ManageComicsInUserList(User loggedUser, bool isAddOperation) 
     {
         List<Comic> selectedComics = new List<Comic>();
+        string operation = isAddOperation ? "añadir" : "eliminar";
+
         while(true)
         {
-            Console.WriteLine("Cómics: ");
-            for (int i = 0; i < ComicService.comics.Count; i++)
+            Console.WriteLine(isAddOperation ? "Cómics disponibles: " : "Tus cómics personales: ");
+            List<Comic> comicsList = isAddOperation ? ComicService.comics : loggedUser.PersonalComics;
+            
+            for (int i = 0; i < comicsList.Count; i++)
             {
                 Console.WriteLine($"{ComicService.comics[i].Id}. {ComicService.comics[i].Name}");
             }
 
-            Console.WriteLine("Introduce los números de los comics separados por comas (ejemplo: 1,3,5):");
+            Console.WriteLine($"Introduce los números de los comics que quieres {operation} separados por comas (ejemplo: 1,3,5):");
             string answer = Console.ReadLine();
 
 
@@ -191,7 +195,15 @@ class UserService
                 if (int.TryParse(index.Trim(), out int comicId) && comicId > 0 && ComicService.comics.Any(c => c.Id == comicId))
                 {
                     Comic comic = ComicService.comics.FirstOrDefault(c => c.Id == comicId);
-                    selectedComics.Add(comic);
+
+                    if (isAddOperation && loggedUser.PersonalComics.Any(c => c.Id == comic.Id))
+                    {
+                        Console.WriteLine($"El cómic '{comic.Name}' ya está en tu lista personal.");
+                    }
+                    else
+                    {
+                        selectedComics.Add(comic);
+                    }
                 }
                 else
                 {
@@ -207,7 +219,22 @@ class UserService
             }
         }
 
+        foreach (var comic in selectedComics)
+        {
+            if (isAddOperation)
+            {
+                loggedUser.PersonalComics.Add(comic);
+                Console.WriteLine($"El cómic '{comic.Name}' se ha añadido a tu lista personal.");
+            }
+            else
+            {
+                loggedUser.PersonalComics.Remove(comic);
+                Console.WriteLine($"El cómic '{comic.Name}' ha sido eliminado de tu lista personal.");
+            }
+        }
+
     }
+
 
 
     // Mostrar los cómics del usuario
@@ -219,12 +246,49 @@ class UserService
         {
             foreach (var comic in user.PersonalComics)
             {
-                Console.WriteLine(comic);
+                Console.WriteLine(comic.Name);
             }
         }
         else
         {
             Console.WriteLine("No tienes cómics registrados.");
+        }
+    }
+
+
+
+
+    public static void Login()
+    {
+        Console.WriteLine("__LOGIN__");
+        Console.WriteLine("Mail: ");
+        string mail = Console.ReadLine();
+        Console.WriteLine("Password: ");
+        string password = Console.ReadLine();
+
+        User? user = users.FirstOrDefault(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase) && u.Password == password);
+
+        if (user != null)
+        {
+            currentUser = user;
+            Console.WriteLine($"Hola, {user.Name}!");
+
+        }
+        Console.WriteLine("Error: Nombre de usuario o contraseña incorrectos.");
+
+    }
+
+
+    public static void Logout()
+    {
+        if (currentUser != null)
+        {
+            Console.WriteLine($"Hasta pronto, {currentUser.Name}!");
+            currentUser = null;
+        }
+        else
+        {
+            Console.WriteLine("No hay usuario conectado.");
         }
     }
 

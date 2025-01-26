@@ -4,9 +4,19 @@
     "Name": "User",
     "Mail": "1@mail.com",
     "Password": "a1Aaaaaa",
-    "DateCreated": "2025-01-19T11:52:17.518903+01:00",
+    "DateCreated": "2025-01-26T01:42:14.21302+01:00",
     "Telephone": "5555555",
     "IsAdmin": false,
-    "Comics": null
+    "PersonalComics": []
+  },
+  {
+    "Id": 2,
+    "Name": "Cris",
+    "Mail": "cris@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-01-26T01:42:55.5357+01:00",
+    "Telephone": "666666666",
+    "IsAdmin": true,
+    "PersonalComics": []
   }
 ]
