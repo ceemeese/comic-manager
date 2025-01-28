@@ -8,10 +8,15 @@ public static class JsonUtils
     {
         try 
         {
-            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../"));
 
-            string fullFileName = Path.Combine(path, "Data", fileName);
-            Console.WriteLine(fullFileName);
+            string localPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../Data"));
+
+
+            string dataPath = Environment.GetEnvironmentVariable("DATA_PATH") ?? localPath;
+            Console.Write(dataPath);
+
+            string fullFileName = Path.Combine(dataPath, fileName);
+            
             string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(fullFileName, json);
         }
@@ -27,9 +32,13 @@ public static class JsonUtils
     {
         try
         {
-            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../"));
+            //ruta local
+            string localPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../Data"));
 
-            string fullFileName = Path.Combine(path, "Data", fileName);
+
+            string dataPath = Environment.GetEnvironmentVariable("DATA_PATH") ?? localPath;
+
+            string fullFileName = Path.Combine(dataPath, fileName);
 
             string jsonContent = File.ReadAllText(fullFileName);
             return JsonSerializer.Deserialize<List<T>>(jsonContent);

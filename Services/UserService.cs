@@ -272,7 +272,7 @@ class UserService
         {
             currentUser = user;
             Console.WriteLine($"Hola, {user.Name}!");
-
+            return;
         }
         Console.WriteLine("Error: Nombre de usuario o contraseña incorrectos.");
 
