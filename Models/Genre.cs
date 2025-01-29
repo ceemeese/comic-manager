@@ -19,9 +19,10 @@ class Genre
     public int Priority{ get; set; }
     public string Icon { get; set; }
     public List<string> Comics { get; set; }
+    public DateTime? DateCreated { get; private set; }
     
 
-    public Genre (string name, string description, int priority, string icon) {
+    public Genre (string name, string description, int priority, string icon, DateTime? dateCreated = null) {
         Id = nextId;
         nextId++;
         Name = name;
@@ -29,11 +30,13 @@ class Genre
         Priority = priority;
         Icon = icon;
         Comics = Comics = new List<string>();
+        DateCreated = dateCreated ?? DateTime.Now;
+        
     }
 
     public void ShowGenreInformation()
     {
-        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Description: {Description}, Icono: {Icon},");
+        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Description: {Description}, Icono: {Icon}, Fecha Creación: {DateCreated:g}");
 
         if (Comics != null && Comics.Any()) 
         {

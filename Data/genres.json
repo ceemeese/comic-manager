@@ -1,26 +1,29 @@
 [
   {
     "Id": 1,
-    "Name": "Ficcion",
-    "Description": "Ficcion descripci\u00F3n",
-    "Priority": 1,
-    "Icon": "#2384324",
-    "Comics": []
+    "Name": "test",
+    "Description": "test",
+    "Priority": 2,
+    "Icon": "#234",
+    "Comics": [],
+    "DateCreated": "0001-01-01T00:00:00"
   },
   {
     "Id": 2,
-    "Name": "Hola",
-    "Description": "hola description",
-    "Priority": 3,
-    "Icon": "#234",
-    "Comics": []
+    "Name": "test3",
+    "Description": "test",
+    "Priority": 2,
+    "Icon": "#4",
+    "Comics": [],
+    "DateCreated": "0001-01-01T00:00:00"
   },
   {
     "Id": 3,
-    "Name": "Ficcionx2",
-    "Description": "Ficcionx2",
+    "Name": "test34",
+    "Description": "test",
     "Priority": 1,
-    "Icon": "#34",
-    "Comics": []
+    "Icon": "#3423",
+    "Comics": [],
+    "DateCreated": "2025-01-29T11:35:06.940884+01:00"
   }
 ]

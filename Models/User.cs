@@ -15,7 +15,7 @@ class User
     public string Name { get; set; }
     public string Mail { get; set; }
     public string Password { get; set; }
-    public DateTime DateCreated { get; private set; }
+    public DateTime? DateCreated { get; private set; }
     public string Telephone { get; set; }
     public bool IsAdmin { get; set; } = false;
     public List<Comic> PersonalComics { get; set; }
@@ -24,14 +24,14 @@ class User
 
 
     //Constructor
-    public User(string name, string mail, string password, string telephone) 
+    public User(string name, string mail, string password, string telephone, DateTime? dateCreated = null ) 
     {
         Id = nextId;
         nextId++;
         Name = name;
         Mail = mail;
         Password = password;
-        DateCreated = DateTime.Now;
+        DateCreated = dateCreated ?? DateTime.Now;
         Telephone = telephone;
         IsAdmin = false;
         PersonalComics = new List<Comic>();

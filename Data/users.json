@@ -4,7 +4,7 @@
     "Name": "User",
     "Mail": "1@mail.com",
     "Password": "a1Aaaaaa",
-    "DateCreated": "2025-01-26T01:42:14.21302+01:00",
+    "DateCreated": "2025-01-29T11:34:30.740508+01:00",
     "Telephone": "5555555",
     "IsAdmin": false,
     "PersonalComics": []
@@ -14,9 +14,29 @@
     "Name": "Cris",
     "Mail": "cris@mail.com",
     "Password": "A1aaaaaa",
-    "DateCreated": "2025-01-26T01:42:55.5357+01:00",
+    "DateCreated": "2025-01-29T11:34:30.763981+01:00",
     "Telephone": "666666666",
     "IsAdmin": true,
+    "PersonalComics": []
+  },
+  {
+    "Id": 3,
+    "Name": "usertest",
+    "Mail": "t@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-01-29T11:36:23.514824+01:00",
+    "Telephone": "666666666",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 4,
+    "Name": "test435",
+    "Mail": "test@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-01-29T11:38:38.335374+01:00",
+    "Telephone": "555555555",
+    "IsAdmin": false,
     "PersonalComics": []
   }
 ]
