@@ -81,10 +81,10 @@ class GenreService
 
     public static void ShowAllGenres()
     {
-        Console.WriteLine("\nListado de Géneros:");
-        foreach (var genre in genres)
+        var genresSorted = genres.OrderBy(g => g.Priority).ToList();
+        foreach (var genre in genresSorted)
         {
-            genre.ShowGenreInformation();
+            Console.WriteLine($"{genre.Name}");
         }
     }
      

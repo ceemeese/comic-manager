@@ -1,3 +1,5 @@
+using Services;
+
 namespace Models;
 
 class InvalidUserException: Exception 
@@ -24,7 +26,7 @@ class User
 
 
     //Constructor
-    public User(string name, string mail, string password, string telephone, DateTime? dateCreated = null ) 
+    public User(string name, string mail, string password, string telephone, bool isAdmin, DateTime? dateCreated = null ) 
     {
         Id = nextId;
         nextId++;
@@ -33,7 +35,7 @@ class User
         Password = password;
         DateCreated = dateCreated ?? DateTime.Now;
         Telephone = telephone;
-        IsAdmin = false;
+        IsAdmin = isAdmin;
         PersonalComics = new List<Comic>();
     }
 
@@ -53,6 +55,12 @@ class User
         }
         else{
             Console.WriteLine("Este usuario no tiene cómics registrados");
+        }
+
+        if (UserService.currentUser.IsAdmin)
+        {
+            string admin = IsAdmin ? "Sí" : "No"; 
+            Console.WriteLine($"Es administrador?: {admin} ");
         }
     }
 

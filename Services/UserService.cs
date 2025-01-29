@@ -67,7 +67,16 @@ class UserService
             Console.WriteLine("Teléfono: ");
             string telephone = Console.ReadLine();
 
-            User user = new User(name, mail, password, telephone);
+            bool admin = false;
+            if (currentUser != null && currentUser.IsAdmin)
+            {
+                Console.WriteLine("Es administrador? (si/no): ");
+                string answer = Console.ReadLine();
+                admin = answer.ToLower() == "yes" ? true : false;
+            }
+
+
+            User user = new User(name, mail, password, telephone, admin);
             Console.WriteLine("Usuario registrado correctamente");
             user.ShowUserInformation();
             users.Add(user);

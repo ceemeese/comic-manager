@@ -91,26 +91,35 @@ class MenuApp
         do
         {
             Console.WriteLine("\n--- MENÚ GÉNEROS ---");
-            Console.WriteLine("1. Añadir género");
+
+            if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
+            {
+                Console.WriteLine("1. Añadir género");
+            }
             Console.WriteLine("2. Listar géneros");
             Console.WriteLine("3. Buscar género");
-            Console.WriteLine("4. Eliminar género");
+
+            if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
+            {
+                Console.WriteLine("4. Eliminar género");
+            }
+
             Console.WriteLine("5. Volver al menú principal");
             Console.WriteLine("Selecciona una opción:");
 
             if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
             {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5).");
+                Console.WriteLine("Error: Por favor selecciona una opción válida");
                     continue;
             }
 
             switch (option)
             {
                 case 1:
-                    if (UserService.currentUser != null)
+                    if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
                         GenreService.AddGenre();
                     else
-                        Console.WriteLine("Debes iniciar sesión para realizar esta acción.");
+                        Console.WriteLine("Error: Por favor selecciona una opción válida");
                     break;
                 case 2:
                     GenreService.ShowAllGenres();
@@ -119,10 +128,10 @@ class MenuApp
                     GenreService.SearchGenre();
                     break;
                 case 4:
-                    if (UserService.currentUser != null)
+                    if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
                         GenreService.DeleteGenre();
                     else
-                        Console.WriteLine("Debes iniciar sesión para realizar esta acción.");
+                        Console.WriteLine("Error: Por favor selecciona una opción válida");
                     break;
                 case 5:
                     Console.WriteLine("Volviendo..");
@@ -155,7 +164,7 @@ class MenuApp
 
             if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
             {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-7).");
+                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5)");
                     continue;
             }
 
