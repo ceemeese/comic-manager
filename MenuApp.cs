@@ -263,11 +263,12 @@ class MenuApp
             Console.WriteLine("1. Añadir cómic a mi lista personal");
             Console.WriteLine("2. Eliminar cómic a mi lista personal");
             Console.WriteLine("3. Ver mi lista personal de cómics");
-            Console.WriteLine("4. Volver al menú principal");
+            Console.WriteLine("4. Ver mis datos personales ");
+            Console.WriteLine("5. Volver al menú principal");
 
             Console.WriteLine("Selecciona una opción:");
 
-            if (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 4)
+            if (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 5)
             {
                 Console.WriteLine("Error: Por favor selecciona una opción válida (1-4).");
                 continue;
@@ -285,12 +286,15 @@ class MenuApp
                     UserService.ShowUserComics(UserService.currentUser);
                     break;
                 case 4:
+                    UserService.ViewUserData();
+                    break;
+                case 5:
                     Console.WriteLine("Volviendo...");
                     break;
                 default:
                     Console.WriteLine("La opción no es correcta");
                     break;
             }
-        } while (option != 4);
+        } while (option != 5);
     }
 }

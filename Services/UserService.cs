@@ -303,4 +303,10 @@ class UserService
         }
     }
 
+
+    public static void ViewUserData()
+    {
+        currentUser?.ShowUserInformation();
+    }
+
 }
