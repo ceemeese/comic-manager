@@ -21,6 +21,12 @@ class GenreService
             Console.WriteLine("___NUEVO GÉNERO___");
             Console.WriteLine("Nombre: ");
             string name = Console.ReadLine();
+
+            if (genres.Any(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new InvalidComicException("Error: Ya existe un género con el mismo nombre");
+            }
+
             Console.WriteLine("Description: ");
             string description = Console.ReadLine();
 
@@ -32,7 +38,7 @@ class GenreService
                 {
                     break;
                 }
-                Console.WriteLine("Error: La prioridad debe ser un número positivo.");
+                Console.WriteLine("Error: La prioridad debe ser un número positivo");
             }
 
 
@@ -46,7 +52,7 @@ class GenreService
                 {
                     break; 
                 }
-                Console.WriteLine("Error: El icono debe empezar por '#'.");
+                Console.WriteLine("Error: El icono debe empezar por '#'");
             }
             
 
@@ -55,7 +61,7 @@ class GenreService
 
             genres.Add(genre);
 
-            Console.WriteLine("Género añadido correctamente.");
+            Console.WriteLine("Género añadido correctamente");
             JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
 
         }
@@ -67,6 +73,7 @@ class GenreService
         catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+            Console.WriteLine(messageError);
         }
     }
 
@@ -96,7 +103,7 @@ class GenreService
             }
             else
             {
-                Console.WriteLine("Género no encontrado.");
+                throw new InvalidGenreException("El género no existe");
             }
         }
         catch (InvalidGenreException ex) 
@@ -107,6 +114,7 @@ class GenreService
         catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+            Console.WriteLine(messageError);
         }
     }
 
@@ -129,7 +137,7 @@ class GenreService
                     JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
                 }
                 else{
-                    Console.WriteLine("No hay ningún género con el ID introducido");
+                    throw new InvalidGenreException("El género no existe");
                 }
             }   
         }
@@ -141,11 +149,7 @@ class GenreService
         catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+            Console.WriteLine(messageError);
         }
     }
-        
-
-            
-
-
 }

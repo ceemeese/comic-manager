@@ -22,8 +22,7 @@ class ComicService
             //Control de géneros antes de preguntar. Si no hay géneros, no se pueden añadir cómics
             if (GenreService.genres.Count == 0)
             {
-                Console.WriteLine("No hay géneros disponibles. Añade algunos géneros antes de seleccionar.");
-                return;
+                throw new InvalidComicException("No hay géneros disponibles. Añade algunos géneros antes de seleccionar");
             }
 
 
@@ -37,8 +36,7 @@ class ComicService
 
             if (comics.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && c.Author.Equals(author, StringComparison.OrdinalIgnoreCase)))
             {
-            Console.WriteLine("Error: Ya existe un cómic con el mismo nombre y autor en la lista global.");
-            return;
+                throw new InvalidComicException("Error: Ya existe un cómic con el mismo nombre y autor en la lista global.");
             }
 
             Console.WriteLine("Editorial: ");

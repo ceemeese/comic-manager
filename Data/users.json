@@ -18,25 +18,5 @@
     "Telephone": "666666666",
     "IsAdmin": true,
     "PersonalComics": []
-  },
-  {
-    "Id": 3,
-    "Name": "usertest",
-    "Mail": "t@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-01-29T11:36:23.514824+01:00",
-    "Telephone": "666666666",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 4,
-    "Name": "test435",
-    "Mail": "test@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-01-29T11:38:38.335374+01:00",
-    "Telephone": "555555555",
-    "IsAdmin": false,
-    "PersonalComics": []
   }
 ]

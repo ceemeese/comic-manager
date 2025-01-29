@@ -13,7 +13,7 @@ public static class JsonUtils
 
 
             string dataPath = Environment.GetEnvironmentVariable("DATA_PATH") ?? localPath;
-            Console.Write(dataPath);
+            
 
             string fullFileName = Path.Combine(dataPath, fileName);
             

@@ -44,8 +44,7 @@ class UserService
 
             if (users.Any(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase)))
             {
-            Console.WriteLine("Error: Ya existe un usuario con este mail");
-            return;
+            throw new InvalidComicException("Error: Ya existe un usuario con este mail");
             }
 
 
@@ -82,6 +81,7 @@ class UserService
         catch(Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+            Console.WriteLine(messageError);
         }
     }
 
@@ -110,7 +110,7 @@ class UserService
             }
             else
             {
-                Console.WriteLine("Usuario no encontrado.");
+                throw new InvalidComicException("Error: Usuario no existe");
             }
         }
         catch (InvalidUserException ex) 
@@ -121,6 +121,7 @@ class UserService
         catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+            Console.WriteLine(messageError);
         }
     }
 
@@ -144,7 +145,7 @@ class UserService
                     JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
                 }
                 else{
-                    Console.WriteLine("No hay ningún usuario con el ID introducido");
+                    throw new InvalidComicException("Error: No hay ningún usuario con ese ID");
                 }
             }   
         }
@@ -156,6 +157,7 @@ class UserService
         catch (Exception ex)
         {
             var messageError = "ExceptionError:" + ex.Message;
+            Console.WriteLine(messageError);
         }
     }
 
