@@ -1,2 +1,80 @@
 [
+  {
+    "Id": 1,
+    "Name": "Nuevo",
+    "Author": "nuevo",
+    "Publisher": "nuevo",
+    "YearPublished": 2023,
+    "Price": 4,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 1,
+        "Name": "Ficcion",
+        "Description": "FiccionDescripcion",
+        "Priority": 1,
+        "Icon": "#234",
+        "Comics": [
+          "Nuevo",
+          "Test",
+          "Tintin"
+        ],
+        "DateCreated": "2025-01-30T11:27:35.279923+01:00"
+      }
+    ],
+    "Type": 5
+  },
+  {
+    "Id": 2,
+    "Name": "Test",
+    "Author": "test",
+    "Publisher": "test",
+    "YearPublished": 2023,
+    "Price": 7,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 1,
+        "Name": "Ficcion",
+        "Description": "FiccionDescripcion",
+        "Priority": 1,
+        "Icon": "#234",
+        "Comics": [
+          "Nuevo",
+          "Test",
+          "Tintin"
+        ],
+        "DateCreated": "2025-01-30T11:27:35.279923+01:00"
+      }
+    ],
+    "Type": 6
+  },
+  {
+    "Id": 3,
+    "Name": "Tintin",
+    "Author": "tintin",
+    "Publisher": "werwer",
+    "YearPublished": 2021,
+    "Price": 9,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 1,
+        "Name": "Ficcion",
+        "Description": "FiccionDescripcion",
+        "Priority": 1,
+        "Icon": "#234",
+        "Comics": [
+          "Nuevo",
+          "Test",
+          "Tintin"
+        ],
+        "DateCreated": "2025-01-30T11:27:35.279923+01:00"
+      }
+    ],
+    "Type": 1
+  }
 ]

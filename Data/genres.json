@@ -2,10 +2,14 @@
   {
     "Id": 1,
     "Name": "Ficcion",
-    "Description": "ficcion",
+    "Description": "FiccionDescripcion",
     "Priority": 1,
-    "Icon": "#23",
-    "Comics": [],
-    "DateCreated": "2025-01-29T16:47:21.943338+01:00"
+    "Icon": "#234",
+    "Comics": [
+      "Nuevo",
+      "Test",
+      "Tintin"
+    ],
+    "DateCreated": "2025-01-30T11:27:35.279923+01:00"
   }
 ]

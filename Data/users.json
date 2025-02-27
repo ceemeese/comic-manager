@@ -17,6 +17,43 @@
     "DateCreated": "2025-01-29T11:34:30.763981+01:00",
     "Telephone": "666666666",
     "IsAdmin": true,
+    "PersonalComics": [
+      {
+        "Id": 1,
+        "Name": "Nuevo",
+        "Author": "nuevo",
+        "Publisher": "nuevo",
+        "YearPublished": 2023,
+        "Price": 4,
+        "IsRead": false,
+        "IsForAdults": true,
+        "Genres": [
+          {
+            "Id": 1,
+            "Name": "Ficcion",
+            "Description": "FiccionDescripcion",
+            "Priority": 1,
+            "Icon": "#234",
+            "Comics": [
+              "Nuevo",
+              "Test",
+              "Tintin"
+            ],
+            "DateCreated": "2025-01-30T11:27:35.279923+01:00"
+          }
+        ],
+        "Type": 5
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "Testuser",
+    "Mail": "t@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-01-30T11:34:30.905826+01:00",
+    "Telephone": "999999999",
+    "IsAdmin": false,
     "PersonalComics": []
   }
 ]

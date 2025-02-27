@@ -20,6 +20,11 @@ class Genre
     public string Icon { get; set; }
     public List<string> Comics { get; set; }
     public DateTime? DateCreated { get; private set; }
+
+    public override string ToString()
+    {
+        return Name;
+    }
     
 
     public Genre (string name, string description, int priority, string icon, DateTime? dateCreated = null) {

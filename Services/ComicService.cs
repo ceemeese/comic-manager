@@ -2,6 +2,7 @@ namespace Services;
 
 using Models;
 using Utils;
+using Spectre.Console;
 
 class ComicService
 {
@@ -22,150 +23,73 @@ class ComicService
             //Control de géneros antes de preguntar. Si no hay géneros, no se pueden añadir cómics
             if (GenreService.genres.Count == 0)
             {
-                throw new InvalidComicException("No hay géneros disponibles. Añade algunos géneros antes de seleccionar");
+                throw new InvalidComicException("[red]No hay géneros disponibles. Añade algunos géneros antes de seleccionar[/]");
             }
 
 
-            Console.WriteLine("___NUEVO CÓMIC___");
-            Console.WriteLine("Nombre: ");
-            string name = Console.ReadLine();
-
-
-            Console.WriteLine("Autor: ");
-            string author = Console.ReadLine();
+            AnsiConsole.MarkupLine("[bold underline]___NUEVO CÓMIC___[/]");
+            string name = AnsiConsole.Ask<string>("[cyan]Nombre:[/]");
+            string author = AnsiConsole.Ask<string>("[cyan]Autor:[/]");
 
             if (comics.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && c.Author.Equals(author, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidComicException("Error: Ya existe un cómic con el mismo nombre y autor en la lista global.");
+                throw new InvalidComicException("[red]Error: Ya existe un cómic con el mismo nombre y autor en la lista global[/]");
             }
 
-            Console.WriteLine("Editorial: ");
-            string publisher = Console.ReadLine();
+            string publisher = AnsiConsole.Ask<string>("[cyan]Editorial:[/]");
+
+            
+            int yearPublished = AnsiConsole.Prompt(
+                new TextPrompt<int>("[cyan]Año de Publicación:[/]")
+                    .Validate(y => y >= 1896 && y <= DateTime.Now.Year ? ValidationResult.Success() : ValidationResult.Error("[red]El año debe estar entre 1896 y el actual.[/]")
+            ));
 
 
-            //Validación año
-            int yearPublished;
-            int currentYear = DateTime.Now.Year;
-            while (true)
-            {
-                Console.WriteLine("Año de Publicación: ");
-                if (int.TryParse(Console.ReadLine(), out yearPublished) && yearPublished >= 1896 && yearPublished <= currentYear)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine($"Error: El año debe ser entre 1896 y {currentYear}.");
-                }
-            }
+            decimal price = AnsiConsole.Prompt(
+                new TextPrompt<decimal>("[cyan]Precio:[/]")
+                .Validate(p => p > 0 ? ValidationResult.Success() : ValidationResult.Error("[red]El precio debe ser un número positivo.[/]")
+            ));
 
-
-            //Validación precio
-            decimal price;
-            while (true)
-            {
-                Console.WriteLine("Precio: ");
-                if (decimal.TryParse(Console.ReadLine(), out price) && price > 0)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Error: El precio debe ser un número positivo.");
-                }
-            }
-
-
-            Console.WriteLine("Leído? (si/no): ");
-            string answer = Console.ReadLine();
-            bool isRead = answer.ToLower() == "yes" ? true : false;
-
-
-            Console.WriteLine("Es para adultos? (si/no): ");
-            answer = Console.ReadLine();
-            bool isForAdults = answer.ToLower() == "yes" ? true : false;
-
+            var isForAdults = AnsiConsole.Prompt(
+                new TextPrompt<bool>("[cyan]Es para adultos?[/]")
+                    .AddChoice(true)
+                    .AddChoice(false)
+                    .DefaultValue(false)
+                    .WithConverter(choice => choice ? "si" : "no"));
 
             List<Genre> selectedGenres = new List<Genre>();
             while(true)
             {
-                Console.WriteLine("Géneros disponibles: ");
-                for (int i = 0; i < GenreService.genres.Count; i++)
+                var genreSelection = AnsiConsole.Prompt(
+                    new MultiSelectionPrompt<Genre>()
+                        .Title("[cyan]Selecciona los géneros:[/]")
+                        .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar.)[/]")
+                        .AddChoices(GenreService.genres));
+
+
+                if (genreSelection.Count > 0)
                 {
-                    Console.WriteLine($"{GenreService.genres[i].Id}. {GenreService.genres[i].Name}");
-                }
-
-                Console.WriteLine("Introduce los números de los géneros separados por comas (ejemplo: 1,3,5):");
-                answer = Console.ReadLine();
-
-
-                if (string.IsNullOrWhiteSpace(answer))
-                {
-                    Console.WriteLine("Error: No has seleccionado ningún género. Intentelo de nuevo.");
-                    continue;
-                }
-
-                string[] genreIndexArray = answer.Split(',');
-                selectedGenres.Clear();
-
-                bool isValid = true;
-
-                foreach (string index in genreIndexArray)
-                {
-                    if (int.TryParse(index.Trim(), out int genreId) && genreId > 0 && GenreService.genres.Any(g => g.Id == genreId))
-                    {
-                        Genre genre = GenreService.genres.FirstOrDefault(g => g.Id == genreId);
-                        selectedGenres.Add(genre);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Error: La opción '{index}' marcada no es correcta. Intentelo de nuevo.");
-                        isValid = false;
-                        break;
-                    }
-                }
-
-                if (isValid && selectedGenres.Count > 0)
-                {
-                    break;
-                }
-            }
-
-
-            Console.WriteLine("Tipos de cómics:");
-            foreach (var comicType in Enum.GetValues(typeof(Comic.ComicType)))
-            {
-                Console.WriteLine($"{(int)comicType}. {comicType}");
-            }
-
-            Comic.ComicType selectedType;
-            while (true)
-            {
-                Console.WriteLine("Selecciona el tipo de cómic (número):");
-                if (int.TryParse(Console.ReadLine(), out int comicTypeSelection) && comicTypeSelection > 0 && comicTypeSelection <= Enum.GetValues(typeof(Comic.ComicType)).Length)
-                {
-                    selectedType = (Comic.ComicType)comicTypeSelection; // Casting del integer al enum
+                    selectedGenres = genreSelection;
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Error: Tipo de cómic no válido.");
+                    AnsiConsole.MarkupLine("[red]Debes seleccionar al menos un género.[/]");
                 }
             }
-            
-            Comic comic= new Comic(name, author, publisher, yearPublished, price, isRead, isForAdults, selectedGenres, selectedType);
+
+
+            Comic.ComicType selectedType = AnsiConsole.Prompt(new SelectionPrompt<Comic.ComicType>()
+                .Title("[cyan]Selecciona el tipo de cómic:[/]")
+                .AddChoices(Enum.GetValues<Comic.ComicType>()));
+
+            Comic comic = new Comic(name, author, publisher, yearPublished, price, isForAdults, selectedGenres, selectedType);
             comic.Genres = selectedGenres;
             comic.ShowComicInformation();
 
             foreach (var genre in selectedGenres)
             {
                 genre.Comics.Add(comic.Name);
-            }
-
-            if (comics == null)
-            {
-                Console.WriteLine("La lista de cómics no está inicializada.");
-                return;
             }
 
             comics.Add(comic);
@@ -175,12 +99,13 @@ class ComicService
         }
         catch (InvalidComicException ex) 
         {
-            var messageError = "InvalidComicException:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
+            AnsiConsole.MarkupLine(messageError);
         }
         catch(Exception ex)
         {
-            var messageError = "ExceptionError:" + ex.Message;
+            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
     }      
 
@@ -189,46 +114,54 @@ class ComicService
 
     public static void ShowAllComics()
     {
-        Console.WriteLine("\nListado de Cómics:");
-        foreach (var comic in comics)
+        
+        AnsiConsole.MarkupLine("[cyan]Listado de Cómics:[/]");
+        if (comics == null || comics.Count == 0)
         {
-            if (comic != null)
-            {
-                comic.ShowComicInformation();
-            }
-            else
-            {
-                Console.WriteLine("Cósmico nulo encontrado en la lista.");
-            }
+            AnsiConsole.MarkupLine("[red]No hay cómics disponibles.[/]");
+            return;
         }
+
+    // Generar la tabla de cómics
+        var table = Comic.GenerateComicTable(comics);
+
+    // Mostrar la tabla con todos los cómics
+        AnsiConsole.Write(table);
     }
 
 
     
     public static void SearchComic()
     {
+
+        if (comics == null || comics.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[red]No hay cómics disponibles.[/]");
+            return;
+        }
+
         try 
         {
-            Console.WriteLine("Introduce el nombre de cómic:");
-            string name = Console.ReadLine();
-            Comic comic = comics.Find(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            if (comic != null)
-            {
-                comic.ShowComicInformation();
-            }
-            else
-            {
-                Console.WriteLine("Cómic no encontrado.");
-            }
+            var name = AnsiConsole.Ask<string>("[cyan]Introduce el nombre de cómic:[/]");
+
+            Comic comic = comics.Find(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                ?? throw new InvalidComicException("[red]Cómic no encontrado.[/]");
+        
+            
+            AnsiConsole.MarkupLine("[bold green]Cómic encontrado:[/]");
+            comic.ShowComicInformation();
+        
+
         }
         catch (InvalidComicException ex) 
         {
-            var messageError = "InvalidComicException:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
+            AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = "ExceptionError:" + ex.Message;
+            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
     }
 
@@ -237,36 +170,40 @@ class ComicService
 
     public static void DeleteComic()
     {
+        if (comics == null || comics.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[red]No hay cómics disponibles.[/]");
+            return;
+        }
+
         ShowAllComics();
     
         try
         {
-            Console.WriteLine("Selecciona el ID del comic a eliminar:");
+            AnsiConsole.WriteLine("Selecciona el ID del comic a eliminar:");
 
             if (int.TryParse(Console.ReadLine(), out int IdSelected))
             {
-                Comic comic = comics.Find(c => c.Id.Equals(IdSelected));
-                if (comic != null){
-                    comics.Remove(comic);
-                    Console.WriteLine("Cómic eliminado correctamente");
-                    ShowAllComics();
-                    JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
-                    JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
+                Comic comic = comics.Find(c => c.Id.Equals(IdSelected))
+                    ?? throw new InvalidComicException("[red]No hay ningún cómic con el ID introducido[/]");
+                
+                comics.Remove(comic);
+                AnsiConsole.WriteLine("Cómic eliminado correctamente");
+                ShowAllComics();
+                JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
+                JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
 
-                }
-                else{
-                    Console.WriteLine("No hay ningún cómic con el ID introducido");
-                }
             }   
         }
         catch(InvalidComicException ex)
         {
-            var messageError = "InvalidComicException:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = "ExceptionError:" + ex.Message;
+            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
     }
 

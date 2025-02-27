@@ -1,5 +1,6 @@
 using Models;
 using Services;
+using Spectre.Console;
 
 
 class MenuApp
@@ -16,35 +17,33 @@ class MenuApp
         
         do
         {
-            Console.WriteLine("\n--- MENÚ PRINCIPAL ---");
-            Console.WriteLine("1. Géneros");
-            Console.WriteLine("2. Comics");
+            AnsiConsole.Clear();
+            AnsiConsole.MarkupLine("[bold cyan]--- MENÚ PRINCIPAL ---[/]");
+            AnsiConsole.WriteLine("1. Géneros");
+            AnsiConsole.WriteLine("2. Comics");
             
             if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
             {
-                Console.WriteLine("3. Usuarios");
+                AnsiConsole.WriteLine("3. Usuarios");
             }
 
             if (UserService.currentUser != null)
             {
-                Console.WriteLine("4. Zona privada");
-                Console.WriteLine("5. Cerrar sesión");
-                Console.WriteLine("6. Salir");
+                AnsiConsole.WriteLine("4. Zona privada");
+                AnsiConsole.WriteLine("5. Cerrar sesión");
+                AnsiConsole.WriteLine("6. Salir");
             }
             else
             {
-                Console.WriteLine("4. Iniciar sesión");
-                Console.WriteLine("5. Registrarse");
-                Console.WriteLine("6. Salir");
+                AnsiConsole.WriteLine("4. Iniciar sesión");
+                AnsiConsole.WriteLine("5. Registrarse");
+                AnsiConsole.WriteLine("6. Salir");
             }
 
-            Console.WriteLine("Selecciona una opción:");
-
-            if (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 6)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-6).");
-                continue;
-            }
+            option = AnsiConsole.Prompt(
+                new TextPrompt<int>("Selecciona una opción: ")
+                    .PromptStyle("yellow")
+                    .Validate(x => x >= 1 && x <= 6 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 6.")));
 
             switch (option)
             {
@@ -70,12 +69,15 @@ class MenuApp
                         UserService.AddUser();
                     break;
                 case 6:
-                    Console.WriteLine("¡Hasta pronto!");
+                    AnsiConsole.MarkupLine("[bold green]¡Hasta pronto![/]");
                     break;
                 default:
-                    Console.WriteLine("La opción no es correcta");
+                    AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
             }
+
+            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            Console.ReadKey();
         }
 
         while(option != 6);
@@ -90,28 +92,29 @@ class MenuApp
 
         do
         {
-            Console.WriteLine("\n--- MENÚ GÉNEROS ---");
+            AnsiConsole.Clear();
+            AnsiConsole.MarkupLine("[bold yellow]--- MENÚ GÉNEROS ---[/]");
 
             if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
             {
-                Console.WriteLine("1. Añadir género");
+                AnsiConsole.WriteLine("1. Añadir género");
             }
-            Console.WriteLine("2. Listar géneros");
-            Console.WriteLine("3. Buscar género");
+            AnsiConsole.WriteLine("2. Listar géneros");
+            AnsiConsole.WriteLine("3. Buscar género");
 
             if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
             {
-                Console.WriteLine("4. Eliminar género");
+                AnsiConsole.WriteLine("4. Eliminar género");
             }
 
-            Console.WriteLine("5. Volver al menú principal");
-            Console.WriteLine("Selecciona una opción:");
+            AnsiConsole.WriteLine("5. Volver al menú principal");
 
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida");
-                    continue;
-            }
+            option = AnsiConsole.Prompt(
+                new TextPrompt<int>("Selecciona una opción: ")
+                    .PromptStyle("yellow")
+                    .Validate(x => x >= 1 && x <= 5 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 5.")));
+
+                    AnsiConsole.WriteLine($"Opción seleccionada: {option}");
 
             switch (option)
             {
@@ -119,7 +122,7 @@ class MenuApp
                     if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
                         GenreService.AddGenre();
                     else
-                        Console.WriteLine("Error: Por favor selecciona una opción válida");
+                        AnsiConsole.MarkupLine("[red]Error: Por favor selecciona una opción válida[/]");
                     break;
                 case 2:
                     GenreService.ShowAllGenres();
@@ -131,15 +134,18 @@ class MenuApp
                     if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
                         GenreService.DeleteGenre();
                     else
-                        Console.WriteLine("Error: Por favor selecciona una opción válida");
+                        AnsiConsole.MarkupLine("[red]Error: Por favor selecciona una opción válida[/]");
                     break;
                 case 5:
-                    Console.WriteLine("Volviendo..");
+                    AnsiConsole.MarkupLine("[blue]Volviendo..[/]");
                     break;
                 default:
-                    Console.WriteLine("La opción no es correcta");
+                    AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
             }
+
+            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            Console.ReadKey();
 
         }
         while (option != 5);
@@ -154,19 +160,17 @@ class MenuApp
 
         do
         {
-            Console.WriteLine("\n--- MENÚ COMICS ---");
-            Console.WriteLine("1. Añadir cómic");
-            Console.WriteLine("2. Listar cómics");
-            Console.WriteLine("3. Buscar cómic");
-            Console.WriteLine("4. Eliminar cómic");
-            Console.WriteLine("5. Volver al menú principal");
-            Console.WriteLine("Selecciona una opción:");
+            AnsiConsole.MarkupLine("[bold yellow]--- MENÚ CÓMICS ---[/]");
+            AnsiConsole.WriteLine("1. Añadir cómic");
+            AnsiConsole.WriteLine("2. Listar cómics");
+            AnsiConsole.WriteLine("3. Buscar cómic");
+            AnsiConsole.WriteLine("4. Eliminar cómic");
+            AnsiConsole.WriteLine("5. Volver al menú principal");
 
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5)");
-                    continue;
-            }
+            option = AnsiConsole.Prompt(
+                new TextPrompt<int>("Selecciona una opción: ")
+                    .PromptStyle("yellow")
+                    .Validate(x => x >= 1 && x <= 5 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 5.")));
 
             switch (option)
             {
@@ -174,7 +178,7 @@ class MenuApp
                     if (UserService.currentUser != null)
                         ComicService.AddComic();
                     else
-                        Console.WriteLine("Debes iniciar sesión para realizar esta acción.");
+                        AnsiConsole.MarkupLine("[red]Debes iniciar sesión para acceder a esta opción[/]");
                     break;
                 case 2:
                     ComicService.ShowAllComics();
@@ -186,15 +190,18 @@ class MenuApp
                     if (UserService.currentUser != null)
                         ComicService.DeleteComic();
                     else
-                        Console.WriteLine("Debes iniciar sesión para realizar esta acción.");
+                        AnsiConsole.MarkupLine("[red]Debes iniciar sesión para acceder a esta opción[/]");
                     break;
                 case 5:
-                    Console.WriteLine("Volviendo..");
+                    AnsiConsole.MarkupLine("[blue]Volviendo..[/]");
                     break;
                 default:
-                    Console.WriteLine("La opción no es correcta");
+                    AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
             }
+
+            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            Console.ReadKey();
 
         }
         while (option != 5);
@@ -210,19 +217,17 @@ class MenuApp
 
         do
         {
-            Console.WriteLine("\n--- MENÚ DE USUARIOS ---");
-            Console.WriteLine("1. Añadir usuario");
-            Console.WriteLine("2. Listar usuarios");
-            Console.WriteLine("3. Buscar usuario");
-            Console.WriteLine("4. Eliminar usuario");
-            Console.WriteLine("5. Volver al menú principal");
-            Console.WriteLine("Selecciona una opción:");
+            AnsiConsole.MarkupLine("[bold yellow]--- MENÚ DE USUARIOS ---[/]");
+            AnsiConsole.WriteLine("1. Añadir usuario");
+            AnsiConsole.WriteLine("2. Listar usuarios");
+            AnsiConsole.WriteLine("3. Buscar usuario");
+            AnsiConsole.WriteLine("4. Eliminar usuario");
+            AnsiConsole.WriteLine("5. Volver al menú principal");
 
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5).");
-                    continue;
-            }
+            option = AnsiConsole.Prompt(
+                new TextPrompt<int>("Selecciona una opción: ")
+                    .PromptStyle("yellow")
+                    .Validate(x => x >= 1 && x <= 5 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 5.")));
 
             switch (option)
             {
@@ -239,12 +244,15 @@ class MenuApp
                     UserService.DeleteUser();
                     break;
                 case 5:
-                    Console.WriteLine("Volviendo..");
+                    AnsiConsole.MarkupLine("[blue]Volviendo..[/]");
                     break;
                 default:
-                    Console.WriteLine("La opción no es correcta");
+                    AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
             }
+
+            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            Console.ReadKey();
 
         }
         while (option != 5);
@@ -259,42 +267,43 @@ class MenuApp
 
         do
         {
-            Console.WriteLine("\n--- ZONA PRIVADA ---");
-            Console.WriteLine("1. Añadir cómic a mi lista personal");
-            Console.WriteLine("2. Eliminar cómic a mi lista personal");
-            Console.WriteLine("3. Ver mi lista personal de cómics");
-            Console.WriteLine("4. Ver mis datos personales ");
-            Console.WriteLine("5. Volver al menú principal");
+            AnsiConsole.MarkupLine("[bold yellow]--- ZONA PRIVADA ---[/]");
+            AnsiConsole.WriteLine("1. Añadir cómic a mi lista personal");
+            AnsiConsole.WriteLine("2. Eliminar cómic a mi lista personal");
+            AnsiConsole.WriteLine("3. Ver mi lista personal de cómics");
+            AnsiConsole.WriteLine("4. Ver mis datos personales ");
+            AnsiConsole.WriteLine("5. Volver al menú principal");
 
-            Console.WriteLine("Selecciona una opción:");
-
-            if (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 5)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-4).");
-                continue;
-            }
+            option = AnsiConsole.Prompt(
+                new TextPrompt<int>("Selecciona una opción: ")
+                    .PromptStyle("yellow")
+                    .Validate(x => x >= 1 && x <= 5 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 5.")));
 
             switch (option)
             {
                 case 1:
-                    UserService.ManageComicsInUserList(UserService.currentUser, true);
+                    UserService.ManageComicsInUserList(UserService.currentUser!, true);
                     break;
                 case 2:
-                    UserService.ManageComicsInUserList(UserService.currentUser, false);
+                    UserService.ManageComicsInUserList(UserService.currentUser!, false);
                     break;
                 case 3:
-                    UserService.ShowUserComics(UserService.currentUser);
+                    UserService.ShowUserComics(UserService.currentUser!);
                     break;
                 case 4:
                     UserService.ViewUserData();
                     break;
                 case 5:
-                    Console.WriteLine("Volviendo...");
+                    AnsiConsole.MarkupLine("[blue]Volviendo..[/]");
                     break;
                 default:
-                    Console.WriteLine("La opción no es correcta");
+                    AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
             }
+
+            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            Console.ReadKey();
+
         } while (option != 5);
     }
 }

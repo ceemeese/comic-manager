@@ -16,6 +16,7 @@ public static class JsonUtils
             
 
             string fullFileName = Path.Combine(dataPath, fileName);
+            Console.WriteLine(fullFileName);
             
             string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(fullFileName, json);
@@ -39,9 +40,18 @@ public static class JsonUtils
             string dataPath = Environment.GetEnvironmentVariable("DATA_PATH") ?? localPath;
 
             string fullFileName = Path.Combine(dataPath, fileName);
+            Console.WriteLine(fullFileName);
+
+            //Comprueba si existe fichero sino
+            if (!File.Exists(fullFileName) || new FileInfo(fullFileName).Length == 0)
+            {
+            Console.WriteLine("El archivo no existe o está vacío. Se inicializa una lista vacía.");
+            return new List<T>();
+            }
 
             string jsonContent = File.ReadAllText(fullFileName);
-            return JsonSerializer.Deserialize<List<T>>(jsonContent);
+            
+            return JsonSerializer.Deserialize<List<T>>(jsonContent) ?? new List<T>();
         }
         catch (Exception ex)
         {

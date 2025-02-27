@@ -2,6 +2,7 @@ namespace Services;
 
 using Models;
 using Utils;
+using Spectre.Console;
 
 class UserService
 {
@@ -22,86 +23,82 @@ class UserService
 
         try
         {
-            Console.WriteLine("___NUEVO USUARIO___");
-            Console.WriteLine("Nombre: ");
-            string name = Console.ReadLine();
+            AnsiConsole.MarkupLine("[bold underline]___NUEVO USUARIO___[/]");
+            string name = AnsiConsole.Ask<string>("[cyan]Nombre:[/]");
 
-            //Validacion mail
+            
             string mail;
             while(true)
             {
-                Console.WriteLine("Correo: ");
-                mail = Console.ReadLine();
+                mail = AnsiConsole.Ask<string>("[cyan]Correo:[/]");
                 if (ValidationUtils.IsValidMail(mail))
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Error: El correo no es válido.");
+                    AnsiConsole.WriteLine("[red]Error: El correo no es válido[/]");
                 }
             }
 
             if (users.Any(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase)))
             {
-            throw new InvalidComicException("Error: Ya existe un usuario con este mail");
+            throw new InvalidComicException("[red]Error: Ya existe un usuario con este mail[/]");
             }
 
 
             string password;
             while(true)
             {
-                Console.WriteLine("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres): ");
-                password = Console.ReadLine();
-                
+                password = AnsiConsole.Ask<string>("[cyan]Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):[/]");
                 if (ValidationUtils.IsValidPassword(password))
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Error: La contraseña no és válida.");
+                    AnsiConsole.WriteLine("[red]Error: La contraseña no és válida[/]");
                 }
             }
 
-            Console.WriteLine("Teléfono: ");
-            string telephone = Console.ReadLine();
+            string telephone = AnsiConsole.Ask<string>("[cyan]Teléfono:[/]");
 
             bool admin = false;
             if (currentUser != null && currentUser.IsAdmin)
             {
-                Console.WriteLine("Es administrador? (si/no): ");
-                string answer = Console.ReadLine();
-                admin = answer.ToLower() == "yes" ? true : false;
+                admin = AnsiConsole.Prompt(
+                new TextPrompt<bool>("[cyan]Es administrador?[/]")
+                    .AddChoice(true)
+                    .AddChoice(false)
+                    .DefaultValue(false)
+                    .WithConverter(choice => choice ? "si" : "no"));
             }
 
 
             User user = new User(name, mail, password, telephone, admin);
-            Console.WriteLine("Usuario registrado correctamente");
+            AnsiConsole.WriteLine("[green]Usuario registrado correctamente[/]");
             user.ShowUserInformation();
             users.Add(user);
             JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
         } 
         catch (InvalidUserException ex) 
         {
-            var messageError = "InvalidUserException:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]InvalidUserException: {ex.Message}[/]";
+            AnsiConsole.MarkupLine(messageError);
         }
         catch(Exception ex)
         {
-            var messageError = "ExceptionError:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
     }
 
 
     public static void ShowAllUsers()
     {
-        Console.WriteLine("\nListado de Usuarios:");
-        foreach (var user in users)
-        {
-            user.ShowUserInformation();
-        }
+        AnsiConsole.MarkupLine("[cyan]Listado de usuarios:[/]");
+        var table = User.GenerateUserTable(users);
+        AnsiConsole.Write(table);
     }
 
 
@@ -110,27 +107,22 @@ class UserService
     {
         try 
         {
-            Console.WriteLine("Introduce el correo del usuario:");
-            string mail = Console.ReadLine();
-            User user = users.Find(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase));
-            if (user != null)
-            {
-                user.ShowUserInformation();
-            }
-            else
-            {
-                throw new InvalidComicException("Error: Usuario no existe");
-            }
+            string mail = AnsiConsole.Ask<string>("[cyan]Introduce el correo del usuario a buscar:[/]");
+            User user = users.Find(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase))
+                ?? throw new InvalidUserException("[red]Error: Usuario no existe[/]");
+
+            user.ShowUserInformation();
+
         }
         catch (InvalidUserException ex) 
         {
-            var messageError = "InvalidUserException:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]InvalidUserException: {ex.Message}[/]";
+            AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = "ExceptionError:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
     }
 
@@ -142,57 +134,64 @@ class UserService
     
         try
         {
-            Console.WriteLine("Selecciona el ID del usuario a eliminar:");
+            int idSelected = AnsiConsole.Ask<int>("[cyan]Selecciona el ID del usuario a eliminar:[/]");
 
-            if (int.TryParse(Console.ReadLine(), out int IdSelected))
-            {
-                User user = users.Find(u => u.Id.Equals(IdSelected));
-                if (user != null){
-                    users.Remove(user);
-                    Console.WriteLine("Usuario eliminado correctamente");
-                    ShowAllUsers();
-                    JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
-                }
-                else{
-                    throw new InvalidComicException("Error: No hay ningún usuario con ese ID");
-                }
-            }   
+            User user = users.Find(u => u.Id.Equals(idSelected))
+                ?? throw new InvalidUserException("[red]Error: No hay ningún usuario con ese ID[/]");
+
+            users.Remove(user);
+            AnsiConsole.MarkupLine("[green]Usuario eliminado correctamente.[/]");
+            ShowAllUsers();
+
+            JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+         
         }
         catch(InvalidComicException ex)
         {
-            var messageError = "InvalidComicException:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]InvalidUserException: {ex.Message}[/]";
+            AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = "ExceptionError:" + ex.Message;
-            Console.WriteLine(messageError);
+            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            AnsiConsole.WriteLine(messageError);
         }
     }
 
 
     public static void ManageComicsInUserList(User loggedUser, bool isAddOperation) 
     {
+
         List<Comic> selectedComics = new List<Comic>();
         string operation = isAddOperation ? "añadir" : "eliminar";
 
         while(true)
         {
-            Console.WriteLine(isAddOperation ? "Cómics disponibles: " : "Tus cómics personales: ");
+            AnsiConsole.MarkupLine(isAddOperation ? "[cyan]Cómics disponibles:[/] " : "[cyan]Tus cómics personales: [/]");
             List<Comic> comicsList = isAddOperation ? ComicService.comics : loggedUser.PersonalComics;
             
-            for (int i = 0; i < comicsList.Count; i++)
+            
+            var table = new Table().Border(TableBorder.Rounded);
+            table.AddColumn("[bold]ID[/]").AddColumn("[bold]Nombre[/]");
+
+            foreach (var comic in comicsList)
             {
-                Console.WriteLine($"{ComicService.comics[i].Id}. {ComicService.comics[i].Name}");
+                table.AddRow(comic.Id.ToString(), comic.Name);
             }
 
-            Console.WriteLine($"Introduce los números de los comics que quieres {operation} separados por comas (ejemplo: 1,3,5):");
-            string answer = Console.ReadLine();
+            AnsiConsole.Write(table);
+
+            AnsiConsole.MarkupLine($"[bold]{operation} cómics:[/]");
+            
+            string answer = AnsiConsole.Prompt(
+                new TextPrompt<string>("[green]Introduce los números de los cómics que quieres seleccionar, separados por comas (ejemplo: 1,3,5):[/]") 
+                    .AllowEmpty()  // Permite que el usuario deje el campo vacío
+            );
 
 
             if (string.IsNullOrWhiteSpace(answer))
             {
-                Console.WriteLine("Error: No has seleccionado ningún cómic. Intenta de nuevo.");
+                AnsiConsole.MarkupLine("[red]Error: No has seleccionado ningún cómic. Intenta de nuevo.[/]");
                 continue;
             }
 
@@ -205,11 +204,11 @@ class UserService
             {
                 if (int.TryParse(index.Trim(), out int comicId) && comicId > 0 && ComicService.comics.Any(c => c.Id == comicId))
                 {
-                    Comic comic = ComicService.comics.FirstOrDefault(c => c.Id == comicId);
+                    Comic comic = ComicService.comics.FirstOrDefault(c => c.Id == comicId)!;
 
                     if (isAddOperation && loggedUser.PersonalComics.Any(c => c.Id == comic.Id))
                     {
-                        Console.WriteLine($"El cómic '{comic.Name}' ya está en tu lista personal.");
+                        AnsiConsole.MarkupLine($"[yellow]El cómic '{comic.Name}' ya está en tu lista personal.[/]");
                     }
                     else
                     {
@@ -218,7 +217,7 @@ class UserService
                 }
                 else
                 {
-                    Console.WriteLine($"Error: La opción '{index}' marcada no es correcta. Intenta de nuevo.");
+                    AnsiConsole.MarkupLine($"[red]Error: La opción '{index}' marcada no es correcta. Intenta de nuevo.[/]");
                     isValid = false;
                     break;
                 }
@@ -235,12 +234,14 @@ class UserService
             if (isAddOperation)
             {
                 loggedUser.PersonalComics.Add(comic);
-                Console.WriteLine($"El cómic '{comic.Name}' se ha añadido a tu lista personal.");
+                AnsiConsole.MarkupLine($"[green]El cómic '{comic.Name}' se ha añadido a tu lista personal.[/]");
+                JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
             }
             else
             {
                 loggedUser.PersonalComics.Remove(comic);
-                Console.WriteLine($"El cómic '{comic.Name}' ha sido eliminado de tu lista personal.");
+                AnsiConsole.MarkupLine($"[green]El cómic '{comic.Name}' ha sido eliminado de tu lista personal.[/]");
+                JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
             }
         }
 
@@ -251,18 +252,25 @@ class UserService
     // Mostrar los cómics del usuario
     public static void ShowUserComics(User user)
     {
-        Console.WriteLine($"Hola {user.Name}, esta es tu lista de cómics:");
+        AnsiConsole.MarkupLine($"Hola [bold]{user.Name}[/], esta es tu lista de cómics:");
 
         if (user.PersonalComics.Count > 0)
         {
+            var table = new Table()
+                .AddColumn("[bold]Nombre[/]")
+                .AddColumn("[bold]Autor[/]"); 
+
             foreach (var comic in user.PersonalComics)
             {
-                Console.WriteLine(comic.Name);
+                table.AddRow(comic.Name);
+                table.AddRow(comic.Author);
             }
+
+            AnsiConsole.Write(table);
         }
         else
         {
-            Console.WriteLine("No tienes cómics registrados.");
+            AnsiConsole.MarkupLine("[red]No tienes cómics registrados[/]");
         }
     }
 
@@ -271,21 +279,30 @@ class UserService
 
     public static void Login()
     {
-        Console.WriteLine("__LOGIN__");
-        Console.WriteLine("Mail: ");
-        string mail = Console.ReadLine();
-        Console.WriteLine("Password: ");
-        string password = Console.ReadLine();
+        AnsiConsole.MarkupLine("[bold underline]__LOGIN__[/]");
+
+        string mail = AnsiConsole.Prompt(
+        new TextPrompt<string>("[cyan]Mail:[/]")
+            .Validate(input => string.IsNullOrEmpty(input) ? ValidationResult.Error("[red]El mail no puede estar vacío.[/]") : ValidationResult.Success())
+        );
+
+
+        string password = AnsiConsole.Prompt(
+        new TextPrompt<string>("[cyan]Password:[/]")
+            .Secret()
+            .Validate(input => string.IsNullOrEmpty(input) ? ValidationResult.Error("[red]La contraseña no puede estar vacía.[/]") : ValidationResult.Success())
+        );
 
         User? user = users.FirstOrDefault(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase) && u.Password == password);
 
         if (user != null)
         {
             currentUser = user;
-            Console.WriteLine($"Hola, {user.Name}!");
+            AnsiConsole.MarkupLine($"[bold green]Hola, {user.Name}![/]");
             return;
         }
-        Console.WriteLine("Error: Nombre de usuario o contraseña incorrectos.");
+        AnsiConsole.MarkupLine("[bold red]Error: Nombre de usuario o contraseña incorrectos.[/]");
+
 
     }
 
@@ -294,12 +311,12 @@ class UserService
     {
         if (currentUser != null)
         {
-            Console.WriteLine($"Hasta pronto, {currentUser.Name}!");
+            AnsiConsole.MarkupLine($"[bold purple]Hasta pronto, {currentUser.Name}![/]");
             currentUser = null;
         }
         else
         {
-            Console.WriteLine("No hay usuario conectado.");
+            AnsiConsole.MarkupLine("[red]No hay usuario conectado[/]");
         }
     }
 
