@@ -1,6 +1,6 @@
 [
   {
-    "Id": 1,
+    "Id": 4,
     "Name": "Nuevo",
     "Author": "nuevo",
     "Publisher": "nuevo",
@@ -10,7 +10,7 @@
     "IsForAdults": true,
     "Genres": [
       {
-        "Id": 1,
+        "Id": 5,
         "Name": "Ficcion",
         "Description": "FiccionDescripcion",
         "Priority": 1,
@@ -26,7 +26,7 @@
     "Type": 5
   },
   {
-    "Id": 2,
+    "Id": 5,
     "Name": "Test",
     "Author": "test",
     "Publisher": "test",
@@ -36,7 +36,7 @@
     "IsForAdults": true,
     "Genres": [
       {
-        "Id": 1,
+        "Id": 6,
         "Name": "Ficcion",
         "Description": "FiccionDescripcion",
         "Priority": 1,
@@ -52,7 +52,7 @@
     "Type": 6
   },
   {
-    "Id": 3,
+    "Id": 6,
     "Name": "Tintin",
     "Author": "tintin",
     "Publisher": "werwer",
@@ -62,7 +62,7 @@
     "IsForAdults": true,
     "Genres": [
       {
-        "Id": 1,
+        "Id": 7,
         "Name": "Ficcion",
         "Description": "FiccionDescripcion",
         "Priority": 1,
@@ -76,5 +76,29 @@
       }
     ],
     "Type": 1
+  },
+  {
+    "Id": 7,
+    "Name": "hola",
+    "Author": "hola",
+    "Publisher": "hola",
+    "YearPublished": 1992,
+    "Price": 5,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 4,
+        "Name": "Genero",
+        "Description": "genero",
+        "Priority": 3,
+        "Icon": "#234",
+        "Comics": [
+          "hola"
+        ],
+        "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+      }
+    ],
+    "Type": 3
   }
 ]

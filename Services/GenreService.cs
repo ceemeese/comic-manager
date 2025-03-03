@@ -57,7 +57,7 @@ class GenreService
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 
@@ -111,7 +111,7 @@ class GenreService
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 
@@ -139,7 +139,7 @@ class GenreService
 
 
             genres.Remove(genre);
-            AnsiConsole.WriteLine("[green]Género eliminado correctamente[/]");
+            AnsiConsole.MarkupLine("[green]Género eliminado correctamente[/]");
             ShowAllGenres();
             JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
     
@@ -152,7 +152,7 @@ class GenreService
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 }

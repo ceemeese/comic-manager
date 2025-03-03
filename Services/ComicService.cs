@@ -105,7 +105,7 @@ class ComicService
         catch(Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }      
 
@@ -161,7 +161,7 @@ class ComicService
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 
@@ -180,7 +180,7 @@ class ComicService
     
         try
         {
-            AnsiConsole.WriteLine("Selecciona el ID del comic a eliminar:");
+            AnsiConsole.MarkupLine("Selecciona el ID del comic a eliminar:");
 
             if (int.TryParse(Console.ReadLine(), out int IdSelected))
             {
@@ -188,7 +188,7 @@ class ComicService
                     ?? throw new InvalidComicException("[red]No hay ningún cómic con el ID introducido[/]");
                 
                 comics.Remove(comic);
-                AnsiConsole.WriteLine("Cómic eliminado correctamente");
+                AnsiConsole.MarkupLine("Cómic eliminado correctamente");
                 ShowAllComics();
                 JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
                 JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
@@ -198,12 +198,12 @@ class ComicService
         catch(InvalidComicException ex)
         {
             var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 

@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Models;
 using Services;
 using Spectre.Console;
@@ -5,19 +6,37 @@ using Spectre.Console;
 
 class MenuApp
 {
+
+    private bool exit = false;
+    private bool back = false;
+
     public MenuApp()
     {
-        
+        AnsiConsole.Write(
+            new FigletText("Comic Manager")
+            .LeftJustified()
+            .Color(Color.Red));
     }
 
     public void ShowMenu()
     {
         
-        int option = 0;
+        //int option = 0;
+        var option = "";
         
         do
         {
-            AnsiConsole.Clear();
+
+            var options = GetOptionsMenu();
+
+            option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("[bold cyan]--- MENÚ PRINCIPAL ---[/]")
+                .AddChoices(options.Keys));
+
+            options[option].Invoke();
+            
+            /*AnsiConsole.Clear();
             AnsiConsole.MarkupLine("[bold cyan]--- MENÚ PRINCIPAL ---[/]");
             AnsiConsole.WriteLine("1. Géneros");
             AnsiConsole.WriteLine("2. Comics");
@@ -43,9 +62,9 @@ class MenuApp
             option = AnsiConsole.Prompt(
                 new TextPrompt<int>("Selecciona una opción: ")
                     .PromptStyle("yellow")
-                    .Validate(x => x >= 1 && x <= 6 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 6.")));
+                    .Validate(x => x >= 1 && x <= 6 ? ValidationResult.Success() : ValidationResult.Error("Opción inválida, selecciona entre 1 y 6."))); */
 
-            switch (option)
+            /*switch (option)
             {
                 case 1:
                     ShowGenreMenu();
@@ -74,13 +93,15 @@ class MenuApp
                 default:
                     AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
-            }
+            }*/
 
-            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
-            Console.ReadKey();
+            /*AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            Console.ReadKey();*/
         }
 
-        while(option != 6);
+        while(!exit);
+
+        AnsiConsole.MarkupLine("[bold green]¡Hasta pronto![/]");
     }
 
 
@@ -88,11 +109,21 @@ class MenuApp
 
     private void ShowGenreMenu()
     {
-        int option = 0;
+        string option = "";
 
         do
         {
-            AnsiConsole.Clear();
+
+            var options = GetOptionsGenreMenu();
+
+            option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("[bold cyan]--- MENÚ GÉNEROS ---[/]")
+                .AddChoices(options.Keys));
+
+            options[option].Invoke();
+
+            /*AnsiConsole.Clear();
             AnsiConsole.MarkupLine("[bold yellow]--- MENÚ GÉNEROS ---[/]");
 
             if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
@@ -142,13 +173,13 @@ class MenuApp
                 default:
                     AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
-            }
+            }*/
 
-            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
-            Console.ReadKey();
+            //AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
+            //Console.ReadKey();
 
         }
-        while (option != 5);
+        while (!back);
 
     }
 
@@ -156,11 +187,20 @@ class MenuApp
 
     private void ShowComicMenu()
     {
-        int option = 0;
+        string option = "";
 
         do
         {
-            AnsiConsole.MarkupLine("[bold yellow]--- MENÚ CÓMICS ---[/]");
+
+            var options = GetOptionsComicMenu();
+
+            option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("[bold cyan]--- MENÚ CÓMICS ---[/]")
+                .AddChoices(options.Keys));
+
+            options[option].Invoke();
+            /*AnsiConsole.MarkupLine("[bold yellow]--- MENÚ CÓMICS ---[/]");
             AnsiConsole.WriteLine("1. Añadir cómic");
             AnsiConsole.WriteLine("2. Listar cómics");
             AnsiConsole.WriteLine("3. Buscar cómic");
@@ -201,10 +241,10 @@ class MenuApp
             }
 
             AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
-            Console.ReadKey();
+            Console.ReadKey();*/
 
         }
-        while (option != 5);
+        while (!back);
 
     }
 
@@ -213,10 +253,19 @@ class MenuApp
 
     private void ShowUserMenu()
     {
-        int option = 0;
+        string option = "";
 
         do
         {
+            var options = GetOptionsUserMenu();
+
+            option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("[bold cyan]--- MENÚ USUARIOS ---[/]")
+                .AddChoices(options.Keys));
+
+            options[option].Invoke();
+            /*
             AnsiConsole.MarkupLine("[bold yellow]--- MENÚ DE USUARIOS ---[/]");
             AnsiConsole.WriteLine("1. Añadir usuario");
             AnsiConsole.WriteLine("2. Listar usuarios");
@@ -251,11 +300,10 @@ class MenuApp
                     break;
             }
 
-            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
-            Console.ReadKey();
-
+        */
+        
         }
-        while (option != 5);
+        while (!back);
 
     }
 
@@ -263,11 +311,19 @@ class MenuApp
 
     private void ShowPrivateMenu()
     {
-        int option = 0;
+        string option = "";
 
         do
         {
-            AnsiConsole.MarkupLine("[bold yellow]--- ZONA PRIVADA ---[/]");
+            var options = GetOptionsPrivateMenu();
+
+            option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("[bold cyan]--- ZONA PRIVADO ---[/]")
+                .AddChoices(options.Keys));
+
+            options[option].Invoke();
+            /*AnsiConsole.MarkupLine("[bold yellow]--- ZONA PRIVADA ---[/]");
             AnsiConsole.WriteLine("1. Añadir cómic a mi lista personal");
             AnsiConsole.WriteLine("2. Eliminar cómic a mi lista personal");
             AnsiConsole.WriteLine("3. Ver mi lista personal de cómics");
@@ -299,11 +355,134 @@ class MenuApp
                 default:
                     AnsiConsole.MarkupLine("[red]La opción no es correcta[/]");
                     break;
+            }*/
+
+        } while (!back);
+    }
+
+    private Dictionary<string, Action> GetOptionsMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Géneros", ShowGenreMenu },
+            { "Cómics", ShowComicMenu },
+        };
+
+        if (UserService.currentUser == null)
+        {
+            options["Iniciar Sesión"] = UserService.Login;
+            options["Registrarse"] = UserService.AddUser;
+        }
+        else
+        {
+            options["Zona Privada"] = ShowPrivateMenu;
+            options["Cerrar Sesión"] = UserService.Logout;
+
+            if (UserService.currentUser.IsAdmin)
+            {
+                options["Usuarios"] = ShowUserMenu;
             }
+        }
 
-            AnsiConsole.MarkupLine("[green]Presiona una tecla para continuar...[/]");
-            Console.ReadKey();
+        {
+            options["Salir"] = ExitMenu;
+        }
+            
+        return options;
+    }
 
-        } while (option != 5);
+
+    private Dictionary<string, Action> GetOptionsGenreMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Listar géneros", GenreService.ShowAllGenres },
+            { "Buscar género", GenreService.SearchGenre },
+        };
+
+        if (UserService.currentUser?.IsAdmin == true)
+        {
+            options["Añadir género"] = GenreService.AddGenre;
+            options["Eliminar género"] = GenreService.DeleteGenre;
+        }
+
+        {
+            options["Volver al menú principal"] = BackMenu;
+        }
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsComicMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Listar cómics", ComicService.ShowAllComics },
+            { "Buscar cómic", ComicService.SearchComic},
+        };
+
+        if (UserService.currentUser != null)
+        {
+            options["Añadir cómic"] = ComicService.AddComic;
+
+            if (UserService.currentUser.IsAdmin) 
+            {
+                options["Eliminar cómic"] = ComicService.DeleteComic;
+            }
+        }
+            
+        {
+            options["Volver al menú principal"] = BackMenu;
+        }
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsUserMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Añadir usuario", UserService.AddUser },
+            { "Listar usuarios", UserService.ShowAllUsers },
+            { "Buscar usuario", UserService.SearchUser },
+            { "Eliminar usuario", UserService.DeleteUser},
+            { "Volver al menú principal", BackMenu}
+        };
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsPrivateMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Añadir cómic a la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, true) },
+            { "Eliminar cómic de la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, false) },
+            { "Ver mi lista personal de cómics",() => UserService.ShowUserComics(UserService.currentUser!)},
+            { "Ver mis datos personales", UserService.ViewUserData },
+            { "Volver al menú principal", BackMenu}
+
+        };
+            
+        return options;
+    }
+
+
+    private void ExitMenu()
+    {
+        exit = true;
+    }
+
+    private void BackMenu()
+    {
+        back = true;
     }
 }

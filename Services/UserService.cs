@@ -37,7 +37,7 @@ class UserService
                 }
                 else
                 {
-                    AnsiConsole.WriteLine("[red]Error: El correo no es válido[/]");
+                    AnsiConsole.MarkupLine("[red]Error: El correo no es válido[/]");
                 }
             }
 
@@ -57,7 +57,7 @@ class UserService
                 }
                 else
                 {
-                    AnsiConsole.WriteLine("[red]Error: La contraseña no és válida[/]");
+                    AnsiConsole.MarkupLine("[red]Error: La contraseña no és válida[/]");
                 }
             }
 
@@ -76,7 +76,7 @@ class UserService
 
 
             User user = new User(name, mail, password, telephone, admin);
-            AnsiConsole.WriteLine("[green]Usuario registrado correctamente[/]");
+            AnsiConsole.MarkupLine("[green]Usuario registrado correctamente[/]");
             user.ShowUserInformation();
             users.Add(user);
             JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
@@ -89,7 +89,7 @@ class UserService
         catch(Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 
@@ -122,7 +122,7 @@ class UserService
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 
@@ -154,7 +154,7 @@ class UserService
         catch (Exception ex)
         {
             var messageError = $"[red]ExceptionError: {ex.Message}[/]";
-            AnsiConsole.WriteLine(messageError);
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 
