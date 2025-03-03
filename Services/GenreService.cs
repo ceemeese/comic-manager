@@ -1,5 +1,6 @@
 namespace Services;
 
+using System.Linq.Expressions;
 using Models;
 using Spectre.Console;
 using Utils;
@@ -129,6 +130,29 @@ class GenreService
     
         try
         {
+            List<Genre> selectedGenres = new List<Genre>();
+
+            while(true)
+            {
+                var genreSelection = AnsiConsole.Prompt(
+                    new MultiSelectionPrompt<Genre>()
+                        .Title("[cyan]Selecciona los géneros a eliminar:[/]")
+                        .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar.)[/]")
+                        .AddChoices(GenreService.genres));
+
+
+                if (genreSelection.Count != 0)
+                {
+                    selectedGenres = genreSelection;
+                    break;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Debes seleccionar al menos un género.[/]");                    
+                }
+            }
+
+            /*
             int id = AnsiConsole.Prompt(
                 new TextPrompt<int>("[cyan]Selecciona el ID del género a eliminar:[/]")
                     .Validate(num => genres.Any(g => g.Id == num) ? ValidationResult.Success() : ValidationResult.Error("El género no existe"))
@@ -136,10 +160,14 @@ class GenreService
 
             Genre genre = genres.Find(g => g.Id.Equals(id))
                 ?? throw new InvalidGenreException("[red]El género no existe[/]");
+            */
 
-
-            genres.Remove(genre);
-            AnsiConsole.MarkupLine("[green]Género eliminado correctamente[/]");
+            foreach (var index in selectedGenres)
+            {
+                 genres.Remove(index); 
+            }
+            //genres.Remove(selectedGenres);
+            AnsiConsole.MarkupLine("[green]Géneros eliminados correctamente[/]");
             ShowAllGenres();
             JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
     
