@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "Id": 1,
+    "Name": "hola",
+    "Author": "hola",
+    "Publisher": "3",
+    "YearPublished": 1992,
+    "Price": 4,
+    "IsRead": false,
+    "IsForAdults": false,
+    "Genres": [
+      {
+        "Id": 1,
+        "Name": "Genero",
+        "Description": "genero",
+        "Priority": 3,
+        "Icon": "#234",
+        "Comics": [
+          "hola",
+          "hola",
+          "test"
+        ],
+        "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+      }
+    ],
+    "Type": 1
+  }
+]

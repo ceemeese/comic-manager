@@ -38,6 +38,11 @@ class Comic
         Webcomic = 7
     }
 
+    public override string ToString()
+    {
+        return Name;
+    }
+
     //Constructor
     public Comic (string name, string author, string publisher, int yearPublished, decimal price, bool isForAdults, List<Genre> genres, ComicType type)
     {

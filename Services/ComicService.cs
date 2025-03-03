@@ -4,6 +4,7 @@ using Models;
 using Utils;
 using Spectre.Console;
 
+
 class ComicService
 {
     //public static List<Comic> comics = new List<Comic>();
@@ -180,20 +181,42 @@ class ComicService
     
         try
         {
-            AnsiConsole.MarkupLine("Selecciona el ID del comic a eliminar:");
+            List<Comic> selectedComics = new List<Comic>();
+
+            
+                var comicSelection = AnsiConsole.Prompt(
+                    new MultiSelectionPrompt<Comic>()
+                    .Title("[cyan]Selecciona los cómics a eliminar:[/]")
+                    .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar.)[/]")
+                    .AddChoices(ComicService.comics));
+
+                if (comicSelection.Count != 0)
+                {
+                    selectedComics = comicSelection;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Debes seleccionar al menos un cómic.[/]");                    
+                }  
+            
+            /*AnsiConsole.MarkupLine("Selecciona el ID del comic a eliminar:");
 
             if (int.TryParse(Console.ReadLine(), out int IdSelected))
             {
                 Comic comic = comics.Find(c => c.Id.Equals(IdSelected))
                     ?? throw new InvalidComicException("[red]No hay ningún cómic con el ID introducido[/]");
-                
-                comics.Remove(comic);
-                AnsiConsole.MarkupLine("Cómic eliminado correctamente");
-                ShowAllComics();
-                JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
-                JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
+            */   
 
-            }   
+            foreach (var index in selectedComics)
+            {
+                comics.Remove(index);
+            }
+            //comics.Remove(comic);
+            AnsiConsole.MarkupLine("Cómic/s eliminados/s correctamente");
+            ShowAllComics();
+            JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
+            JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
+  
         }
         catch(InvalidComicException ex)
         {

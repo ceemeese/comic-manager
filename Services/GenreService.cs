@@ -167,7 +167,7 @@ class GenreService
                  genres.Remove(index); 
             }
             //genres.Remove(selectedGenres);
-            AnsiConsole.MarkupLine("[green]Géneros eliminados correctamente[/]");
+            AnsiConsole.MarkupLine("[green]Género/s eliminado/s correctamente[/]");
             ShowAllGenres();
             JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
     

@@ -1,12 +1,14 @@
 [
   {
-    "Id": 4,
+    "Id": 1,
     "Name": "Genero",
     "Description": "genero",
     "Priority": 3,
     "Icon": "#234",
     "Comics": [
-      "hola"
+      "hola",
+      "hola",
+      "test"
     ],
     "DateCreated": "2025-03-03T10:14:09.591345+01:00"
   }
