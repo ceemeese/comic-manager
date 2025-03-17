@@ -24,35 +24,35 @@ class ComicService
             //Control de géneros antes de preguntar. Si no hay géneros, no se pueden añadir cómics
             if (GenreService.genres.Count == 0)
             {
-                throw new InvalidComicException("[red]No hay géneros disponibles. Añade algunos géneros antes de seleccionar[/]");
+                throw new InvalidComicException("[darkred]No hay géneros disponibles. Añade algunos géneros antes de seleccionar[/]");
             }
 
 
             AnsiConsole.MarkupLine("[bold underline]___NUEVO CÓMIC___[/]");
-            string name = AnsiConsole.Ask<string>("[cyan]Nombre:[/]");
-            string author = AnsiConsole.Ask<string>("[cyan]Autor:[/]");
+            string name = AnsiConsole.Ask<string>("[yellow4]Nombre:[/]");
+            string author = AnsiConsole.Ask<string>("[yellow4]Autor:[/]");
 
             if (comics.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && c.Author.Equals(author, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidComicException("[red]Error: Ya existe un cómic con el mismo nombre y autor en la lista global[/]");
+                throw new InvalidComicException("[darkred]Error:[/] Ya existe un cómic con el mismo nombre y autor en la lista global");
             }
 
-            string publisher = AnsiConsole.Ask<string>("[cyan]Editorial:[/]");
+            string publisher = AnsiConsole.Ask<string>("[yellow4]Editorial:[/]");
 
             
             int yearPublished = AnsiConsole.Prompt(
-                new TextPrompt<int>("[cyan]Año de Publicación:[/]")
-                    .Validate(y => y >= 1896 && y <= DateTime.Now.Year ? ValidationResult.Success() : ValidationResult.Error("[red]El año debe estar entre 1896 y el actual.[/]")
+                new TextPrompt<int>("[yellow4]Año de Publicación:[/]")
+                    .Validate(y => y >= 1896 && y <= DateTime.Now.Year ? ValidationResult.Success() : ValidationResult.Error("[red]El año debe estar entre 1896 y el actual[/]")
             ));
 
 
             decimal price = AnsiConsole.Prompt(
-                new TextPrompt<decimal>("[cyan]Precio:[/]")
-                .Validate(p => p > 0 ? ValidationResult.Success() : ValidationResult.Error("[red]El precio debe ser un número positivo.[/]")
+                new TextPrompt<decimal>("[yellow4]Precio:[/]")
+                .Validate(p => p > 0 ? ValidationResult.Success() : ValidationResult.Error("[darkred]El precio debe ser un número positivo[/]")
             ));
 
             var isForAdults = AnsiConsole.Prompt(
-                new TextPrompt<bool>("[cyan]Es para adultos?[/]")
+                new TextPrompt<bool>("[yellow4]Es para adultos?[/]")
                     .AddChoice(true)
                     .AddChoice(false)
                     .DefaultValue(false)
@@ -63,25 +63,21 @@ class ComicService
             {
                 var genreSelection = AnsiConsole.Prompt(
                     new MultiSelectionPrompt<Genre>()
-                        .Title("[cyan]Selecciona los géneros:[/]")
-                        .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar.)[/]")
+                        .Title("[yellow4]Selecciona los géneros:[/]")
+                        .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+                        .InstructionsText("[grey][blue]Espacio[/] para seleccionar" +"[green] Enter:[/] confirmar selección[/]")
                         .AddChoices(GenreService.genres));
-
 
                 if (genreSelection.Count > 0)
                 {
                     selectedGenres = genreSelection;
                     break;
                 }
-                else
-                {
-                    AnsiConsole.MarkupLine("[red]Debes seleccionar al menos un género.[/]");
-                }
             }
 
 
             Comic.ComicType selectedType = AnsiConsole.Prompt(new SelectionPrompt<Comic.ComicType>()
-                .Title("[cyan]Selecciona el tipo de cómic:[/]")
+                .Title("[yellow4]Selecciona el tipo de cómic:[/]")
                 .AddChoices(Enum.GetValues<Comic.ComicType>()));
 
             Comic comic = new Comic(name, author, publisher, yearPublished, price, isForAdults, selectedGenres, selectedType);
@@ -100,12 +96,12 @@ class ComicService
         }
         catch (InvalidComicException ex) 
         {
-            var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
+            var messageError = $"[darkred]InvalidComicException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch(Exception ex)
         {
-            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }      
@@ -116,10 +112,10 @@ class ComicService
     public static void ShowAllComics()
     {
         
-        AnsiConsole.MarkupLine("[cyan]Listado de Cómics:[/]");
+        AnsiConsole.MarkupLine("[yellow4]Listado de Cómics:[/]");
         if (comics == null || comics.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]No hay cómics disponibles.[/]");
+            AnsiConsole.MarkupLine("[darkred]No hay cómics disponibles[/]");
             return;
         }
 
@@ -137,16 +133,16 @@ class ComicService
 
         if (comics == null || comics.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]No hay cómics disponibles.[/]");
+            AnsiConsole.MarkupLine("[darkred]No hay cómics disponibles[/]");
             return;
         }
 
         try 
         {
-            var name = AnsiConsole.Ask<string>("[cyan]Introduce el nombre de cómic:[/]");
+            var name = AnsiConsole.Ask<string>("[yellow4]Introduce el nombre de cómic:[/]");
 
             Comic comic = comics.Find(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                ?? throw new InvalidComicException("[red]Cómic no encontrado.[/]");
+                ?? throw new InvalidComicException("[darkred]Cómic no encontrado[/]");
         
             
             AnsiConsole.MarkupLine("[bold green]Cómic encontrado:[/]");
@@ -156,12 +152,12 @@ class ComicService
         }
         catch (InvalidComicException ex) 
         {
-            var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
+            var messageError = $"[darkred]InvalidComicException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }
@@ -173,7 +169,7 @@ class ComicService
     {
         if (comics == null || comics.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]No hay cómics disponibles.[/]");
+            AnsiConsole.MarkupLine("[darkred]No hay cómics disponibles[/]");
             return;
         }
 
@@ -184,28 +180,18 @@ class ComicService
             List<Comic> selectedComics = new List<Comic>();
 
             
-                var comicSelection = AnsiConsole.Prompt(
-                    new MultiSelectionPrompt<Comic>()
-                    .Title("[cyan]Selecciona los cómics a eliminar:[/]")
-                    .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar.)[/]")
-                    .AddChoices(ComicService.comics));
+            var comicSelection = AnsiConsole.Prompt(
+                new MultiSelectionPrompt<Comic>()
+                .Title("[yellow4]Selecciona los cómics a eliminar:[/]")
+                .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+                .InstructionsText("[grey][blue]Espacio[/] para seleccionar" + "[green] Enter:[/] confirmar selección" + "[darkred] Cancelar:[/] Enter sin seleccionar[/]")
+                .AddChoices(ComicService.comics)
+                .NotRequired());
 
-                if (comicSelection.Count != 0)
-                {
-                    selectedComics = comicSelection;
-                }
-                else
-                {
-                    AnsiConsole.MarkupLine("[red]Debes seleccionar al menos un cómic.[/]");                    
-                }  
-            
-            /*AnsiConsole.MarkupLine("Selecciona el ID del comic a eliminar:");
-
-            if (int.TryParse(Console.ReadLine(), out int IdSelected))
+            if (comicSelection.Count != 0)
             {
-                Comic comic = comics.Find(c => c.Id.Equals(IdSelected))
-                    ?? throw new InvalidComicException("[red]No hay ningún cómic con el ID introducido[/]");
-            */   
+                selectedComics = comicSelection;
+            }
 
             foreach (var index in selectedComics)
             {
@@ -220,12 +206,12 @@ class ComicService
         }
         catch(InvalidComicException ex)
         {
-            var messageError = $"[red]InvalidComicException: {ex.Message}[/]";
+            var messageError = $"[darkred]InvalidComicException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }

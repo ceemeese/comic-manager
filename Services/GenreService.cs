@@ -21,22 +21,22 @@ class GenreService
         try
         {
             AnsiConsole.MarkupLine("[bold underline]___NUEVO GÉNERO___[/]");
-            string name = AnsiConsole.Ask<string>("[cyan]Nombre:[/]");
+            string name = AnsiConsole.Ask<string>("[yellow4]Nombre:[/]");
 
             if (genres.Any(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidComicException("[red]Error: Ya existe un género con el mismo nombre[/]");
+                throw new InvalidComicException("[darkred]Error:[/] Ya existe un género con el mismo nombre");
             }
 
-            string description = AnsiConsole.Ask<string>("[cyan]Descripción:[/]");
+            string description = AnsiConsole.Ask<string>("[yellow4]Descripción:[/]");
 
             int priority = AnsiConsole.Prompt(
-                new TextPrompt<int>("[cyan]Prioridad:[/]")
+                new TextPrompt<int>("[yellow4]Prioridad:[/]")
                     .Validate(num => num > 0 ? ValidationResult.Success() : ValidationResult.Error("La prioridad debe ser un número positivo"))
             );
 
             string icon = AnsiConsole.Prompt(
-                new TextPrompt<string>("[cyan]Icono (debe empezar con '#'):[/]")
+                new TextPrompt<string>("[yellow4]Icono (debe empezar con '#'):[/]")
                     .Validate(input => input.StartsWith('#') ? ValidationResult.Success() : ValidationResult.Error("El icono debe empezar por '#'"))
             );
             
@@ -52,12 +52,12 @@ class GenreService
         }
         catch (InvalidGenreException ex) 
         {
-            var messageError = $"[red]InvalidGenreException: {ex.Message}[/]";
+            var messageError = $"[darkred]InvalidGenreException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }
@@ -68,19 +68,21 @@ class GenreService
     {
         if (genres == null || genres.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]No hay géneros disponibles.[/]");
+            AnsiConsole.MarkupLine("[darkred]No hay géneros disponibles[/]");
             return;
         }
 
-        var table = new Table().Border(TableBorder.Rounded);
-        table.AddColumn("[bold]Nombre[/]");
+        string genresText = string.Join("\n", genres
+            .OrderBy(genre => genre.Name)
+            .Select(genre => $"{genre.Name}"));
 
-        foreach (var genre in genres.OrderBy(g => g.Priority))
-        {
-            table.AddRow(genre.Name);
-        }
+        var panel = new Panel(genresText)
+            .Header("Géneros")
+            .Padding(2, 2, 2, 2)
+            .BorderColor(Color.Yellow4)
+            .Border(BoxBorder.Double);
 
-        AnsiConsole.Write(table);
+        AnsiConsole.Write(panel);
     }
      
 
@@ -90,28 +92,28 @@ class GenreService
 
         if (genres == null || genres.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]No hay géneros disponibles.[/]");
+            AnsiConsole.MarkupLine("[darkred]No hay géneros disponibles[/]");
             return;
         }
 
 
         try 
         {
-            string name = AnsiConsole.Ask<string>("[cyan]Introduce el nombre del género:[/]");
+            string name = AnsiConsole.Ask<string>("[yellow4]Introduce el nombre del género:[/]");
             Genre genre = genres.Find(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                ?? throw new InvalidGenreException("[red]El género no existe[/]");
+                ?? throw new InvalidGenreException("[darkred]El género no existe[/]");
 
             genre.ShowGenreInformation();
 
         }
         catch (InvalidGenreException ex) 
         {
-            var messageError = $"[red]InvalidGenreException: {ex.Message}[/]";
+            var messageError = $"[darkred]InvalidGenreException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }
@@ -122,7 +124,7 @@ class GenreService
 
         if (genres == null || genres.Count == 0)
             {
-                AnsiConsole.MarkupLine("[red]No hay géneros disponibles para eliminar.[/]");
+                AnsiConsole.MarkupLine("[darkred]No hay géneros disponibles para eliminar[/]");
                 return;
             }
 
@@ -136,8 +138,8 @@ class GenreService
             {
                 var genreSelection = AnsiConsole.Prompt(
                     new MultiSelectionPrompt<Genre>()
-                        .Title("[cyan]Selecciona los géneros a eliminar:[/]")
-                        .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar.)[/]")
+                        .Title("[yellow4]Selecciona los géneros a eliminar:[/]")
+                        .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar)[/]")
                         .AddChoices(GenreService.genres));
 
 
@@ -148,19 +150,10 @@ class GenreService
                 }
                 else
                 {
-                    AnsiConsole.MarkupLine("[red]Debes seleccionar al menos un género.[/]");                    
+                    AnsiConsole.MarkupLine("[darkred]Debes seleccionar al menos un género[/]");                    
                 }
             }
 
-            /*
-            int id = AnsiConsole.Prompt(
-                new TextPrompt<int>("[cyan]Selecciona el ID del género a eliminar:[/]")
-                    .Validate(num => genres.Any(g => g.Id == num) ? ValidationResult.Success() : ValidationResult.Error("El género no existe"))
-            );
-
-            Genre genre = genres.Find(g => g.Id.Equals(id))
-                ?? throw new InvalidGenreException("[red]El género no existe[/]");
-            */
 
             foreach (var index in selectedGenres)
             {
@@ -174,12 +167,12 @@ class GenreService
         }
         catch(InvalidGenreException ex)
         {
-            var messageError = $"[red]InvalidGenreException: {ex.Message}[/]";
+            var messageError = $"[darkred]InvalidGenreException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
-            var messageError = $"[red]ExceptionError: {ex.Message}[/]";
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }

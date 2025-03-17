@@ -63,15 +63,19 @@ class Comic
     {
         string adults = IsForAdults ? "Sí" : "No"; 
 
-        var table = new Table().Border(TableBorder.Rounded);
-        table.AddColumn("[bold]ID[/]");
-        table.AddColumn("[bold]Nombre[/]");
-        table.AddColumn("[bold]Autor[/]");
-        table.AddColumn("[bold]Año[/]");
-        table.AddColumn("[bold]Precio[/]");
-        table.AddColumn("[bold]Es para adultos?[/]");
-        table.AddColumn("[bold]Tipo de Cómic[/]");
-        table.AddColumn("[bold]Géneros[/]");
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Yellow4);;
+
+
+        table.AddColumn("[bold yellow4]ID[/]");
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Autor[/]");
+        table.AddColumn("[bold yellow4]Año[/]");
+        table.AddColumn("[bold yellow4]Precio[/]");
+        table.AddColumn("[bold yellow4]Es para adultos?[/]");
+        table.AddColumn("[bold yellow4]Tipo de Cómic[/]");
+        table.AddColumn("[bold yellow4]Géneros[/]");
 
         string genreList = Genres != null && Genres.Any() ? string.Join(", ", Genres.Select(g => g.Name)) : "No tiene géneros";
 
@@ -84,15 +88,17 @@ class Comic
 
     public static Table GenerateComicTable(List<Comic> comics)
     {
-        var table = new Table().Border(TableBorder.Rounded);
-        table.AddColumn("[bold]ID[/]");
-        table.AddColumn("[bold]Nombre[/]");
-        table.AddColumn("[bold]Autor[/]");
-        table.AddColumn("[bold]Año[/]");
-        table.AddColumn("[bold]Precio[/]");
-        table.AddColumn("[bold]Es para adultos?[/]");
-        table.AddColumn("[bold]Tipo de Cómic[/]");
-        table.AddColumn("[bold]Géneros[/]");
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Yellow4);
+
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Autor[/]");
+        table.AddColumn("[bold yellow4]Año[/]");
+        table.AddColumn("[bold yellow4]Precio[/]");
+        table.AddColumn("[bold yellow4]Es para adultos?[/]");
+        table.AddColumn("[bold yellow4]Tipo de Cómic[/]");
+        table.AddColumn("[bold yellow4]Géneros[/]");
 
         foreach (var comic in comics)
         {
@@ -102,7 +108,6 @@ class Comic
                 : "No tiene géneros";
 
             table.AddRow(
-                comic.Id.ToString(),
                 comic.Name,
                 comic.Author,
                 comic.YearPublished.ToString(),

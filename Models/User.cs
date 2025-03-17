@@ -45,13 +45,16 @@ class User
     public void ShowUserInformation() 
     {
 
-        var table = new Table().Border(TableBorder.Rounded).Title("[bold yellow]Información del Usuario[/]");
-        table.AddColumn("[bold]ID[/]");
-        table.AddColumn("[bold]Nombre[/]");
-        table.AddColumn("[bold]Correo[/]");
-        table.AddColumn("[bold]Teléfono[/]");
-        table.AddColumn("[bold]Fecha registro[/]");
-        table.AddColumn("[bold]Listado Cómics personales[/]");
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .Title("[bold yellow]Información del Usuario[/]")
+            .BorderColor(Color.Yellow4);
+        table.AddColumn("[bold yellow4]ID[/]");
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Correo[/]");
+        table.AddColumn("[bold yellow4]Teléfono[/]");
+        table.AddColumn("[bold yellow4]Fecha registro[/]");
+        table.AddColumn("[bold yellow4]Listado Cómics personales[/]");
 
         string comicsList = PersonalComics != null && PersonalComics.Count > 0 
             ? string.Join(", ", PersonalComics.Select(c => c.Name))
@@ -60,7 +63,7 @@ class User
 
         if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
         {
-            table.AddColumn("[bold]Es Admin?[/]");
+            table.AddColumn("[bold yellow4]Es Admin?[/]");
             string admin = IsAdmin ? "[green]Sí[/]" : "[red]No[/]";
             table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList, admin);
         }
@@ -75,15 +78,18 @@ class User
 
     public static Table GenerateUserTable(List<User> users)
     {
-        var table = new Table().Border(TableBorder.Rounded);
-        table.AddColumn("[bold]ID[/]");
-        table.AddColumn("[bold]Nombre[/]");
-        table.AddColumn("[bold]Correo[/]");
-        table.AddColumn("[bold]Telefono[/]");
-        table.AddColumn("[bold]Fecha registro[/]");
-        table.AddColumn("[bold]Es admin?[/]");
-        table.AddColumn("[bold]Número de Cómics Personales[/]");
-        table.AddColumn("[bold]Listado de Cómics Personales[/]");
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Yellow4);
+
+        table.AddColumn("[bold yellow4]ID[/]");
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Correo[/]");
+        table.AddColumn("[bold yellow4]Telefono[/]");
+        table.AddColumn("[bold yellow4]Fecha registro[/]");
+        table.AddColumn("[bold yellow4]Es admin?[/]");
+        table.AddColumn("[bold yellow4]Número de Cómics Personales[/]");
+        table.AddColumn("[bold yellow4]Listado de Cómics Personales[/]");
 
         foreach (var user in users)
         {

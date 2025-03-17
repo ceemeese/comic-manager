@@ -9,7 +9,7 @@
     "IsAdmin": true,
     "PersonalComics": [
       {
-        "Id": 2,
+        "Id": 3,
         "Name": "hola",
         "Author": "hola",
         "Publisher": "3",
@@ -28,33 +28,6 @@
               "hola",
               "hola",
               "test"
-            ],
-            "DateCreated": "2025-03-03T10:14:09.591345+01:00"
-          }
-        ],
-        "Type": 1
-      },
-      {
-        "Id": 3,
-        "Name": "Test",
-        "Author": "test2",
-        "Publisher": "test3",
-        "YearPublished": 2023,
-        "Price": 2,
-        "IsRead": false,
-        "IsForAdults": true,
-        "Genres": [
-          {
-            "Id": 4,
-            "Name": "Genero",
-            "Description": "genero",
-            "Priority": 3,
-            "Icon": "#234",
-            "Comics": [
-              "hola",
-              "hola",
-              "test",
-              "Test"
             ],
             "DateCreated": "2025-03-03T10:14:09.591345+01:00"
           }
