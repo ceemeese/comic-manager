@@ -1,6 +1,6 @@
 [
   {
-    "Id": 1,
+    "Id": 5,
     "Name": "Genero",
     "Description": "genero",
     "Priority": 3,
@@ -8,7 +8,8 @@
     "Comics": [
       "hola",
       "hola",
-      "test"
+      "test",
+      "Test"
     ],
     "DateCreated": "2025-03-03T10:14:09.591345+01:00"
   }

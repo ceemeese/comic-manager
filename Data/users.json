@@ -1,15 +1,5 @@
 [
   {
-    "Id": 1,
-    "Name": "User",
-    "Mail": "1@mail.com",
-    "Password": "a1Aaaaaa",
-    "DateCreated": "2025-01-29T11:34:30.740508+01:00",
-    "Telephone": "5555555",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
     "Id": 2,
     "Name": "Cris",
     "Mail": "cris@mail.com",
@@ -17,7 +7,61 @@
     "DateCreated": "2025-01-29T11:34:30.763981+01:00",
     "Telephone": "666666666",
     "IsAdmin": true,
-    "PersonalComics": []
+    "PersonalComics": [
+      {
+        "Id": 2,
+        "Name": "hola",
+        "Author": "hola",
+        "Publisher": "3",
+        "YearPublished": 1992,
+        "Price": 4,
+        "IsRead": false,
+        "IsForAdults": false,
+        "Genres": [
+          {
+            "Id": 3,
+            "Name": "Genero",
+            "Description": "genero",
+            "Priority": 3,
+            "Icon": "#234",
+            "Comics": [
+              "hola",
+              "hola",
+              "test"
+            ],
+            "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+          }
+        ],
+        "Type": 1
+      },
+      {
+        "Id": 3,
+        "Name": "Test",
+        "Author": "test2",
+        "Publisher": "test3",
+        "YearPublished": 2023,
+        "Price": 2,
+        "IsRead": false,
+        "IsForAdults": true,
+        "Genres": [
+          {
+            "Id": 4,
+            "Name": "Genero",
+            "Description": "genero",
+            "Priority": 3,
+            "Icon": "#234",
+            "Comics": [
+              "hola",
+              "hola",
+              "test",
+              "Test"
+            ],
+            "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+          }
+        ],
+        "Type": 1
+      }
+    ]
   },
   {
     "Id": 3,

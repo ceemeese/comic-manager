@@ -162,115 +162,93 @@ class UserService
     public static void ManageComicsInUserList(User loggedUser, bool isAddOperation) 
     {
 
-        List<Comic> selectedComics = new List<Comic>();
-        string operation = isAddOperation ? "añadir" : "eliminar";
+        string operation = isAddOperation ? "Añadir" : "Eliminar";
 
-        while(true)
+        AnsiConsole.MarkupLine(isAddOperation ? "[cyan]Cómics disponibles:[/] " : "[cyan]Tus cómics personales: [/]");
+        List<Comic> comicsList = isAddOperation ? ComicService.comics : loggedUser.PersonalComics;
+        
+            
+        var table = new Table().Border(TableBorder.Rounded);
+        table.AddColumn("[bold]ID[/]").AddColumn("[bold]Nombre[/]");
+
+        foreach (var comic in comicsList)
         {
-            AnsiConsole.MarkupLine(isAddOperation ? "[cyan]Cómics disponibles:[/] " : "[cyan]Tus cómics personales: [/]");
-            List<Comic> comicsList = isAddOperation ? ComicService.comics : loggedUser.PersonalComics;
-            
-            
-            var table = new Table().Border(TableBorder.Rounded);
-            table.AddColumn("[bold]ID[/]").AddColumn("[bold]Nombre[/]");
-
-            foreach (var comic in comicsList)
-            {
-                table.AddRow(comic.Id.ToString(), comic.Name);
-            }
-
-            AnsiConsole.Write(table);
-
-            AnsiConsole.MarkupLine($"[bold]{operation} cómics:[/]");
-            
-            string answer = AnsiConsole.Prompt(
-                new TextPrompt<string>("[green]Introduce los números de los cómics que quieres seleccionar, separados por comas (ejemplo: 1,3,5):[/]") 
-                    .AllowEmpty()  // Permite que el usuario deje el campo vacío
-            );
-
-
-            if (string.IsNullOrWhiteSpace(answer))
-            {
-                AnsiConsole.MarkupLine("[red]Error: No has seleccionado ningún cómic. Intenta de nuevo.[/]");
-                continue;
-            }
-
-            string[] comicIndexArray = answer.Split(',');
-            selectedComics.Clear();
-
-            bool isValid = true;
-
-            foreach (string index in comicIndexArray)
-            {
-                if (int.TryParse(index.Trim(), out int comicId) && comicId > 0 && ComicService.comics.Any(c => c.Id == comicId))
-                {
-                    Comic comic = ComicService.comics.FirstOrDefault(c => c.Id == comicId)!;
-
-                    if (isAddOperation && loggedUser.PersonalComics.Any(c => c.Id == comic.Id))
-                    {
-                        AnsiConsole.MarkupLine($"[yellow]El cómic '{comic.Name}' ya está en tu lista personal.[/]");
-                    }
-                    else
-                    {
-                        selectedComics.Add(comic);
-                    }
-                }
-                else
-                {
-                    AnsiConsole.MarkupLine($"[red]Error: La opción '{index}' marcada no es correcta. Intenta de nuevo.[/]");
-                    isValid = false;
-                    break;
-                }
-            }
-
-            if (isValid && selectedComics.Count > 0)
-            {
-                break;
-            }
+            table.AddRow(comic.Id.ToString(), comic.Name);
         }
+        AnsiConsole.Write(table);
 
-        foreach (var comic in selectedComics)
+        // Selección de cómics
+        AnsiConsole.MarkupLine($"[bold]{operation} cómics:[/]");
+        //List<Comic> selectedPersonalComics = new List<Comic>();
+
+        var selectedPersonalComics = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<Comic>()
+            .Title("[cyan]Selecciona los cómics:[/]")
+            .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar)[/]")
+            .AddChoices(comicsList));
+
+
+        if (isAddOperation)
         {
-            if (isAddOperation)
+            var alreadyInList = selectedPersonalComics.Where(c => loggedUser.PersonalComics.Any(pc => pc.Name == c.Name)).ToList();
+            var newComics = selectedPersonalComics.Where(c => !loggedUser.PersonalComics.Any(pc => pc.Name == c.Name)).ToList();
+
+            if (alreadyInList.Any())
             {
-                loggedUser.PersonalComics.Add(comic);
-                AnsiConsole.MarkupLine($"[green]El cómic '{comic.Name}' se ha añadido a tu lista personal.[/]");
-                JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+                AnsiConsole.MarkupLine($"[yellow]Los siguientes cómics ya están en tu lista: {string.Join(", ", alreadyInList.Select(c => $"'{c.Name}'"))}[/]");
             }
-            else
+
+            if (newComics.Any())
             {
-                loggedUser.PersonalComics.Remove(comic);
-                AnsiConsole.MarkupLine($"[green]El cómic '{comic.Name}' ha sido eliminado de tu lista personal.[/]");
+                loggedUser.PersonalComics.AddRange(newComics);
+                AnsiConsole.MarkupLine($"[green]Se han añadido a tu lista personal: {string.Join(", ", newComics.Select(c => $"'{c.Name}'"))}[/]");
                 JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
             }
         }
+        else
+        {
+            var comicsToRemove = selectedPersonalComics
+                .Where(c => loggedUser.PersonalComics.Any(pc => pc.Name == c.Name))
+                .ToList();
 
+            if (comicsToRemove.Any())
+            {
+                foreach (var comic in comicsToRemove)
+                {
+                    loggedUser.PersonalComics.Remove(comic!);
+                }
+
+                AnsiConsole.MarkupLine($"[green]Se han eliminado de tu lista personal: {string.Join(", ", comicsToRemove.Select(c => $"'{c!.Name}'"))}[/]");
+                JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+            }
+        }
     }
+
 
 
 
     // Mostrar los cómics del usuario
     public static void ShowUserComics(User user)
     {
-        AnsiConsole.MarkupLine($"Hola [bold]{user.Name}[/], esta es tu lista de cómics:");
 
         if (user.PersonalComics.Count > 0)
         {
+            AnsiConsole.MarkupLine($"Hola [bold][green]{user.Name}[/][/], esta es tu lista de cómics:");
+
             var table = new Table()
                 .AddColumn("[bold]Nombre[/]")
                 .AddColumn("[bold]Autor[/]"); 
 
             foreach (var comic in user.PersonalComics)
             {
-                table.AddRow(comic.Name);
-                table.AddRow(comic.Author);
+                table.AddRow(comic.Name, comic.Author);
             }
 
             AnsiConsole.Write(table);
         }
         else
         {
-            AnsiConsole.MarkupLine("[red]No tienes cómics registrados[/]");
+            AnsiConsole.MarkupLine("[red]No tienes cómics personales registrados[/]");
         }
     }
 

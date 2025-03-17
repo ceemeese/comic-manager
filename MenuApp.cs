@@ -12,10 +12,10 @@ class MenuApp
 
     public MenuApp()
     {
-        AnsiConsole.Write(
+        /*AnsiConsole.Write(
             new FigletText("Comic Manager")
             .LeftJustified()
-            .Color(Color.Red));
+            .Color(Color.Red));*/
     }
 
     public void ShowMenu()

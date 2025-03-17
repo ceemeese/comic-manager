@@ -1,6 +1,6 @@
 [
   {
-    "Id": 1,
+    "Id": 5,
     "Name": "hola",
     "Author": "hola",
     "Publisher": "3",
@@ -10,7 +10,7 @@
     "IsForAdults": false,
     "Genres": [
       {
-        "Id": 1,
+        "Id": 6,
         "Name": "Genero",
         "Description": "genero",
         "Priority": 3,
@@ -19,6 +19,33 @@
           "hola",
           "hola",
           "test"
+        ],
+        "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+      }
+    ],
+    "Type": 1
+  },
+  {
+    "Id": 6,
+    "Name": "Test",
+    "Author": "test2",
+    "Publisher": "test3",
+    "YearPublished": 2023,
+    "Price": 2,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 5,
+        "Name": "Genero",
+        "Description": "genero",
+        "Priority": 3,
+        "Icon": "#234",
+        "Comics": [
+          "hola",
+          "hola",
+          "test",
+          "Test"
         ],
         "DateCreated": "2025-03-03T10:14:09.591345+01:00"
       }
