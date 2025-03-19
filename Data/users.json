@@ -9,7 +9,7 @@
     "IsAdmin": true,
     "PersonalComics": [
       {
-        "Id": 3,
+        "Id": 1,
         "Name": "hola",
         "Author": "hola",
         "Publisher": "3",
@@ -19,7 +19,7 @@
         "IsForAdults": false,
         "Genres": [
           {
-            "Id": 3,
+            "Id": 1,
             "Name": "Genero",
             "Description": "genero",
             "Priority": 3,
@@ -63,6 +63,26 @@
     "Password": "A1aaaaaa",
     "DateCreated": "2025-03-03T10:16:56.587289+01:00",
     "Telephone": "111111111",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 5,
+    "Name": "hola",
+    "Mail": "hola@mail.com",
+    "Password": "Aa1aaaaa",
+    "DateCreated": "2025-03-19T12:28:36.40355+01:00",
+    "Telephone": "324234234",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 6,
+    "Name": "234",
+    "Mail": "nuevotest@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-03-19T12:31:13.89477+01:00",
+    "Telephone": "234234",
     "IsAdmin": false,
     "PersonalComics": []
   }

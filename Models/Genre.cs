@@ -42,7 +42,7 @@ class Genre
 
     public void ShowGenreInformation()
     {
-        AnsiConsole.Write(new Rule($"[yellow4]Detalles del género[/]").RuleStyle("green"));
+        AnsiConsole.Write(new Rule($"[yellow4]Detalles del género[/]").RuleStyle("lightsalmon1"));
 
         string comicsText = string.Join("\n", Comics 
             .OrderBy(comic => comic)

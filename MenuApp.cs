@@ -13,10 +13,11 @@ class MenuApp
 
     public MenuApp()
     {
+        
         AnsiConsole.Write(
             new FigletText("Comic Manager")
             .LeftJustified()
-            .Color(Color.DarkBlue));
+            .Color(Color.LightSalmon1));
     }
 
     public void ShowMenu()
@@ -24,17 +25,17 @@ class MenuApp
         //int option = 0;
         var option = "";
         
+        
         do
         {
             var options = GetOptionsMenu();
+            var highlightStyle = new Style().Foreground(Color.LightSalmon1);
 
-            option = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .Title("[bold yellow4]--- MENÚ PRINCIPAL ---[/]")
-                .AddChoices(options.Keys));
+            WriteMenuRule("MENU PRINCIPAL");
 
+            option = ShowSelectionMenu(options, "Selecciona una opción");
             options[option].Invoke();
-            
+
         }
 
         while(!exit);
@@ -53,13 +54,20 @@ class MenuApp
         {
 
             var options = GetOptionsGenreMenu();
+            Console.Clear();
+            
+            WriteMenuRule("MENU GËNEROS");
 
-            option = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .Title("[bold yellow4]--- MENÚ GÉNEROS ---[/]")
-                .AddChoices(options.Keys));
-
+            option = ShowSelectionMenu(options, "Selecciona una opción");
             options[option].Invoke();
+
+            if (option != "Volver al menú principal")
+            {
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
+            }
+
+            Console.Clear();
 
         }
         while (!back);
@@ -77,14 +85,20 @@ class MenuApp
         {
 
             var options = GetOptionsComicMenu();
+            Console.Clear();
 
-            option = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .Title("[bold yellow4]--- MENÚ CÓMICS ---[/]")
-                .AddChoices(options.Keys));
+            WriteMenuRule("MENU CÓMICS");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
 
             options[option].Invoke();
-        
+            
+            if (option != "Volver al menú principal")
+            {
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
+            }
+            Console.Clear();
+
         }
         while (!back);
 
@@ -100,13 +114,18 @@ class MenuApp
         do
         {
             var options = GetOptionsUserMenu();
+            AnsiConsole.Clear();
 
-            option = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .Title("[bold yellow4]--- MENÚ USUARIOS ---[/]")
-                .AddChoices(options.Keys));
+            WriteMenuRule("MENU USUARIOS");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
 
             options[option].Invoke();
+            if (option != "Volver al menú principal")
+            {
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
+            }
+            Console.Clear();
         
         }
         while (!back);
@@ -123,13 +142,18 @@ class MenuApp
         do
         {
             var options = GetOptionsPrivateMenu();
+            AnsiConsole.Clear();
 
-            option = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .Title("[bold yellow4]--- ZONA PRIVADO ---[/]")
-                .AddChoices(options.Keys));
+            WriteMenuRule("ZONA PRIVADA");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
 
             options[option].Invoke();
+            if (option != "Volver al menú principal")
+            {
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
+            }
+            Console.Clear();
             
         } while (!back);
     }
@@ -258,5 +282,20 @@ class MenuApp
     private void BackMenu()
     {
         back = true;
+    }
+
+    private string ShowSelectionMenu(Dictionary<string, Action> options, string title)
+    {
+        var highlightStyle = new Style().Foreground(Color.LightSalmon1);
+        return AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title($"[bold yellow4]{title}[/]")
+                .AddChoices(options.Keys)
+                .HighlightStyle(highlightStyle));
+    }
+
+    private void WriteMenuRule(string menuTitle)
+    {
+        AnsiConsole.Write(new Rule($"[bold yellow4] {menuTitle} [/]").RuleStyle("lightsalmon1"));
     }
 }

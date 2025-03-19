@@ -1,16 +1,11 @@
 [
   {
-    "Id": 5,
-    "Name": "Genero",
-    "Description": "genero",
-    "Priority": 3,
-    "Icon": "#234",
-    "Comics": [
-      "hola",
-      "hola",
-      "test",
-      "Test"
-    ],
-    "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+    "Id": 2,
+    "Name": "Test",
+    "Description": "Test1",
+    "Priority": 1,
+    "Icon": "#123",
+    "Comics": [],
+    "DateCreated": "2025-03-19T13:15:44.482737+01:00"
   }
 ]

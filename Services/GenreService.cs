@@ -78,7 +78,7 @@ class GenreService
 
         var panel = new Panel(genresText)
             .Header("Géneros")
-            .Padding(2, 2, 2, 2)
+            .Padding(3, 3, 3, 3)
             .BorderColor(Color.Yellow4)
             .Border(BoxBorder.Double);
 
@@ -134,36 +134,37 @@ class GenreService
         {
             List<Genre> selectedGenres = new List<Genre>();
 
-            while(true)
+            var highlightStyle = new Style().Foreground(Color.LightSalmon1);
+            selectedGenres = AnsiConsole.Prompt(
+                new MultiSelectionPrompt<Genre>()
+                    .Title("[yellow4]Selecciona los géneros a eliminar:[/][grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+                    .InstructionsText("[grey][blue]Espacio[/] para seleccionar" + "[green] Enter:[/] confirmar selección" + "[darkred] Cancelar:[/] Enter sin seleccionar[/]")
+                    .AddChoices(GenreService.genres)
+                    .NotRequired());
+
+            if (selectedGenres.Any())
             {
-                var genreSelection = AnsiConsole.Prompt(
-                    new MultiSelectionPrompt<Genre>()
-                        .Title("[yellow4]Selecciona los géneros a eliminar:[/]")
-                        .InstructionsText("[grey](Usa las flechas y espacio para seleccionar, enter para confirmar)[/]")
-                        .AddChoices(GenreService.genres));
+                var sureDelete = AnsiConsole.Prompt(
+                new TextPrompt<bool>("[yellow4]Seguro que quieres eliminar?[/]")
+                    .AddChoice(true)
+                    .AddChoice(false)
+                    .DefaultValue(false)
+                    .WithConverter(choice => choice ? "si" : "no"));
 
-
-                if (genreSelection.Count != 0)
+                if (!sureDelete)
                 {
-                    selectedGenres = genreSelection;
-                    break;
+                    return;
                 }
-                else
+
+                foreach (var genre in selectedGenres)
                 {
-                    AnsiConsole.MarkupLine("[darkred]Debes seleccionar al menos un género[/]");                    
+                    genres.Remove(genre); 
                 }
+                AnsiConsole.MarkupLine("[green]Género/s eliminado/s correctamente[/]");
+                ShowAllGenres();
+                JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
             }
-
-
-            foreach (var index in selectedGenres)
-            {
-                 genres.Remove(index); 
-            }
-            //genres.Remove(selectedGenres);
-            AnsiConsole.MarkupLine("[green]Género/s eliminado/s correctamente[/]");
-            ShowAllGenres();
-            JsonUtils.SaveDataToJson(genres, Constants.GenresFileName);
-    
+            
         }
         catch(InvalidGenreException ex)
         {

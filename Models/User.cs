@@ -47,14 +47,14 @@ class User
 
         var table = new Table()
             .Border(TableBorder.Rounded)
-            .Title("[bold yellow]Información del Usuario[/]")
+            .Title("[bold yellow4]Información del Usuario[/]")
             .BorderColor(Color.Yellow4);
         table.AddColumn("[bold yellow4]ID[/]");
         table.AddColumn("[bold yellow4]Nombre[/]");
         table.AddColumn("[bold yellow4]Correo[/]");
         table.AddColumn("[bold yellow4]Teléfono[/]");
         table.AddColumn("[bold yellow4]Fecha registro[/]");
-        table.AddColumn("[bold yellow4]Listado Cómics personales[/]");
+        table.AddColumn("[bold yellow4]Cómics personales[/]");
 
         string comicsList = PersonalComics != null && PersonalComics.Count > 0 
             ? string.Join(", ", PersonalComics.Select(c => c.Name))

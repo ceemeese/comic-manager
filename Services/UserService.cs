@@ -184,6 +184,7 @@ class UserService
         AnsiConsole.MarkupLine($"[bold]{operation} cómics:[/]");
         //List<Comic> selectedPersonalComics = new List<Comic>();
 
+        var highlightStyle = new Style().Foreground(Color.LightSalmon1);
         var selectedPersonalComics = AnsiConsole.Prompt(
         new MultiSelectionPrompt<Comic>()
             .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
@@ -211,18 +212,26 @@ class UserService
         }
         else
         {
-            var comicsToRemove = selectedPersonalComics
-                .Where(c => loggedUser.PersonalComics.Any(pc => pc.Name == c.Name))
-                .ToList();
-
-            if (comicsToRemove.Any())
+            if (selectedPersonalComics.Any())
             {
-                foreach (var comic in comicsToRemove)
+                var sureDelete = AnsiConsole.Prompt(
+                new TextPrompt<bool>("[yellow4]Seguro que quieres eliminar?[/]")
+                    .AddChoice(true)
+                    .AddChoice(false)
+                    .DefaultValue(false)
+                    .WithConverter(choice => choice ? "si" : "no"));
+                
+                if (!sureDelete)
+                {
+                    return;
+                }
+
+                foreach (var comic in selectedPersonalComics)
                 {
                     loggedUser.PersonalComics.Remove(comic!);
                 }
 
-                AnsiConsole.MarkupLine($"[green]Se han eliminado de tu lista personal: {string.Join(", ", comicsToRemove.Select(c => $"'{c!.Name}'"))}[/]");
+                AnsiConsole.MarkupLine($"[green]Se han eliminado de tu lista personal: {string.Join(", ", selectedPersonalComics.Select(c => $"'{c!.Name}'"))}[/]");
                 JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
             }
         }

@@ -58,22 +58,14 @@ class ComicService
                     .DefaultValue(false)
                     .WithConverter(choice => choice ? "si" : "no"));
 
+            var highlightStyle = new Style().Foreground(Color.LightSalmon1);
             List<Genre> selectedGenres = new List<Genre>();
-            while(true)
-            {
-                var genreSelection = AnsiConsole.Prompt(
-                    new MultiSelectionPrompt<Genre>()
-                        .Title("[yellow4]Selecciona los géneros:[/]")
-                        .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
-                        .InstructionsText("[grey][blue]Espacio[/] para seleccionar" +"[green] Enter:[/] confirmar selección[/]")
-                        .AddChoices(GenreService.genres));
-
-                if (genreSelection.Count > 0)
-                {
-                    selectedGenres = genreSelection;
-                    break;
-                }
-            }
+            selectedGenres = AnsiConsole.Prompt(
+                new MultiSelectionPrompt<Genre>()
+                    .Title("[yellow4]Selecciona los géneros:[/]")
+                    .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+                    .InstructionsText("[grey][blue]Espacio[/] para seleccionar" +"[green] Enter:[/] confirmar selección[/]")
+                    .AddChoices(GenreService.genres));
 
 
             Comic.ComicType selectedType = AnsiConsole.Prompt(new SelectionPrompt<Comic.ComicType>()
@@ -179,30 +171,40 @@ class ComicService
         {
             List<Comic> selectedComics = new List<Comic>();
 
-            
-            var comicSelection = AnsiConsole.Prompt(
-                new MultiSelectionPrompt<Comic>()
-                .Title("[yellow4]Selecciona los cómics a eliminar:[/]")
-                .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
-                .InstructionsText("[grey][blue]Espacio[/] para seleccionar" + "[green] Enter:[/] confirmar selección" + "[darkred] Cancelar:[/] Enter sin seleccionar[/]")
-                .AddChoices(ComicService.comics)
-                .NotRequired());
+            var highlightStyle = new Style().Foreground(Color.LightSalmon1);
+            selectedComics = AnsiConsole.Prompt(
+            new MultiSelectionPrompt<Comic>()
+            .Title("[yellow4]Selecciona los cómics a eliminar:[/]")
+            .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+            .InstructionsText("[grey][blue]Espacio[/] para seleccionar" + "[green] Enter:[/] confirmar selección" + "[darkred] Cancelar:[/] Enter sin seleccionar[/]")
+            .AddChoices(ComicService.comics)
+            .NotRequired());
 
-            if (comicSelection.Count != 0)
+            if (selectedComics.Any())
             {
-                selectedComics = comicSelection;
+                var sureDelete = AnsiConsole.Prompt(
+                new TextPrompt<bool>("[yellow4]Seguro que quieres eliminar?[/]")
+                    .AddChoice(true)
+                    .AddChoice(false)
+                    .DefaultValue(false)
+                    .WithConverter(choice => choice ? "si" : "no"));
+
+                if (!sureDelete)
+                {
+                    return;
+                }
+
+                foreach (var comic in selectedComics)
+                {
+                    comics.Remove(comic);
+                }
+                //comics.Remove(comic);
+                AnsiConsole.MarkupLine("Cómic/s eliminados/s correctamente");
+                ShowAllComics();
+                JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
+                JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
             }
 
-            foreach (var index in selectedComics)
-            {
-                comics.Remove(index);
-            }
-            //comics.Remove(comic);
-            AnsiConsole.MarkupLine("Cómic/s eliminados/s correctamente");
-            ShowAllComics();
-            JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
-            JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
-  
         }
         catch(InvalidComicException ex)
         {
