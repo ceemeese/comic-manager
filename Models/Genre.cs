@@ -1,4 +1,5 @@
 namespace Models;
+using Spectre.Console;
 
 class InvalidGenreException: Exception 
 {
@@ -41,19 +42,47 @@ class Genre
 
     public void ShowGenreInformation()
     {
-        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Description: {Description}, Icono: {Icon}, Fecha Creación: {DateCreated:g}");
+        AnsiConsole.Write(new Rule($"[yellow4]Detalles del género[/]").RuleStyle("green"));
 
-        if (Comics != null && Comics.Any()) 
-        {
-            Console.WriteLine("Cómics:");
-            foreach (var comic in Comics) 
-            {
-                Console.WriteLine($"- {comic}");
-            }
-        }
-        else{
-            Console.WriteLine("No hay cómics en este género");
-        }
+        string comicsText = string.Join("\n", Comics 
+            .OrderBy(comic => comic)
+            .Select(comic => $"• {comic}"));
+
+        string genreInformationText = 
+            $"[bold yellow4]{Name}[/]\n\n" +
+            $"[bold]Descripción:[/] {Description}\n" +
+            $"[bold]Icono:[/] {Icon}\n" +
+            $"[bold]Fecha Creación:[/] {DateCreated:g}";
+
+
+        // Crear layout
+        var layout = new Layout("Root")
+            .SplitColumns(
+                new Layout("Info").Ratio(2),
+                new Layout("Comics").Ratio(1));
+
+        layout["Comics"].Update(
+            new Panel(
+                Align.Center(
+                    new Markup(comicsText),
+                    VerticalAlignment.Middle))
+                    .Border(BoxBorder.Double)
+                    .BorderColor(Color.Yellow4)
+                    .Header("Cómics")
+                    .Expand());
+        
+        layout["Info"].Update(
+            new Panel(
+                Align.Center(
+                    new Markup(genreInformationText),
+                    VerticalAlignment.Middle))
+                    .Border(BoxBorder.Double)
+                    .BorderColor(Color.Yellow4)
+                    .Header("[bold yellow4]Información del Género[/]")
+                    .Expand());
+
+        AnsiConsole.Write(layout);
+
     }
 }
 
