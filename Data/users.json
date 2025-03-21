@@ -1,15 +1,5 @@
 [
   {
-    "Id": 1,
-    "Name": "User",
-    "Mail": "1@mail.com",
-    "Password": "a1Aaaaaa",
-    "DateCreated": "2025-01-29T11:34:30.740508+01:00",
-    "Telephone": "5555555",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
     "Id": 2,
     "Name": "Cris",
     "Mail": "cris@mail.com",
@@ -17,6 +7,107 @@
     "DateCreated": "2025-01-29T11:34:30.763981+01:00",
     "Telephone": "666666666",
     "IsAdmin": true,
+    "PersonalComics": [
+      {
+        "Id": 1,
+        "Name": "Tintin",
+        "Author": "Hedge",
+        "Publisher": "Planeta",
+        "YearPublished": 1954,
+        "Price": 4.5,
+        "IsRead": false,
+        "IsForAdults": true,
+        "Genres": [
+          {
+            "Id": 5,
+            "Name": "Fantasia y aventura",
+            "Description": "Descripcion fantasia y aventura",
+            "Priority": 2,
+            "Icon": "#12",
+            "Comics": [
+              "Tintin"
+            ],
+            "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+            "PercentageOfComics": 0
+          }
+        ],
+        "Type": 2
+      },
+      {
+        "Id": 2,
+        "Name": "Maus",
+        "Author": "Art Spielgemen",
+        "Publisher": "Reservoir Books",
+        "YearPublished": 1986,
+        "Price": 23,
+        "IsRead": false,
+        "IsForAdults": true,
+        "Genres": [
+          {
+            "Id": 6,
+            "Name": "Historico",
+            "Description": "Descripcion historico",
+            "Priority": 1,
+            "Icon": "#34",
+            "Comics": [
+              "Maus"
+            ],
+            "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+            "PercentageOfComics": 0
+          }
+        ],
+        "Type": 2
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "Testuser",
+    "Mail": "t@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-01-30T11:34:30.905826+01:00",
+    "Telephone": "999999999",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 4,
+    "Name": "nuevo",
+    "Mail": "nuevo@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-03-03T10:09:25.288472+01:00",
+    "Telephone": "111111111",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 5,
+    "Name": "test",
+    "Mail": "test@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-03-03T10:16:56.587289+01:00",
+    "Telephone": "111111111",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 5,
+    "Name": "hola",
+    "Mail": "hola@mail.com",
+    "Password": "Aa1aaaaa",
+    "DateCreated": "2025-03-19T12:28:36.40355+01:00",
+    "Telephone": "324234234",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 6,
+    "Name": "234",
+    "Mail": "nuevotest@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-03-19T12:31:13.89477+01:00",
+    "Telephone": "234234",
+    "IsAdmin": false,
     "PersonalComics": []
   }
 ]

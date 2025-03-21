@@ -1,6 +1,7 @@
 using Services;
 
 namespace Models;
+using Spectre.Console;
 
 class InvalidUserException: Exception 
 {
@@ -43,25 +44,73 @@ class User
     //Mostrar información
     public void ShowUserInformation() 
     {
-        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Correo: {Mail}, Teléfono: {Telephone}, Fecha Alta: {DateCreated:g} ");
 
-        if (PersonalComics != null && PersonalComics.Count != 0) 
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .Title("[bold yellow4]Información del Usuario[/]")
+            .BorderColor(Color.Yellow4);
+        table.AddColumn("[bold yellow4]ID[/]");
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Correo[/]");
+        table.AddColumn("[bold yellow4]Teléfono[/]");
+        table.AddColumn("[bold yellow4]Fecha registro[/]");
+        table.AddColumn("[bold yellow4]Cómics personales[/]");
+
+        string comicsList = PersonalComics != null && PersonalComics.Count > 0 
+            ? string.Join(", ", PersonalComics.Select(c => c.Name))
+            : "No tiene cómics";
+
+
+        if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
         {
-            Console.WriteLine("Cómics:");
-            foreach (var comic in PersonalComics) 
-            {
-                Console.WriteLine($"Título: {comic}, Autor: {comic}");
-            }
+            table.AddColumn("[bold yellow4]Es Admin?[/]");
+            string admin = IsAdmin ? "[green]Sí[/]" : "[red]No[/]";
+            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList, admin);
         }
-        else{
-            Console.WriteLine("Este usuario no tiene cómics registrados");
+        else
+        {
+            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList);
         }
 
-        if (UserService.currentUser.IsAdmin)
-        {
-            string admin = IsAdmin ? "Sí" : "No"; 
-            Console.WriteLine($"Es administrador?: {admin} ");
-        }
+        AnsiConsole.Write(table);
     }
+    
 
+    public static Table GenerateUserTable(List<User> users)
+    {
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Yellow4);
+
+        table.AddColumn("[bold yellow4]ID[/]");
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Correo[/]");
+        table.AddColumn("[bold yellow4]Telefono[/]");
+        table.AddColumn("[bold yellow4]Fecha registro[/]");
+        table.AddColumn("[bold yellow4]Es admin?[/]");
+        table.AddColumn("[bold yellow4]Número de Cómics Personales[/]");
+        table.AddColumn("[bold yellow4]Listado de Cómics Personales[/]");
+
+        foreach (var user in users)
+        {
+            string admin = user.IsAdmin ? "Sí" : "No"; 
+            string personalComicsNames = user.PersonalComics != null && user.PersonalComics.Any() 
+                ? string.Join(", ", user.PersonalComics.Select(c => c.Name)) 
+                : "No tiene cómics";
+                
+
+            table.AddRow(
+                user.Id.ToString(),
+                user.Name,
+                user.Mail,
+                user.Telephone,
+                user.DateCreated.ToString()!,
+                admin,
+                user.PersonalComics!.Count.ToString(),
+                personalComicsNames
+            );
+        }
+
+        return table;
+    }
 }

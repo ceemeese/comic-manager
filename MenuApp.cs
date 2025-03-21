@@ -1,148 +1,74 @@
-using Models;
 using Services;
+using Spectre.Console;
 
 
 class MenuApp
 {
+
+    private bool exit = false;
+    private bool back = false;
+
+
     public MenuApp()
     {
         
+        AnsiConsole.Write(
+            new FigletText("Comic Manager")
+            .LeftJustified()
+            .Color(Color.LightSalmon1));
     }
 
     public void ShowMenu()
     {
+        //int option = 0;
+        var option = "";
         
-        int option = 0;
         
         do
         {
-            Console.WriteLine("\n--- MENÚ PRINCIPAL ---");
-            Console.WriteLine("1. Géneros");
-            Console.WriteLine("2. Comics");
-            
-            if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
-            {
-                Console.WriteLine("3. Usuarios");
-            }
+            var options = GetOptionsMenu();
+            var highlightStyle = new Style().Foreground(Color.LightSalmon1);
 
-            if (UserService.currentUser != null)
-            {
-                Console.WriteLine("4. Zona privada");
-                Console.WriteLine("5. Cerrar sesión");
-                Console.WriteLine("6. Salir");
-            }
-            else
-            {
-                Console.WriteLine("4. Iniciar sesión");
-                Console.WriteLine("5. Registrarse");
-                Console.WriteLine("6. Salir");
-            }
+            WriteMenuRule("MENU PRINCIPAL");
 
-            Console.WriteLine("Selecciona una opción:");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
+            options[option].Invoke();
 
-            if (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 6)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-6).");
-                continue;
-            }
-
-            switch (option)
-            {
-                case 1:
-                    ShowGenreMenu();
-                    break;
-                case 2:
-                    ShowComicMenu();
-                    break;
-                case 3:
-                    ShowUserMenu();
-                    break;
-                case 4:
-                    if (UserService.currentUser != null)
-                        ShowPrivateMenu();
-                    else
-                        UserService.Login();
-                    break;
-                case 5:
-                    if (UserService.currentUser != null)
-                        UserService.Logout();
-                    else
-                        UserService.AddUser();
-                    break;
-                case 6:
-                    Console.WriteLine("¡Hasta pronto!");
-                    break;
-                default:
-                    Console.WriteLine("La opción no es correcta");
-                    break;
-            }
         }
 
-        while(option != 6);
-    }
+        while(!exit);
 
+        AnsiConsole.MarkupLine("[bold green]¡Hasta pronto![/]");
+    }
 
 
 
     private void ShowGenreMenu()
     {
-        int option = 0;
+        back = false;
+        string option = "";
 
         do
         {
-            Console.WriteLine("\n--- MENÚ GÉNEROS ---");
 
-            if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
+            var options = GetOptionsGenreMenu();
+            Console.Clear();
+            
+            WriteMenuRule("MENU GËNEROS");
+
+            option = ShowSelectionMenu(options, "Selecciona una opción");
+            options[option].Invoke();
+
+            if (option != "Volver al menú principal")
             {
-                Console.WriteLine("1. Añadir género");
-            }
-            Console.WriteLine("2. Listar géneros");
-            Console.WriteLine("3. Buscar género");
-
-            if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
-            {
-                Console.WriteLine("4. Eliminar género");
-            }
-
-            Console.WriteLine("5. Volver al menú principal");
-            Console.WriteLine("Selecciona una opción:");
-
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida");
-                    continue;
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
             }
 
-            switch (option)
-            {
-                case 1:
-                    if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
-                        GenreService.AddGenre();
-                    else
-                        Console.WriteLine("Error: Por favor selecciona una opción válida");
-                    break;
-                case 2:
-                    GenreService.ShowAllGenres();
-                    break;
-                case 3:
-                    GenreService.SearchGenre();
-                    break;
-                case 4:
-                    if (UserService.currentUser != null && UserService.currentUser.IsAdmin)
-                        GenreService.DeleteGenre();
-                    else
-                        Console.WriteLine("Error: Por favor selecciona una opción válida");
-                    break;
-                case 5:
-                    Console.WriteLine("Volviendo..");
-                    break;
-                default:
-                    Console.WriteLine("La opción no es correcta");
-                    break;
-            }
+            Console.Clear();
 
         }
-        while (option != 5);
+        while (!back);
 
     }
 
@@ -150,104 +76,57 @@ class MenuApp
 
     private void ShowComicMenu()
     {
-        int option = 0;
+        back = false;
+        string option = "";
 
         do
         {
-            Console.WriteLine("\n--- MENÚ COMICS ---");
-            Console.WriteLine("1. Añadir cómic");
-            Console.WriteLine("2. Listar cómics");
-            Console.WriteLine("3. Buscar cómic");
-            Console.WriteLine("4. Eliminar cómic");
-            Console.WriteLine("5. Volver al menú principal");
-            Console.WriteLine("Selecciona una opción:");
 
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
-            {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5)");
-                    continue;
-            }
+            var options = GetOptionsComicMenu();
+            Console.Clear();
 
-            switch (option)
+            WriteMenuRule("MENU CÓMICS");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
+
+            options[option].Invoke();
+            
+            if (option != "Volver al menú principal")
             {
-                case 1:
-                    if (UserService.currentUser != null)
-                        ComicService.AddComic();
-                    else
-                        Console.WriteLine("Debes iniciar sesión para realizar esta acción.");
-                    break;
-                case 2:
-                    ComicService.ShowAllComics();
-                    break;
-                case 3:
-                    ComicService.SearchComic();
-                    break;
-                case 4:
-                    if (UserService.currentUser != null)
-                        ComicService.DeleteComic();
-                    else
-                        Console.WriteLine("Debes iniciar sesión para realizar esta acción.");
-                    break;
-                case 5:
-                    Console.WriteLine("Volviendo..");
-                    break;
-                default:
-                    Console.WriteLine("La opción no es correcta");
-                    break;
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
             }
+            Console.Clear();
 
         }
-        while (option != 5);
+        while (!back);
 
     }
 
 
 
-
     private void ShowUserMenu()
     {
-        int option = 0;
+        back = false;
+        string option = "";
 
         do
         {
-            Console.WriteLine("\n--- MENÚ DE USUARIOS ---");
-            Console.WriteLine("1. Añadir usuario");
-            Console.WriteLine("2. Listar usuarios");
-            Console.WriteLine("3. Buscar usuario");
-            Console.WriteLine("4. Eliminar usuario");
-            Console.WriteLine("5. Volver al menú principal");
-            Console.WriteLine("Selecciona una opción:");
+            var options = GetOptionsUserMenu();
+            AnsiConsole.Clear();
 
-            if (!int.TryParse((string)Console.ReadLine(), out option) || option < 1 || option > 5)
+            WriteMenuRule("MENU USUARIOS");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
+
+            options[option].Invoke();
+            if (option != "Volver al menú principal")
             {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-5).");
-                    continue;
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
             }
-
-            switch (option)
-            {
-                case 1:
-                    UserService.AddUser();
-                    break;
-                case 2:
-                    UserService.ShowAllUsers();
-                    break;
-                case 3:
-                    UserService.SearchUser();
-                    break;
-                case 4:
-                    UserService.DeleteUser();
-                    break;
-                case 5:
-                    Console.WriteLine("Volviendo..");
-                    break;
-                default:
-                    Console.WriteLine("La opción no es correcta");
-                    break;
-            }
-
+            Console.Clear();
+        
         }
-        while (option != 5);
+        while (!back);
 
     }
 
@@ -255,46 +134,165 @@ class MenuApp
 
     private void ShowPrivateMenu()
     {
-        int option = 0;
+        back = false;
+        string option = "";
 
         do
         {
-            Console.WriteLine("\n--- ZONA PRIVADA ---");
-            Console.WriteLine("1. Añadir cómic a mi lista personal");
-            Console.WriteLine("2. Eliminar cómic a mi lista personal");
-            Console.WriteLine("3. Ver mi lista personal de cómics");
-            Console.WriteLine("4. Ver mis datos personales ");
-            Console.WriteLine("5. Volver al menú principal");
+            var options = GetOptionsPrivateMenu();
+            AnsiConsole.Clear();
 
-            Console.WriteLine("Selecciona una opción:");
+            WriteMenuRule("ZONA PRIVADA");
+            option = ShowSelectionMenu(options, "Selecciona una opción");
 
-            if (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 5)
+            options[option].Invoke();
+            if (option != "Volver al menú principal")
             {
-                Console.WriteLine("Error: Por favor selecciona una opción válida (1-4).");
-                continue;
+                AnsiConsole.Write(new Markup("[bold]Presiona [green]Enter[/] para continuar...[/]"));
+                Console.ReadLine();
             }
+            Console.Clear();
+            
+        } while (!back);
+    }
 
-            switch (option)
+    private Dictionary<string, Action> GetOptionsMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Géneros", ShowGenreMenu },
+            { "Cómics", ShowComicMenu },
+        };
+
+        if (UserService.currentUser == null)
+        {
+            options["Iniciar Sesión"] = UserService.Login;
+            options["Registrarse"] = UserService.AddUser;
+        }
+        else
+        {
+            if (UserService.currentUser.IsAdmin)
             {
-                case 1:
-                    UserService.ManageComicsInUserList(UserService.currentUser, true);
-                    break;
-                case 2:
-                    UserService.ManageComicsInUserList(UserService.currentUser, false);
-                    break;
-                case 3:
-                    UserService.ShowUserComics(UserService.currentUser);
-                    break;
-                case 4:
-                    UserService.ViewUserData();
-                    break;
-                case 5:
-                    Console.WriteLine("Volviendo...");
-                    break;
-                default:
-                    Console.WriteLine("La opción no es correcta");
-                    break;
+                options["Usuarios"] = ShowUserMenu;
             }
-        } while (option != 5);
+            options["Zona Privada"] = ShowPrivateMenu;
+            options["Cerrar Sesión"] = UserService.Logout;
+        }
+
+        {
+            options["Salir"] = ExitMenu;
+        }
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsGenreMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Listar géneros", GenreService.ShowAllGenres },
+            { "Buscar género", GenreService.SearchGenre },
+        };
+
+        if (UserService.currentUser?.IsAdmin == true)
+        {
+            options["Añadir género"] = GenreService.AddGenre;
+            options["Eliminar género"] = GenreService.DeleteGenre;
+        }
+
+        {
+            options["Volver al menú principal"] = BackMenu;
+        }
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsComicMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Listar cómics", ComicService.ShowAllComics },
+            { "Buscar cómic", ComicService.SearchComic},
+        };
+
+        if (UserService.currentUser != null)
+        {
+            options["Añadir cómic"] = ComicService.AddComic;
+
+            if (UserService.currentUser.IsAdmin) 
+            {
+                options["Eliminar cómic"] = ComicService.DeleteComic;
+            }
+        }
+            
+        {
+            options["Volver al menú principal"] = BackMenu;
+        }
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsUserMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Añadir usuario", UserService.AddUser },
+            { "Listar usuarios", UserService.ShowAllUsers },
+            { "Buscar usuario", UserService.SearchUser },
+            { "Eliminar usuario", UserService.DeleteUser},
+            { "Volver al menú principal", BackMenu}
+        };
+            
+        return options;
+    }
+
+
+    private Dictionary<string, Action> GetOptionsPrivateMenu()
+    {
+        var options = new Dictionary<string, Action>
+
+        {
+            { "Añadir cómic a la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, true) },
+            { "Eliminar cómic de la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, false) },
+            { "Ver mi lista personal de cómics",() => UserService.ShowUserComics(UserService.currentUser!)},
+            { "Ver mis datos personales", UserService.ViewUserData },
+            { "Volver al menú principal", BackMenu}
+
+        };
+            
+        return options;
+    }
+
+
+    private void ExitMenu()
+    {
+        exit = true;
+    }
+
+    private void BackMenu()
+    {
+        back = true;
+    }
+
+    private string ShowSelectionMenu(Dictionary<string, Action> options, string title)
+    {
+        var highlightStyle = new Style().Foreground(Color.LightSalmon1);
+        return AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title($"[bold yellow4]{title}[/]")
+                .AddChoices(options.Keys)
+                .HighlightStyle(highlightStyle));
+    }
+
+    private void WriteMenuRule(string menuTitle)
+    {
+        AnsiConsole.Write(new Rule($"[bold yellow4] {menuTitle} [/]").RuleStyle("lightsalmon1"));
     }
 }

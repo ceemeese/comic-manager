@@ -13,8 +13,8 @@ ARG DATA_PATH
 
 RUN echo "Path: $DATA_PATH, AppName: $APP_NAME" 
 
-ENV DATA_PATH=/app/data
-ENV APP_NAME=ComicManagerApp
+ENV DATA_PATH "/app/data"
+ENV APP_NAME "ComicManagerApp"
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

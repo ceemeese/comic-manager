@@ -1,11 +1,113 @@
 [
   {
-    "Id": 1,
+    "Id": 3,
     "Name": "Ficcion",
-    "Description": "ficcion",
+    "Description": "Descripcion ficcion",
     "Priority": 1,
-    "Icon": "#23",
-    "Comics": [],
-    "DateCreated": "2025-01-29T16:47:21.943338+01:00"
+    "Icon": "#234324",
+    "Comics": [
+      "Otro"
+    ],
+    "DateCreated": "2025-03-21T18:58:21.738574+01:00",
+    "PercentageOfComics": 14.29,
+    "IsPopular": false
+  },
+  {
+    "Id": 4,
+    "Name": "Fantasia y aventura",
+    "Description": "Descripcion fantasia y aventura",
+    "Priority": 2,
+    "Icon": "#12",
+    "Comics": [
+      "Tintin",
+      "Otro",
+      "NuevoComic",
+      "nuevotest"
+    ],
+    "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+    "PercentageOfComics": 57.14,
+    "IsPopular": true
+  },
+  {
+    "Id": 5,
+    "Name": "Belico",
+    "Description": "Descripcion belico",
+    "Priority": 3,
+    "Icon": "#234",
+    "Comics": [
+      "Otro"
+    ],
+    "DateCreated": "2025-03-21T18:59:58.366644+01:00",
+    "PercentageOfComics": 14.29,
+    "IsPopular": false
+  },
+  {
+    "Id": 6,
+    "Name": "Historico",
+    "Description": "Descripcion historico",
+    "Priority": 1,
+    "Icon": "#34",
+    "Comics": [
+      "Maus",
+      "Otro",
+      "nuevotest"
+    ],
+    "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+    "PercentageOfComics": 42.86,
+    "IsPopular": true
+  },
+  {
+    "Id": 7,
+    "Name": "Test",
+    "Description": "Descripcion test",
+    "Priority": 3,
+    "Icon": "#4",
+    "Comics": [
+      "Otro"
+    ],
+    "DateCreated": "2025-03-21T20:06:01.971059+01:00",
+    "PercentageOfComics": 14.29,
+    "IsPopular": false
+  },
+  {
+    "Id": 8,
+    "Name": "Nuevo",
+    "Description": "descripcion nuevo",
+    "Priority": 1,
+    "Icon": "#1",
+    "Comics": [
+      "nuevotest"
+    ],
+    "DateCreated": "2025-03-21T20:06:21.146071+01:00",
+    "PercentageOfComics": 14.29,
+    "IsPopular": false
+  },
+  {
+    "Id": 9,
+    "Name": "NuevoGenero",
+    "Description": "descripcionnuevo",
+    "Priority": 3,
+    "Icon": "#87",
+    "Comics": [
+      "NuevoComic",
+      "hola",
+      "nuevotest"
+    ],
+    "DateCreated": "2025-03-21T22:21:55.317507+01:00",
+    "PercentageOfComics": 42.86,
+    "IsPopular": true
+  },
+  {
+    "Id": 10,
+    "Name": "hola",
+    "Description": "hola",
+    "Priority": 5,
+    "Icon": "#4",
+    "Comics": [
+      "Prueba"
+    ],
+    "DateCreated": "2025-03-21T22:23:14.103409+01:00",
+    "PercentageOfComics": 14.29,
+    "IsPopular": false
   }
 ]

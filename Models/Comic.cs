@@ -1,4 +1,5 @@
 namespace Models;
+using Spectre.Console;
 
 class InvalidComicException: Exception 
 {
@@ -37,8 +38,13 @@ class Comic
         Webcomic = 7
     }
 
+    public override string ToString()
+    {
+        return Name;
+    }
+
     //Constructor
-    public Comic (string name, string author, string publisher, int yearPublished, decimal price, bool isRead, bool isForAdults, List<Genre> genres, ComicType type)
+    public Comic (string name, string author, string publisher, int yearPublished, decimal price, bool isForAdults, List<Genre> genres, ComicType type)
     {
         Id = nextId;
         nextId++;
@@ -47,7 +53,6 @@ class Comic
         Publisher = publisher;
         YearPublished = yearPublished;
         Price = price;
-        IsRead = isRead;
         IsForAdults = isForAdults;
         Genres = genres ?? new List<Genre>();
         Type = type;
@@ -56,22 +61,64 @@ class Comic
 
     public void ShowComicInformation()
     {
-        string read = IsRead ? "Sí" : "No";
         string adults = IsForAdults ? "Sí" : "No"; 
 
-        Console.WriteLine($"ID: {Id}, Nombre: {Name}, Autor: {Author}, Año: {YearPublished}, Precio: {Price}, Leído: {read}, Es para adultos?: {adults}, Tipo de Cómic: {Type} ");
-        if (Genres != null && Genres.Any()) // Verifica que Genres no sea nulo
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Yellow4);;
+
+
+        table.AddColumn("[bold yellow4]ID[/]");
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Autor[/]");
+        table.AddColumn("[bold yellow4]Año[/]");
+        table.AddColumn("[bold yellow4]Precio[/]");
+        table.AddColumn("[bold yellow4]Es para adultos?[/]");
+        table.AddColumn("[bold yellow4]Tipo de Cómic[/]");
+        table.AddColumn("[bold yellow4]Géneros[/]");
+
+        string genreList = Genres != null && Genres.Any() ? string.Join(", ", Genres.Select(g => g.Name)) : "No tiene géneros";
+
+        table.AddRow(Id.ToString(), Name, Author, YearPublished.ToString(), Price.ToString("C"), adults, Type.ToString(), genreList);
+
+        AnsiConsole.Write(table);
+
+    }
+
+
+    public static Table GenerateComicTable(List<Comic> comics)
+    {
+        var table = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Yellow4);
+
+        table.AddColumn("[bold yellow4]Nombre[/]");
+        table.AddColumn("[bold yellow4]Autor[/]");
+        table.AddColumn("[bold yellow4]Año[/]");
+        table.AddColumn("[bold yellow4]Precio[/]");
+        table.AddColumn("[bold yellow4]Es para adultos?[/]");
+        table.AddColumn("[bold yellow4]Tipo de Cómic[/]");
+        table.AddColumn("[bold yellow4]Géneros[/]");
+
+        foreach (var comic in comics)
         {
-            Console.WriteLine("Géneros:");
-            foreach (var genre in Genres)
-            {
-                Console.WriteLine($"- {genre.Name}");
-            }
+            string adults = comic.IsForAdults ? "Sí" : "No"; 
+            string genreNames = comic.Genres != null && comic.Genres.Any() 
+                ? string.Join(", ", comic.Genres.Select(g => g.Name)) 
+                : "No tiene géneros";
+
+            table.AddRow(
+                comic.Name,
+                comic.Author,
+                comic.YearPublished.ToString(),
+                comic.Price.ToString("C"),
+                adults,
+                comic.Type.ToString(),
+                genreNames
+            );
         }
-        else
-        {
-            Console.WriteLine("Este cómic no tiene géneros asociados.");
-        }
+
+        return table;
     }
 
 }
