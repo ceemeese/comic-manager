@@ -79,9 +79,12 @@ class ComicService
             foreach (var genre in selectedGenres)
             {
                 genre.Comics.Add(comic.Name);
+                genre.UpdatePercentage(comics.Count + 1);
+                genre.UpdatePopularity();
             }
 
             comics.Add(comic);
+            GenreService.UpdateGenrePercentages(comics.Count);
             JsonUtils.SaveDataToJson(comics, Constants.ComicsFileName);
             JsonUtils.SaveDataToJson(GenreService.genres, Constants.GenresFileName);
                 
@@ -117,7 +120,6 @@ class ComicService
     // Mostrar la tabla con todos los cómics
         AnsiConsole.Write(table);
     }
-
 
     
     public static void SearchComic()

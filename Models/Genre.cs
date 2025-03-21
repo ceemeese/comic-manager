@@ -21,27 +21,32 @@ class Genre
     public string Icon { get; set; }
     public List<string> Comics { get; set; }
     public DateTime? DateCreated { get; private set; }
+    public decimal PercentageOfComics { get; private set; }
+    public bool IsPopular { get; private set; } = false;
 
     public override string ToString()
     {
         return Name;
     }
-    
 
-    public Genre (string name, string description, int priority, string icon, DateTime? dateCreated = null) {
+
+    public Genre (string name, string description, int priority, string icon, DateTime? dateCreated = null, decimal percentageOfComics = 0, bool isPopular = false) {
         Id = nextId;
         nextId++;
         Name = name;
         Description = description;
         Priority = priority;
         Icon = icon;
-        Comics = Comics = new List<string>();
+        Comics =  new List<string>();
         DateCreated = dateCreated ?? DateTime.Now;
-        
+        PercentageOfComics = percentageOfComics;
+        IsPopular = isPopular;
     }
 
     public void ShowGenreInformation()
     {
+        string popularityStatus = IsPopular ? "[bold green]Popular[/]" : "[bold red]No Popular[/]";
+
         AnsiConsole.Write(new Rule($"[yellow4]Detalles del género[/]").RuleStyle("lightsalmon1"));
 
         string comicsText = string.Join("\n", Comics 
@@ -52,7 +57,9 @@ class Genre
             $"[bold yellow4]{Name}[/]\n\n" +
             $"[bold]Descripción:[/] {Description}\n" +
             $"[bold]Icono:[/] {Icon}\n" +
-            $"[bold]Fecha Creación:[/] {DateCreated:g}";
+            $"[bold]Fecha Creación:[/] {DateCreated:g}\n" +
+            $"[bold]Es popular? [/] {popularityStatus}\n"+            
+            $"[bold]Porcentaje de cómics de este género:[/] {PercentageOfComics}%";
 
 
         // Crear layout
@@ -83,6 +90,33 @@ class Genre
 
         AnsiConsole.Write(layout);
 
+    }
+
+
+    /*private void CalculatePercentajeComics(List<Comic> comicsTotal)
+    {
+        int comicTotalCount = comicsTotal.Count;
+        PercentageOfComics =  (Comics.Count / comicTotalCount) * 100;
+    }*/
+
+    public void UpdatePercentage(int totalComics)
+    {
+        if (totalComics > 0)
+        {
+            PercentageOfComics = Math.Round((decimal)Comics.Count * 100 / totalComics, 2);
+        }
+    }
+
+
+    public void UpdatePopularity()
+    {
+        
+        decimal popularThresholdPercentage = 20;
+
+        if (PercentageOfComics > popularThresholdPercentage )
+        {
+            IsPopular = true;
+        }
     }
 }
 

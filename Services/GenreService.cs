@@ -1,6 +1,5 @@
 namespace Services;
 
-using System.Linq.Expressions;
 using Models;
 using Spectre.Console;
 using Utils;
@@ -78,11 +77,24 @@ class GenreService
 
         var panel = new Panel(genresText)
             .Header("Géneros")
-            .Padding(3, 3, 3, 3)
+            .Padding(2, 2, 2, 2)
             .BorderColor(Color.Yellow4)
             .Border(BoxBorder.Double);
 
         AnsiConsole.Write(panel);
+
+        var chart = new BarChart()
+            .Width(60)
+            .Label("[yellow4 bold underline]Porcentaje de cómics por género[/]\n");
+
+        foreach (var genre in genres)
+        {
+            Color barColor = genre.PercentageOfComics > 50 ? Color.PaleGreen1_1 : Color.Maroon;
+            chart.AddItem($"{genre.Name}\n", (double)genre.PercentageOfComics, barColor);
+        }
+
+        AnsiConsole.Write(chart);
+
     }
      
 
@@ -175,6 +187,15 @@ class GenreService
         {
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
+        }
+    }
+
+
+    public static void UpdateGenrePercentages(int totalComics)
+    {
+        foreach (var genre in genres)
+        {
+            genre.UpdatePercentage(totalComics);
         }
     }
 }

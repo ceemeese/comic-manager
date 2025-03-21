@@ -10,29 +10,53 @@
     "PersonalComics": [
       {
         "Id": 1,
-        "Name": "hola",
-        "Author": "hola",
-        "Publisher": "3",
-        "YearPublished": 1992,
-        "Price": 4,
+        "Name": "Tintin",
+        "Author": "Hedge",
+        "Publisher": "Planeta",
+        "YearPublished": 1954,
+        "Price": 4.5,
         "IsRead": false,
-        "IsForAdults": false,
+        "IsForAdults": true,
         "Genres": [
           {
-            "Id": 1,
-            "Name": "Genero",
-            "Description": "genero",
-            "Priority": 3,
-            "Icon": "#234",
+            "Id": 5,
+            "Name": "Fantasia y aventura",
+            "Description": "Descripcion fantasia y aventura",
+            "Priority": 2,
+            "Icon": "#12",
             "Comics": [
-              "hola",
-              "hola",
-              "test"
+              "Tintin"
             ],
-            "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+            "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+            "PercentageOfComics": 0
           }
         ],
-        "Type": 1
+        "Type": 2
+      },
+      {
+        "Id": 2,
+        "Name": "Maus",
+        "Author": "Art Spielgemen",
+        "Publisher": "Reservoir Books",
+        "YearPublished": 1986,
+        "Price": 23,
+        "IsRead": false,
+        "IsForAdults": true,
+        "Genres": [
+          {
+            "Id": 6,
+            "Name": "Historico",
+            "Description": "Descripcion historico",
+            "Priority": 1,
+            "Icon": "#34",
+            "Comics": [
+              "Maus"
+            ],
+            "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+            "PercentageOfComics": 0
+          }
+        ],
+        "Type": 2
       }
     ]
   },

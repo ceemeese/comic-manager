@@ -1,5 +1,3 @@
-using System.Net.Http.Headers;
-using Models;
 using Services;
 using Spectre.Console;
 
@@ -174,13 +172,12 @@ class MenuApp
         }
         else
         {
-            options["Zona Privada"] = ShowPrivateMenu;
-            options["Cerrar Sesión"] = UserService.Logout;
-
             if (UserService.currentUser.IsAdmin)
             {
                 options["Usuarios"] = ShowUserMenu;
             }
+            options["Zona Privada"] = ShowPrivateMenu;
+            options["Cerrar Sesión"] = UserService.Logout;
         }
 
         {

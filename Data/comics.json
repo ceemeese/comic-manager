@@ -1,28 +1,301 @@
 [
   {
-    "Id": 2,
-    "Name": "hola",
-    "Author": "hola",
-    "Publisher": "3",
-    "YearPublished": 1992,
-    "Price": 4,
+    "Id": 3,
+    "Name": "Tintin",
+    "Author": "Hedge",
+    "Publisher": "Planeta",
+    "YearPublished": 1954,
+    "Price": 4.5,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 11,
+        "Name": "Fantasia y aventura",
+        "Description": "Descripcion fantasia y aventura",
+        "Priority": 2,
+        "Icon": "#12",
+        "Comics": [
+          "Tintin"
+        ],
+        "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+        "PercentageOfComics": 0,
+        "IsPopular": false
+      }
+    ],
+    "Type": 2
+  },
+  {
+    "Id": 4,
+    "Name": "Maus",
+    "Author": "Art Spielgemen",
+    "Publisher": "Reservoir Books",
+    "YearPublished": 1986,
+    "Price": 23,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 12,
+        "Name": "Historico",
+        "Description": "Descripcion historico",
+        "Priority": 1,
+        "Icon": "#34",
+        "Comics": [
+          "Maus"
+        ],
+        "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+        "PercentageOfComics": 0,
+        "IsPopular": false
+      }
+    ],
+    "Type": 2
+  },
+  {
+    "Id": 5,
+    "Name": "Otro",
+    "Author": "Otro",
+    "Publisher": "otro",
+    "YearPublished": 1940,
+    "Price": 7,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 13,
+        "Name": "Ficcion",
+        "Description": "Descripcion ficcion",
+        "Priority": 1,
+        "Icon": "#234324",
+        "Comics": [
+          "Otro"
+        ],
+        "DateCreated": "2025-03-21T18:58:21.738574+01:00",
+        "PercentageOfComics": 33.33,
+        "IsPopular": false
+      },
+      {
+        "Id": 14,
+        "Name": "Fantasia y aventura",
+        "Description": "Descripcion fantasia y aventura",
+        "Priority": 2,
+        "Icon": "#12",
+        "Comics": [
+          "Tintin",
+          "Otro"
+        ],
+        "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+        "PercentageOfComics": 66.67,
+        "IsPopular": false
+      },
+      {
+        "Id": 15,
+        "Name": "Belico",
+        "Description": "Descripcion belico",
+        "Priority": 3,
+        "Icon": "#234",
+        "Comics": [
+          "Otro"
+        ],
+        "DateCreated": "2025-03-21T18:59:58.366644+01:00",
+        "PercentageOfComics": 33.33,
+        "IsPopular": false
+      },
+      {
+        "Id": 16,
+        "Name": "Historico",
+        "Description": "Descripcion historico",
+        "Priority": 1,
+        "Icon": "#34",
+        "Comics": [
+          "Maus",
+          "Otro"
+        ],
+        "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+        "PercentageOfComics": 66.67,
+        "IsPopular": false
+      },
+      {
+        "Id": 17,
+        "Name": "Test",
+        "Description": "Descripcion test",
+        "Priority": 3,
+        "Icon": "#4",
+        "Comics": [
+          "Otro"
+        ],
+        "DateCreated": "2025-03-21T20:06:01.971059+01:00",
+        "PercentageOfComics": 33.33,
+        "IsPopular": false
+      }
+    ],
+    "Type": 1
+  },
+  {
+    "Id": 6,
+    "Name": "NuevoComic",
+    "Author": "Nuevo",
+    "Publisher": "nuevo",
+    "YearPublished": 1900,
+    "Price": 7,
     "IsRead": false,
     "IsForAdults": false,
     "Genres": [
       {
-        "Id": 2,
-        "Name": "Genero",
-        "Description": "genero",
-        "Priority": 3,
-        "Icon": "#234",
+        "Id": 18,
+        "Name": "Fantasia y aventura",
+        "Description": "Descripcion fantasia y aventura",
+        "Priority": 2,
+        "Icon": "#12",
         "Comics": [
-          "hola",
-          "hola",
-          "test"
+          "Tintin",
+          "Otro",
+          "NuevoComic"
         ],
-        "DateCreated": "2025-03-03T10:14:09.591345+01:00"
+        "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+        "PercentageOfComics": 60,
+        "IsPopular": false
+      },
+      {
+        "Id": 19,
+        "Name": "NuevoGenero",
+        "Description": "descripcionnuevo",
+        "Priority": 3,
+        "Icon": "#87",
+        "Comics": [
+          "NuevoComic",
+          "hola"
+        ],
+        "DateCreated": "2025-03-21T22:21:55.317507+01:00",
+        "PercentageOfComics": 40,
+        "IsPopular": false
+      }
+    ],
+    "Type": 2
+  },
+  {
+    "Id": 7,
+    "Name": "hola",
+    "Author": "hola",
+    "Publisher": "hola",
+    "YearPublished": 1980,
+    "Price": 0.5,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 20,
+        "Name": "NuevoGenero",
+        "Description": "descripcionnuevo",
+        "Priority": 3,
+        "Icon": "#87",
+        "Comics": [
+          "NuevoComic",
+          "hola"
+        ],
+        "DateCreated": "2025-03-21T22:21:55.317507+01:00",
+        "PercentageOfComics": 40,
+        "IsPopular": false
       }
     ],
     "Type": 1
+  },
+  {
+    "Id": 8,
+    "Name": "Prueba",
+    "Author": "prueba",
+    "Publisher": "prueba",
+    "YearPublished": 2000,
+    "Price": 0.3,
+    "IsRead": false,
+    "IsForAdults": false,
+    "Genres": [
+      {
+        "Id": 21,
+        "Name": "hola",
+        "Description": "hola",
+        "Priority": 5,
+        "Icon": "#4",
+        "Comics": [
+          "Prueba"
+        ],
+        "DateCreated": "2025-03-21T22:23:14.103409+01:00",
+        "PercentageOfComics": 16.67,
+        "IsPopular": false
+      }
+    ],
+    "Type": 3
+  },
+  {
+    "Id": 9,
+    "Name": "nuevotest",
+    "Author": "nuevotest",
+    "Publisher": "nuevotest",
+    "YearPublished": 2020,
+    "Price": 9,
+    "IsRead": false,
+    "IsForAdults": true,
+    "Genres": [
+      {
+        "Id": 4,
+        "Name": "Fantasia y aventura",
+        "Description": "Descripcion fantasia y aventura",
+        "Priority": 2,
+        "Icon": "#12",
+        "Comics": [
+          "Tintin",
+          "Otro",
+          "NuevoComic",
+          "nuevotest"
+        ],
+        "DateCreated": "2025-03-21T18:59:25.898296+01:00",
+        "PercentageOfComics": 57.14,
+        "IsPopular": true
+      },
+      {
+        "Id": 6,
+        "Name": "Historico",
+        "Description": "Descripcion historico",
+        "Priority": 1,
+        "Icon": "#34",
+        "Comics": [
+          "Maus",
+          "Otro",
+          "nuevotest"
+        ],
+        "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+        "PercentageOfComics": 42.86,
+        "IsPopular": true
+      },
+      {
+        "Id": 8,
+        "Name": "Nuevo",
+        "Description": "descripcion nuevo",
+        "Priority": 1,
+        "Icon": "#1",
+        "Comics": [
+          "nuevotest"
+        ],
+        "DateCreated": "2025-03-21T20:06:21.146071+01:00",
+        "PercentageOfComics": 14.29,
+        "IsPopular": false
+      },
+      {
+        "Id": 9,
+        "Name": "NuevoGenero",
+        "Description": "descripcionnuevo",
+        "Priority": 3,
+        "Icon": "#87",
+        "Comics": [
+          "NuevoComic",
+          "hola",
+          "nuevotest"
+        ],
+        "DateCreated": "2025-03-21T22:21:55.317507+01:00",
+        "PercentageOfComics": 42.86,
+        "IsPopular": true
+      }
+    ],
+    "Type": 2
   }
 ]
