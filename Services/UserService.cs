@@ -310,6 +310,18 @@ class UserService
 
     public static void Logout()
     {
+        var sureExit = AnsiConsole.Prompt(
+            new TextPrompt<bool>("[yellow4]Seguro que quieres cerrar la sesión?[/]")
+                .AddChoice(true)
+                .AddChoice(false)
+                .DefaultValue(false)
+                .WithConverter(choice => choice ? "si" : "no"));
+
+        if (!sureExit)
+            {
+                return;
+            }
+
         if (currentUser != null)
         {
             AnsiConsole.MarkupLine($"[bold purple]Hasta pronto, {currentUser.Name}![/]");
