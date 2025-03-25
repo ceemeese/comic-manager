@@ -7,13 +7,13 @@ using Spectre.Console;
 
 class ComicService
 {
-    //public static List<Comic> comics = new List<Comic>();
+    
     public static List<Comic> comics = JsonUtils.LoadDataJson<Comic>(Constants.ComicsFileName) ?? new List<Comic>();
 
 
     public ComicService()
     {
-        //comics = new List<Comic>();
+          
     }
 
 

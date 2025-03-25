@@ -7,11 +7,11 @@ using Utils;
 class GenreService
 {
     public static List<Genre> genres = JsonUtils.LoadDataJson<Genre>(Constants.GenresFileName) ?? new List<Genre>();
-    //public static List<Genre> genres = new List<Genre>();
+    
     
     public GenreService()
     {
-        //genres = new List<Genre>();
+        
     }
 
 

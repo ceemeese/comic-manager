@@ -36,39 +36,7 @@ class UserService
             }
             
             string password = AskValidInput("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):", ValidationUtils.IsValidPassword, "La contraseña no es válida");
-                
-            /*string mail;
-            while(true)
-            {
-                mail = AnsiConsole.Ask<string>("[yellow4]Correo:[/]");
-                if (ValidationUtils.IsValidMail(mail))
-                {
-                    if (users.Any(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase)))
-                    {
-                    throw new InvalidUserException("[darkred]Error:[/] Ya existe un usuario con este mail");
-                    }
-                    break;
-                }
-                else
-                {
-                    AnsiConsole.MarkupLine("[darkred]Error:[/] El correo no es válido");
-                }
-            }*/
-
             
-            /*string password;
-            while(true)
-            {
-                password = AnsiConsole.Ask<string>("[yellow4]Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):[/]");
-                if (ValidationUtils.IsValidPassword(password))
-                {
-                    break;
-                }
-                else
-                {
-                    AnsiConsole.MarkupLine("[darkred]Error:[/] La contraseña no és válida");
-                }
-            }*/
 
             string telephone = AnsiConsole.Ask<string>("[yellow4]Teléfono:[/]");
 
