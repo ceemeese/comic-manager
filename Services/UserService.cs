@@ -8,14 +8,11 @@ class UserService
 {
     public static List<User> users = JsonUtils.LoadDataJson<User>(Constants.UsersFileName) ?? new List<User>();
     public static User? currentUser = null;
-    //public static List<User> users = new List<User>();
-
 
     public UserService()
     {
 
     }
-
 
 
     public static void AddUser()
@@ -26,28 +23,40 @@ class UserService
             AnsiConsole.MarkupLine("[bold underline]___NUEVO USUARIO___[/]");
             string name = AnsiConsole.Ask<string>("[yellow4]Nombre:[/]");
 
-            
             string mail;
+            while (true)
+            {
+                mail = AskValidInput("Correo:", ValidationUtils.IsValidMail, "El correo no es válido");
+
+                if (!users.Any(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase)))
+                {
+                    break;
+                }
+                AnsiConsole.MarkupLine("[darkred]Error:[/] Ya existe un usuario con este mail");
+            }
+            
+            string password = AskValidInput("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):", ValidationUtils.IsValidPassword, "La contraseña no es válida");
+                
+            /*string mail;
             while(true)
             {
                 mail = AnsiConsole.Ask<string>("[yellow4]Correo:[/]");
                 if (ValidationUtils.IsValidMail(mail))
                 {
+                    if (users.Any(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase)))
+                    {
+                    throw new InvalidUserException("[darkred]Error:[/] Ya existe un usuario con este mail");
+                    }
                     break;
                 }
                 else
                 {
                     AnsiConsole.MarkupLine("[darkred]Error:[/] El correo no es válido");
                 }
-            }
+            }*/
 
-            if (users.Any(u => u.Mail.Equals(mail, StringComparison.OrdinalIgnoreCase)))
-            {
-            throw new InvalidComicException("[darkred]Error:[/] Ya existe un usuario con este mail");
-            }
-
-
-            string password;
+            
+            /*string password;
             while(true)
             {
                 password = AnsiConsole.Ask<string>("[yellow4]Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):[/]");
@@ -59,7 +68,7 @@ class UserService
                 {
                     AnsiConsole.MarkupLine("[darkred]Error:[/] La contraseña no és válida");
                 }
-            }
+            }*/
 
             string telephone = AnsiConsole.Ask<string>("[yellow4]Teléfono:[/]");
 
@@ -272,12 +281,13 @@ class UserService
     {
         AnsiConsole.MarkupLine("[bold underline]__LOGIN__[/]");
 
+
         string mail = AnsiConsole.Prompt(
         new TextPrompt<string>("[yellow4]Mail:[/]")
             .Validate(input => string.IsNullOrEmpty(input) ? ValidationResult.Error("[darkred]El mail no puede estar vacío[/]") : ValidationResult.Success())
         );
 
-
+        
         string password = AnsiConsole.Prompt(
         new TextPrompt<string>("[yellow4]Password:[/]")
             .Secret()
@@ -317,4 +327,69 @@ class UserService
         currentUser?.ShowUserInformation();
     }
 
+
+    public static void PutUserData() {
+
+        if (currentUser != null)
+        {
+            currentUser.ShowUserInformation();
+
+            var modifyOption = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Qué dato quieres modificar?")
+                    .PageSize(10)
+                    .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+                    .AddChoices(new[] {
+                        "Email", "Password", "Teléfono"
+                    }));
+
+            switch (modifyOption)
+            {
+                case "Email":
+                string newMail;
+                    while (true)
+                    {
+                        newMail = AskValidInput("Correo:", ValidationUtils.IsValidMail, "El correo no es válido");
+
+                        if (!users.Any(u => u.Mail.Equals(newMail, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            break;
+                        }
+                        AnsiConsole.MarkupLine("[darkred]Error:[/] Ya existe un usuario con este mail");
+                    }
+                    currentUser.Mail = newMail;
+                    break;  
+                case "Password":
+                    string newPassword = AskValidInput("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):", ValidationUtils.IsValidPassword, "La contraseña no es válida");
+                    currentUser.Password = newPassword;
+                    break;
+                case "Teléfono":
+                    string newTelephone = AnsiConsole.Ask<string>("[yellow4]Nuevo teléfono:[/]");
+                    currentUser.Telephone = newTelephone;
+                    break;
+            }
+
+
+            AnsiConsole.MarkupLine("[green]Usuario modificado correctamente[/]");
+            currentUser.ShowUserInformation();
+            JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+        }
+    }
+
+
+    public static string AskValidInput(string promptMessage, Func<string, bool> validationFunc, string errorMessage)
+    {
+        while (true)
+        {
+            string input = AnsiConsole.Ask<string>($"[yellow4]{promptMessage}[/]");
+            if (validationFunc(input))
+            {
+                return input;
+            }
+            AnsiConsole.MarkupLine($"[darkred]Error:[/] {errorMessage}");
+        }
+    }
+
 }
+
+

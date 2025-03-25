@@ -54,7 +54,7 @@ class MenuApp
             var options = GetOptionsGenreMenu();
             Console.Clear();
             
-            WriteMenuRule("MENU GËNEROS");
+            WriteMenuRule("MENU GÉNEROS");
 
             option = ShowSelectionMenu(options, "Selecciona una opción");
             options[option].Invoke();
@@ -263,6 +263,7 @@ class MenuApp
             { "Eliminar cómic de la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, false) },
             { "Ver mi lista personal de cómics",() => UserService.ShowUserComics(UserService.currentUser!)},
             { "Ver mis datos personales", UserService.ViewUserData },
+            { "Modificar datos personales", UserService.PutUserData },
             { "Volver al menú principal", BackMenu}
 
         };

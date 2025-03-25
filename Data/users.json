@@ -5,7 +5,7 @@
     "Mail": "cris@mail.com",
     "Password": "A1aaaaaa",
     "DateCreated": "2025-01-29T11:34:30.763981+01:00",
-    "Telephone": "666666666",
+    "Telephone": "777777777",
     "IsAdmin": true,
     "PersonalComics": [
       {
@@ -19,7 +19,7 @@
         "IsForAdults": true,
         "Genres": [
           {
-            "Id": 5,
+            "Id": 1,
             "Name": "Fantasia y aventura",
             "Description": "Descripcion fantasia y aventura",
             "Priority": 2,
@@ -28,7 +28,8 @@
               "Tintin"
             ],
             "DateCreated": "2025-03-21T18:59:25.898296+01:00",
-            "PercentageOfComics": 0
+            "PercentageOfComics": 0,
+            "IsPopular": false
           }
         ],
         "Type": 2
@@ -44,7 +45,7 @@
         "IsForAdults": true,
         "Genres": [
           {
-            "Id": 6,
+            "Id": 2,
             "Name": "Historico",
             "Description": "Descripcion historico",
             "Priority": 1,
@@ -53,7 +54,8 @@
               "Maus"
             ],
             "DateCreated": "2025-03-21T19:00:22.28916+01:00",
-            "PercentageOfComics": 0
+            "PercentageOfComics": 0,
+            "IsPopular": false
           }
         ],
         "Type": 2
@@ -107,6 +109,26 @@
     "Password": "A1aaaaaa",
     "DateCreated": "2025-03-19T12:31:13.89477+01:00",
     "Telephone": "234234",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 7,
+    "Name": "NuevoUsuario",
+    "Mail": "nuevousuario@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-03-22T11:20:02.193445+01:00",
+    "Telephone": "657545644",
+    "IsAdmin": false,
+    "PersonalComics": []
+  },
+  {
+    "Id": 8,
+    "Name": "hola",
+    "Mail": "holanuevo@mail.com",
+    "Password": "A1aaaaaa",
+    "DateCreated": "2025-03-22T11:54:16.316574+01:00",
+    "Telephone": "654345345",
     "IsAdmin": false,
     "PersonalComics": []
   }
