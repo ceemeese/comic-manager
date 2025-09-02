@@ -1,113 +1,61 @@
 [
   {
-    "Id": 3,
+    "Id": 1,
     "Name": "Ficcion",
     "Description": "Descripcion ficcion",
     "Priority": 1,
     "Icon": "#234324",
     "Comics": [
-      "Otro"
+      "Tintin"
     ],
     "DateCreated": "2025-03-21T18:58:21.738574+01:00",
-    "PercentageOfComics": 14.29,
-    "IsPopular": false
+    "PercentageOfComics": 100,
+    "IsPopular": true
   },
   {
-    "Id": 4,
+    "Id": 2,
     "Name": "Fantasia y aventura",
     "Description": "Descripcion fantasia y aventura",
     "Priority": 2,
     "Icon": "#12",
-    "Comics": [
-      "Tintin",
-      "Otro",
-      "NuevoComic",
-      "nuevotest"
-    ],
+    "Comics": [],
     "DateCreated": "2025-03-21T18:59:25.898296+01:00",
-    "PercentageOfComics": 57.14,
+    "PercentageOfComics": 0,
     "IsPopular": true
   },
   {
-    "Id": 5,
+    "Id": 3,
     "Name": "Belico",
     "Description": "Descripcion belico",
     "Priority": 3,
     "Icon": "#234",
-    "Comics": [
-      "Otro"
-    ],
+    "Comics": [],
     "DateCreated": "2025-03-21T18:59:58.366644+01:00",
-    "PercentageOfComics": 14.29,
-    "IsPopular": false
+    "PercentageOfComics": 0,
+    "IsPopular": true
   },
   {
-    "Id": 6,
+    "Id": 4,
     "Name": "Historico",
     "Description": "Descripcion historico",
     "Priority": 1,
     "Icon": "#34",
-    "Comics": [
-      "Maus",
-      "Otro",
-      "nuevotest"
-    ],
+    "Comics": [],
     "DateCreated": "2025-03-21T19:00:22.28916+01:00",
-    "PercentageOfComics": 42.86,
+    "PercentageOfComics": 0,
     "IsPopular": true
   },
   {
-    "Id": 7,
+    "Id": 5,
     "Name": "Test",
     "Description": "Descripcion test",
     "Priority": 3,
     "Icon": "#4",
     "Comics": [
-      "Otro"
+      "Tintin"
     ],
     "DateCreated": "2025-03-21T20:06:01.971059+01:00",
-    "PercentageOfComics": 14.29,
-    "IsPopular": false
-  },
-  {
-    "Id": 8,
-    "Name": "Nuevo",
-    "Description": "descripcion nuevo",
-    "Priority": 1,
-    "Icon": "#1",
-    "Comics": [
-      "nuevotest"
-    ],
-    "DateCreated": "2025-03-21T20:06:21.146071+01:00",
-    "PercentageOfComics": 14.29,
-    "IsPopular": false
-  },
-  {
-    "Id": 9,
-    "Name": "NuevoGenero",
-    "Description": "descripcionnuevo",
-    "Priority": 3,
-    "Icon": "#87",
-    "Comics": [
-      "NuevoComic",
-      "hola",
-      "nuevotest"
-    ],
-    "DateCreated": "2025-03-21T22:21:55.317507+01:00",
-    "PercentageOfComics": 42.86,
+    "PercentageOfComics": 100,
     "IsPopular": true
-  },
-  {
-    "Id": 10,
-    "Name": "hola",
-    "Description": "hola",
-    "Priority": 5,
-    "Icon": "#4",
-    "Comics": [
-      "Prueba"
-    ],
-    "DateCreated": "2025-03-21T22:23:14.103409+01:00",
-    "PercentageOfComics": 14.29,
-    "IsPopular": false
   }
 ]

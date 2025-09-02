@@ -9,7 +9,7 @@ class InvalidComicException: Exception
     }
 }
 
-class Comic 
+class Comic
 {
     //Variable para autoincremento
     private static int nextId = 1;
@@ -22,9 +22,10 @@ class Comic
     public decimal Price { get; set; }
     public bool IsRead { get; set; } = false;
     public bool IsForAdults { get; set; } = true;
+    public DateTime? DateAdded { get; set; }
     public List<Genre> Genres { get; set; } = new List<Genre>();
     public ComicType Type { get; set; }
-    
+
 
 
     public enum ComicType
@@ -44,7 +45,7 @@ class Comic
     }
 
     //Constructor
-    public Comic (string name, string author, string publisher, int yearPublished, decimal price, bool isForAdults, List<Genre> genres, ComicType type)
+    public Comic(string name, string author, string publisher, int yearPublished, decimal price, bool isForAdults, List<Genre> genres, ComicType type)
     {
         Id = nextId;
         nextId++;
@@ -61,11 +62,11 @@ class Comic
 
     public void ShowComicInformation()
     {
-        string adults = IsForAdults ? "Sí" : "No"; 
+        string adults = IsForAdults ? "Sí" : "No";
 
         var table = new Table()
             .Border(TableBorder.Rounded)
-            .BorderColor(Color.Yellow4);;
+            .BorderColor(Color.Yellow4); ;
 
 
         table.AddColumn("[bold yellow4]ID[/]");
@@ -102,9 +103,9 @@ class Comic
 
         foreach (var comic in comics)
         {
-            string adults = comic.IsForAdults ? "Sí" : "No"; 
-            string genreNames = comic.Genres != null && comic.Genres.Any() 
-                ? string.Join(", ", comic.Genres.Select(g => g.Name)) 
+            string adults = comic.IsForAdults ? "Sí" : "No";
+            string genreNames = comic.Genres != null && comic.Genres.Any()
+                ? string.Join(", ", comic.Genres.Select(g => g.Name))
                 : "No tiene géneros";
 
             table.AddRow(
@@ -119,6 +120,12 @@ class Comic
         }
 
         return table;
+    }
+    
+
+    public void MarkAsAdded()
+    {
+        DateAdded = DateTime.Now;
     }
 
 }
