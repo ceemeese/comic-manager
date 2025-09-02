@@ -22,12 +22,13 @@ class User
     public string Telephone { get; set; }
     public bool IsAdmin { get; set; } = false;
     public List<Comic> PersonalComics { get; set; }
+    public decimal TotalValue => PersonalComics?.Sum(c => c.Price) ?? 0m;
     
 
 
 
     //Constructor
-    public User(string name, string mail, string password, string telephone, bool isAdmin, DateTime? dateCreated = null ) 
+    public User(string name, string mail, string password, string telephone, bool isAdmin, DateTime? dateCreated = null)
     {
         Id = nextId;
         nextId++;

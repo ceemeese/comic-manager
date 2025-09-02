@@ -243,14 +243,17 @@ class UserService
             var table = new Table()
                 .AddColumn("[bold]Nombre[/]")
                 .AddColumn("[bold]Autor[/]")
-                .AddColumn("[bold]Fecha registro en lista personal:[/]"); 
+                .AddColumn("[bold]Fecha registro en lista personal:[/]")
+                .AddColumn("[bold]Precio:[/]");
 
             foreach (var comic in user.PersonalComics)
             {
-                table.AddRow(comic.Name, comic.Author, comic.DateAdded?.ToString("d") ?? "No es posible recuperar fecha");
+                table.AddRow(comic.Name, comic.Author, comic.DateAdded?.ToString("d") ?? "No es posible recuperar fecha", comic.Price.ToString("C"));
             }
 
             AnsiConsole.Write(table);
+
+            AnsiConsole.MarkupLine($"[bold]Inversión total:[/] {user.TotalValue:C}");
         }
         else
         {
