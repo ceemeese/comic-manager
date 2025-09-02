@@ -1,61 +1,50 @@
 [
   {
-    "Id": 2,
-    "Name": "Cris",
-    "Mail": "cris@mail.com",
+    "Id": 1,
+    "Name": "Admin",
+    "Mail": "admin@mail.com",
     "Password": "A1aaaaaa",
     "DateCreated": "2025-01-29T11:34:30.763981+01:00",
     "Telephone": "777777777",
     "IsAdmin": true,
     "PersonalComics": [
       {
-        "Id": 1,
+        "Id": 3,
         "Name": "Tintin",
-        "Author": "Hedge",
-        "Publisher": "Planeta",
-        "YearPublished": 1954,
-        "Price": 4.5,
+        "Author": "test",
+        "Publisher": "test",
+        "YearPublished": 1992,
+        "Price": 6,
         "IsRead": false,
-        "IsForAdults": true,
+        "IsForAdults": false,
+        "DateCreated": "2025-09-02T14:27:40.243337+02:00",
+        "DateAdded": "2025-09-02T14:27:40.243344+02:00",
         "Genres": [
           {
             "Id": 1,
-            "Name": "Fantasia y aventura",
-            "Description": "Descripcion fantasia y aventura",
-            "Priority": 2,
-            "Icon": "#12",
+            "Name": "Ficcion",
+            "Description": "Descripcion ficcion",
+            "Priority": 1,
+            "Icon": "#234324",
             "Comics": [
               "Tintin"
             ],
-            "DateCreated": "2025-03-21T18:59:25.898296+01:00",
-            "PercentageOfComics": 0,
-            "IsPopular": false
-          }
-        ],
-        "Type": 2
-      },
-      {
-        "Id": 2,
-        "Name": "Maus",
-        "Author": "Art Spielgemen",
-        "Publisher": "Reservoir Books",
-        "YearPublished": 1986,
-        "Price": 23,
-        "IsRead": false,
-        "IsForAdults": true,
-        "Genres": [
+            "DateCreated": "2025-03-21T18:58:21.738574+01:00",
+            "PercentageOfComics": 100,
+            "IsPopular": true
+          },
           {
             "Id": 2,
-            "Name": "Historico",
-            "Description": "Descripcion historico",
-            "Priority": 1,
-            "Icon": "#34",
+            "Name": "Test",
+            "Description": "Descripcion test",
+            "Priority": 3,
+            "Icon": "#4",
             "Comics": [
-              "Maus"
+              "Tintin"
             ],
-            "DateCreated": "2025-03-21T19:00:22.28916+01:00",
-            "PercentageOfComics": 0,
-            "IsPopular": false
+            "DateCreated": "2025-03-21T20:06:01.971059+01:00",
+            "PercentageOfComics": 100,
+            "IsPopular": true
           }
         ],
         "Type": 2
@@ -63,73 +52,55 @@
     ]
   },
   {
-    "Id": 3,
-    "Name": "Testuser",
-    "Mail": "t@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-01-30T11:34:30.905826+01:00",
-    "Telephone": "999999999",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 4,
-    "Name": "nuevo",
-    "Mail": "nuevo@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-03-03T10:09:25.288472+01:00",
-    "Telephone": "111111111",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 5,
-    "Name": "test",
+    "Id": 2,
+    "Name": "Test",
     "Mail": "test@mail.com",
     "Password": "A1aaaaaa",
-    "DateCreated": "2025-03-03T10:16:56.587289+01:00",
-    "Telephone": "111111111",
+    "DateCreated": "2025-09-02T14:12:09.305122+02:00",
+    "Telephone": "11111111111",
     "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 5,
-    "Name": "hola",
-    "Mail": "hola@mail.com",
-    "Password": "Aa1aaaaa",
-    "DateCreated": "2025-03-19T12:28:36.40355+01:00",
-    "Telephone": "324234234",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 6,
-    "Name": "234",
-    "Mail": "nuevotest@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-03-19T12:31:13.89477+01:00",
-    "Telephone": "234234",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 7,
-    "Name": "NuevoUsuario",
-    "Mail": "nuevousuario@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-03-22T11:20:02.193445+01:00",
-    "Telephone": "657545644",
-    "IsAdmin": false,
-    "PersonalComics": []
-  },
-  {
-    "Id": 8,
-    "Name": "hola",
-    "Mail": "holanuevo@mail.com",
-    "Password": "A1aaaaaa",
-    "DateCreated": "2025-03-22T11:54:16.316574+01:00",
-    "Telephone": "654345345",
-    "IsAdmin": false,
-    "PersonalComics": []
+    "PersonalComics": [
+      {
+        "Id": 2,
+        "Name": "Tintin",
+        "Author": "test",
+        "Publisher": "test",
+        "YearPublished": 1992,
+        "Price": 6,
+        "IsRead": false,
+        "IsForAdults": false,
+        "DateCreated": "2025-09-02T14:26:52.688716+02:00",
+        "DateAdded": "2025-09-02T14:26:52.688823+02:00",
+        "Genres": [
+          {
+            "Id": 1,
+            "Name": "Ficcion",
+            "Description": "Descripcion ficcion",
+            "Priority": 1,
+            "Icon": "#234324",
+            "Comics": [
+              "Tintin"
+            ],
+            "DateCreated": "2025-03-21T18:58:21.738574+01:00",
+            "PercentageOfComics": 100,
+            "IsPopular": true
+          },
+          {
+            "Id": 2,
+            "Name": "Test",
+            "Description": "Descripcion test",
+            "Priority": 3,
+            "Icon": "#4",
+            "Comics": [
+              "Tintin"
+            ],
+            "DateCreated": "2025-03-21T20:06:01.971059+01:00",
+            "PercentageOfComics": 100,
+            "IsPopular": true
+          }
+        ],
+        "Type": 2
+      }
+    ]
   }
 ]

@@ -22,12 +22,13 @@ class User
     public string Telephone { get; set; }
     public bool IsAdmin { get; set; } = false;
     public List<Comic> PersonalComics { get; set; }
+    public decimal TotalValue => PersonalComics?.Sum(c => c.Price) ?? 0m;
     
 
 
 
     //Constructor
-    public User(string name, string mail, string password, string telephone, bool isAdmin, DateTime? dateCreated = null ) 
+    public User(string name, string mail, string password, string telephone, bool isAdmin, DateTime? dateCreated = null)
     {
         Id = nextId;
         nextId++;
@@ -65,11 +66,11 @@ class User
         {
             table.AddColumn("[bold yellow4]Es Admin?[/]");
             string admin = IsAdmin ? "[green]Sí[/]" : "[red]No[/]";
-            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList, admin);
+            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated != null ? DateCreated.Value.ToString("d 'de' MMMM 'de' yyyy") : "N/A", comicsList, admin);
         }
         else
         {
-            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList);
+            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated != null ? DateCreated.Value.ToString("d 'de' MMMM 'de' yyyy") : "N/A", comicsList);
         }
 
         AnsiConsole.Write(table);
@@ -104,7 +105,7 @@ class User
                 user.Name,
                 user.Mail,
                 user.Telephone,
-                user.DateCreated.ToString()!,
+                user.DateCreated != null ? user.DateCreated.Value.ToString("dd/MM/yyyy") : "N/A",
                 admin,
                 user.PersonalComics!.Count.ToString(),
                 personalComicsNames

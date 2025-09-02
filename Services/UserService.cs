@@ -182,7 +182,22 @@ class UserService
 
             if (newComics.Any())
             {
-                loggedUser.PersonalComics.AddRange(newComics);
+                foreach (var comic in newComics)
+                {
+                    Comic personalComic = new Comic(
+                       comic.Name,
+                       comic.Author,
+                       comic.Publisher,
+                       comic.YearPublished,
+                       comic.Price,
+                       comic.IsForAdults,
+                       comic.Genres,
+                       comic.Type
+                   );
+                    personalComic.MarkAsAdded();
+                    loggedUser.PersonalComics.Add(personalComic);
+                }
+
                 AnsiConsole.MarkupLine($"[green]Se han añadido a tu lista personal: {string.Join(", ", newComics.Select(c => $"'{c.Name}'"))}[/]");
                 JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
             }
@@ -227,14 +242,18 @@ class UserService
 
             var table = new Table()
                 .AddColumn("[bold]Nombre[/]")
-                .AddColumn("[bold]Autor[/]"); 
+                .AddColumn("[bold]Autor[/]")
+                .AddColumn("[bold]Fecha registro en lista personal:[/]")
+                .AddColumn("[bold]Precio:[/]");
 
             foreach (var comic in user.PersonalComics)
             {
-                table.AddRow(comic.Name, comic.Author);
+                table.AddRow(comic.Name, comic.Author, comic.DateAdded?.ToString("d 'de' MMMM 'de' yyyy") ?? "No es posible recuperar fecha", comic.Price.ToString("C"));
             }
 
             AnsiConsole.Write(table);
+
+            AnsiConsole.MarkupLine($"[bold]Inversión total:[/] {user.TotalValue:C}");
         }
         else
         {
