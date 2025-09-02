@@ -66,11 +66,11 @@ class User
         {
             table.AddColumn("[bold yellow4]Es Admin?[/]");
             string admin = IsAdmin ? "[green]Sí[/]" : "[red]No[/]";
-            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList, admin);
+            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated != null ? DateCreated.Value.ToString("d 'de' MMMM 'de' yyyy") : "N/A", comicsList, admin);
         }
         else
         {
-            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated.ToString()!, comicsList);
+            table.AddRow(Id.ToString(), Name, Mail, Telephone, DateCreated != null ? DateCreated.Value.ToString("d 'de' MMMM 'de' yyyy") : "N/A", comicsList);
         }
 
         AnsiConsole.Write(table);
@@ -105,7 +105,7 @@ class User
                 user.Name,
                 user.Mail,
                 user.Telephone,
-                user.DateCreated.ToString()!,
+                user.DateCreated != null ? user.DateCreated.Value.ToString("dd/MM/yyyy") : "N/A",
                 admin,
                 user.PersonalComics!.Count.ToString(),
                 personalComicsNames

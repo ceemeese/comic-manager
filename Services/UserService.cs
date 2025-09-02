@@ -248,7 +248,7 @@ class UserService
 
             foreach (var comic in user.PersonalComics)
             {
-                table.AddRow(comic.Name, comic.Author, comic.DateAdded?.ToString("d") ?? "No es posible recuperar fecha", comic.Price.ToString("C"));
+                table.AddRow(comic.Name, comic.Author, comic.DateAdded?.ToString("d 'de' MMMM 'de' yyyy") ?? "No es posible recuperar fecha", comic.Price.ToString("C"));
             }
 
             AnsiConsole.Write(table);
