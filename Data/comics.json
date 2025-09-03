@@ -8,7 +8,6 @@
     "Price": 6,
     "IsRead": false,
     "IsForAdults": false,
-    "DateCreated": "2025-09-02T14:21:59.13837+02:00",
     "DateAdded": null,
     "Genres": [
       {
@@ -25,7 +24,7 @@
         "IsPopular": true
       },
       {
-        "Id": 5,
+        "Id": 2,
         "Name": "Test",
         "Description": "Descripcion test",
         "Priority": 3,
@@ -35,6 +34,117 @@
         ],
         "DateCreated": "2025-03-21T20:06:01.971059+01:00",
         "PercentageOfComics": 100,
+        "IsPopular": true
+      }
+    ],
+    "Type": 2
+  },
+  {
+    "Id": 2,
+    "Name": "Maus",
+    "Author": "Art Spiegelman",
+    "Publisher": "Apex Novelties",
+    "YearPublished": 1991,
+    "Price": 20.15,
+    "IsRead": false,
+    "IsForAdults": true,
+    "DateAdded": null,
+    "Genres": [
+      {
+        "Id": 3,
+        "Name": "Belico",
+        "Description": "Descripcion belico",
+        "Priority": 3,
+        "Icon": "#234",
+        "Comics": [
+          "Maus"
+        ],
+        "DateCreated": "2025-03-21T18:59:58.366644+01:00",
+        "PercentageOfComics": 50,
+        "IsPopular": true
+      }
+    ],
+    "Type": 2
+  },
+  {
+    "Id": 3,
+    "Name": "Hierba",
+    "Author": "Keum Suk Gendry-Kim",
+    "Publisher": "Reservoir Books",
+    "YearPublished": 2022,
+    "Price": 23.65,
+    "IsRead": false,
+    "IsForAdults": true,
+    "DateAdded": null,
+    "Genres": [
+      {
+        "Id": 7,
+        "Name": "Historico",
+        "Description": "Descripcion historico",
+        "Priority": 1,
+        "Icon": "#34",
+        "Comics": [
+          "Hierba",
+          "Ethel y Ernest"
+        ],
+        "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+        "PercentageOfComics": 40,
+        "IsPopular": true
+      }
+    ],
+    "Type": 4
+  },
+  {
+    "Id": 4,
+    "Name": "V de Vendetta",
+    "Author": "Alan Moore y David Lloyd",
+    "Publisher": "Vertigo",
+    "YearPublished": 2018,
+    "Price": 19.95,
+    "IsRead": false,
+    "IsForAdults": true,
+    "DateAdded": null,
+    "Genres": [
+      {
+        "Id": 4,
+        "Name": "Ficcion",
+        "Description": "Descripcion ficcion",
+        "Priority": 1,
+        "Icon": "#234324",
+        "Comics": [
+          "Tintin",
+          "V de Vendetta"
+        ],
+        "DateCreated": "2025-03-21T18:58:21.738574+01:00",
+        "PercentageOfComics": 40,
+        "IsPopular": true
+      }
+    ],
+    "Type": 2
+  },
+  {
+    "Id": 5,
+    "Name": "Ethel y Ernest",
+    "Author": "Raymond Briggs",
+    "Publisher": "Blackie Books",
+    "YearPublished": 2021,
+    "Price": 19,
+    "IsRead": false,
+    "IsForAdults": false,
+    "DateAdded": null,
+    "Genres": [
+      {
+        "Id": 7,
+        "Name": "Historico",
+        "Description": "Descripcion historico",
+        "Priority": 1,
+        "Icon": "#34",
+        "Comics": [
+          "Hierba",
+          "Ethel y Ernest"
+        ],
+        "DateCreated": "2025-03-21T19:00:22.28916+01:00",
+        "PercentageOfComics": 40,
         "IsPopular": true
       }
     ],

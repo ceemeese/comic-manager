@@ -1,19 +1,20 @@
 [
   {
-    "Id": 1,
+    "Id": 4,
     "Name": "Ficcion",
     "Description": "Descripcion ficcion",
     "Priority": 1,
     "Icon": "#234324",
     "Comics": [
-      "Tintin"
+      "Tintin",
+      "V de Vendetta"
     ],
     "DateCreated": "2025-03-21T18:58:21.738574+01:00",
-    "PercentageOfComics": 100,
+    "PercentageOfComics": 40,
     "IsPopular": true
   },
   {
-    "Id": 2,
+    "Id": 5,
     "Name": "Fantasia y aventura",
     "Description": "Descripcion fantasia y aventura",
     "Priority": 2,
@@ -24,29 +25,34 @@
     "IsPopular": true
   },
   {
-    "Id": 3,
+    "Id": 6,
     "Name": "Belico",
     "Description": "Descripcion belico",
     "Priority": 3,
     "Icon": "#234",
-    "Comics": [],
+    "Comics": [
+      "Maus"
+    ],
     "DateCreated": "2025-03-21T18:59:58.366644+01:00",
-    "PercentageOfComics": 0,
+    "PercentageOfComics": 20,
     "IsPopular": true
   },
   {
-    "Id": 4,
+    "Id": 7,
     "Name": "Historico",
     "Description": "Descripcion historico",
     "Priority": 1,
     "Icon": "#34",
-    "Comics": [],
+    "Comics": [
+      "Hierba",
+      "Ethel y Ernest"
+    ],
     "DateCreated": "2025-03-21T19:00:22.28916+01:00",
-    "PercentageOfComics": 0,
+    "PercentageOfComics": 40,
     "IsPopular": true
   },
   {
-    "Id": 5,
+    "Id": 8,
     "Name": "Test",
     "Description": "Descripcion test",
     "Priority": 3,
@@ -55,7 +61,7 @@
       "Tintin"
     ],
     "DateCreated": "2025-03-21T20:06:01.971059+01:00",
-    "PercentageOfComics": 100,
+    "PercentageOfComics": 20,
     "IsPopular": true
   }
 ]

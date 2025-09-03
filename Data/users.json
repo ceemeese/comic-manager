@@ -5,51 +5,10 @@
     "Mail": "admin@mail.com",
     "Password": "A1aaaaaa",
     "DateCreated": "2025-01-29T11:34:30.763981+01:00",
-    "Telephone": "777777777",
+    "Telephone": "666666666",
     "IsAdmin": true,
-    "PersonalComics": [
-      {
-        "Id": 3,
-        "Name": "Tintin",
-        "Author": "test",
-        "Publisher": "test",
-        "YearPublished": 1992,
-        "Price": 6,
-        "IsRead": false,
-        "IsForAdults": false,
-        "DateCreated": "2025-09-02T14:27:40.243337+02:00",
-        "DateAdded": "2025-09-02T14:27:40.243344+02:00",
-        "Genres": [
-          {
-            "Id": 1,
-            "Name": "Ficcion",
-            "Description": "Descripcion ficcion",
-            "Priority": 1,
-            "Icon": "#234324",
-            "Comics": [
-              "Tintin"
-            ],
-            "DateCreated": "2025-03-21T18:58:21.738574+01:00",
-            "PercentageOfComics": 100,
-            "IsPopular": true
-          },
-          {
-            "Id": 2,
-            "Name": "Test",
-            "Description": "Descripcion test",
-            "Priority": 3,
-            "Icon": "#4",
-            "Comics": [
-              "Tintin"
-            ],
-            "DateCreated": "2025-03-21T20:06:01.971059+01:00",
-            "PercentageOfComics": 100,
-            "IsPopular": true
-          }
-        ],
-        "Type": 2
-      }
-    ]
+    "PersonalComics": [],
+    "TotalValue": 0
   },
   {
     "Id": 2,
@@ -57,50 +16,9 @@
     "Mail": "test@mail.com",
     "Password": "A1aaaaaa",
     "DateCreated": "2025-09-02T14:12:09.305122+02:00",
-    "Telephone": "11111111111",
+    "Telephone": "666666666",
     "IsAdmin": false,
-    "PersonalComics": [
-      {
-        "Id": 2,
-        "Name": "Tintin",
-        "Author": "test",
-        "Publisher": "test",
-        "YearPublished": 1992,
-        "Price": 6,
-        "IsRead": false,
-        "IsForAdults": false,
-        "DateCreated": "2025-09-02T14:26:52.688716+02:00",
-        "DateAdded": "2025-09-02T14:26:52.688823+02:00",
-        "Genres": [
-          {
-            "Id": 1,
-            "Name": "Ficcion",
-            "Description": "Descripcion ficcion",
-            "Priority": 1,
-            "Icon": "#234324",
-            "Comics": [
-              "Tintin"
-            ],
-            "DateCreated": "2025-03-21T18:58:21.738574+01:00",
-            "PercentageOfComics": 100,
-            "IsPopular": true
-          },
-          {
-            "Id": 2,
-            "Name": "Test",
-            "Description": "Descripcion test",
-            "Priority": 3,
-            "Icon": "#4",
-            "Comics": [
-              "Tintin"
-            ],
-            "DateCreated": "2025-03-21T20:06:01.971059+01:00",
-            "PercentageOfComics": 100,
-            "IsPopular": true
-          }
-        ],
-        "Type": 2
-      }
-    ]
+    "PersonalComics": [],
+    "TotalValue": 0
   }
 ]

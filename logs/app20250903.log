@@ -8,3 +8,7 @@ Models.InvalidGenreException: [darkred]El género no existe[/]
    at Services.GenreService.SearchGenre() in /Users/cristinamalmiercasalvador/Documents/SAN-VALERO/Desarrollo web entorno servidor/code/AA1/ComicManager/Services/GenreService.cs:line 120
 2025-09-03 20:13:16 [INF] Aplicación iniciada
 2025-09-03 20:13:19 [ERR] Error al buscar género: [darkred]El género no existe[/]
+2025-09-03 21:04:36 [INF] Aplicación iniciada
+2025-09-03 21:06:09 [ERR] Error al buscar género: [darkred]El género no existe[/]
+2025-09-03 21:12:00 [INF] Aplicación iniciada
+2025-09-03 21:12:19 [ERR] Error al buscar cómic: [darkred]Cómic no encontrado[/]

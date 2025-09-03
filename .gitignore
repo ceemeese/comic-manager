@@ -1,3 +1,7 @@
+# Ignore logs
+logs 
+**/logs/
+
 # Ignore bin and obj directories
 bin
 obj
@@ -8,6 +12,7 @@ obj
 # Ignore the Visual Studio temporary files
 .vs/
 .vscode/
+
 
 # Ignore the user-specific files
 *.user
