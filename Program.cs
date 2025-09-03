@@ -7,7 +7,10 @@ using Services;
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     //.WriteTo.Console()
-    .WriteTo.File("logs/app.log", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+    .WriteTo.File(
+        Environment.GetEnvironmentVariable("DATA_PATH") ?? "logs/app.log",
+        rollingInterval: RollingInterval.Day,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
     .CreateLogger();
 
 
