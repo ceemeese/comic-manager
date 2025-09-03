@@ -32,6 +32,7 @@ ENV DATA_PATH=/app/data
 ENV LOG_PATH=/app/logs
 #Ruta del volumen persistente
 VOLUME ["/app/data"]
+VOLUME ["/app/logs"]
 #Puerto donde escucha la app
 EXPOSE 7877
 #Comando para ejecutar la app
