@@ -3,19 +3,22 @@ namespace Services;
 using Models;
 using Spectre.Console;
 using Utils;
+using Microsoft.Extensions.Logging;
 
 class GenreService
 {
+    private readonly ILogger<GenreService> _logger;
+
     public static List<Genre> genres = JsonUtils.LoadDataJson<Genre>(Constants.GenresFileName) ?? new List<Genre>();
     
     
-    public GenreService()
+    public GenreService(ILogger<GenreService> logger)
     {
-        
+        _logger = logger;
     }
 
 
-    public static void AddGenre()
+    public void AddGenre()
     {
         try
         {
@@ -51,11 +54,13 @@ class GenreService
         }
         catch (InvalidGenreException ex) 
         {
+            _logger.LogError("Error al añadir género: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidGenreException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
@@ -99,7 +104,7 @@ class GenreService
      
 
 
-    public static void SearchGenre()
+    public void SearchGenre()
     {
 
         if (genres == null || genres.Count == 0)
@@ -120,18 +125,20 @@ class GenreService
         }
         catch (InvalidGenreException ex) 
         {
+            _logger.LogError("Error al buscar género: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidGenreException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }
 
 
-    public static void DeleteGenre()
+    public void DeleteGenre()
     {
 
         if (genres == null || genres.Count == 0)
@@ -180,11 +187,13 @@ class GenreService
         }
         catch(InvalidGenreException ex)
         {
+            _logger.LogError("Error al eliminar género: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidGenreException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }

@@ -3,19 +3,21 @@ namespace Services;
 using Models;
 using Utils;
 using Spectre.Console;
-
+using Microsoft.Extensions.Logging;
 class UserService
 {
+    private readonly ILogger<UserService> _logger;
+
     public static List<User> users = JsonUtils.LoadDataJson<User>(Constants.UsersFileName) ?? new List<User>();
     public static User? currentUser = null;
 
-    public UserService()
+    public UserService(ILogger<UserService> logger)
     {
-
+        _logger = logger;
     }
 
 
-    public static void AddUser()
+    public void AddUser()
     {
 
         try
@@ -60,11 +62,13 @@ class UserService
         } 
         catch (InvalidUserException ex) 
         {
+            _logger.LogError("Error al añadir usuario: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidUserException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch(Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
@@ -80,7 +84,7 @@ class UserService
 
 
 
-    public static void SearchUser()
+    public void SearchUser()
     {
         try 
         {
@@ -93,11 +97,13 @@ class UserService
         }
         catch (InvalidUserException ex) 
         {
+            _logger.LogError("Error al buscar usuario: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidUserException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
@@ -105,7 +111,7 @@ class UserService
 
 
 
-    public static void DeleteUser()
+    public void DeleteUser()
     {
         ShowAllUsers();
     
@@ -125,112 +131,125 @@ class UserService
         }
         catch(InvalidComicException ex)
         {
+            _logger.LogError("Error al eliminar usuario: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidUserException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
     }
 
 
-    public static void ManageComicsInUserList(User loggedUser, bool isAddOperation) 
+    public void ManageComicsInUserList(User loggedUser, bool isAddOperation)
     {
-
-        string operation = isAddOperation ? "AÑADIR" : "ELIMINAR";
-
-        AnsiConsole.MarkupLine(isAddOperation ? "[yellow4]CÓMICS DISPONIBLES:[/] " : "[yellow4]CÓMICS PERSONALES: [/]");
-        List<Comic> comicsList = isAddOperation ? ComicService.comics : loggedUser.PersonalComics;
-
-        //Se pasa a String porque es el único tipo con el que opera Panel
-        string comicsText = comicsList.Count > 0
-            ? string.Join("\n", comicsList.Select(comic => $"{comic.Name}"))
-            : "[grey]No hay cómics disponibles[/]";
-
-        var panel = new Panel(comicsText)
-            .Header("Lista")
-            .Padding(2, 2, 2, 2)
-            .BorderColor(Color.Yellow4)
-            .Border(BoxBorder.Double);
-
-        AnsiConsole.Write(panel);
-        
-        // Selección de cómics
-        AnsiConsole.MarkupLine($"[bold]{operation} cómics:[/]");
-        //List<Comic> selectedPersonalComics = new List<Comic>();
-
-        var highlightStyle = new Style().Foreground(Color.LightSalmon1);
-        var selectedPersonalComics = AnsiConsole.Prompt(
-        new MultiSelectionPrompt<Comic>()
-            .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
-            .InstructionsText("[grey][blue]Espacio[/] para seleccionar" + "[green] Enter:[/] confirmar selección" + "[darkred] Cancelar:[/] Enter sin seleccionar[/]")
-            .AddChoices(comicsList)
-            .NotRequired());
-
-
-        if (isAddOperation)
+        try
         {
-            var alreadyInList = selectedPersonalComics.Where(c => loggedUser.PersonalComics.Any(pc => pc.Name == c.Name)).ToList();
-            var newComics = selectedPersonalComics.Where(c => !loggedUser.PersonalComics.Any(pc => pc.Name == c.Name)).ToList();
+            string operation = isAddOperation ? "AÑADIR" : "ELIMINAR";
 
-            if (alreadyInList.Any())
-            {
-                AnsiConsole.MarkupLine($"[darkorange]Los siguientes cómics ya están en tu lista: {string.Join(", ", alreadyInList.Select(c => $"'{c.Name}'"))}[/]");
-            }
+            AnsiConsole.MarkupLine(isAddOperation ? "[yellow4]CÓMICS DISPONIBLES:[/] " : "[yellow4]CÓMICS PERSONALES: [/]");
+            List<Comic> comicsList = isAddOperation ? ComicService.comics : loggedUser.PersonalComics;
 
-            if (newComics.Any())
+            //Se pasa a String porque es el único tipo con el que opera Panel
+            string comicsText = comicsList.Count > 0
+                ? string.Join("\n", comicsList.Select(comic => $"{comic.Name}"))
+                : "[grey]No hay cómics disponibles[/]";
+
+            var panel = new Panel(comicsText)
+                .Header("Lista")
+                .Padding(2, 2, 2, 2)
+                .BorderColor(Color.Yellow4)
+                .Border(BoxBorder.Double);
+
+            AnsiConsole.Write(panel);
+
+            // Selección de cómics
+            AnsiConsole.MarkupLine($"[bold]{operation} cómics:[/]");
+            //List<Comic> selectedPersonalComics = new List<Comic>();
+
+            var highlightStyle = new Style().Foreground(Color.LightSalmon1);
+            var selectedPersonalComics = AnsiConsole.Prompt(
+            new MultiSelectionPrompt<Comic>()
+                .MoreChoicesText("[grey](Usa las feclas arriba y abajo para navegar por la lista)[/]")
+                .InstructionsText("[grey][blue]Espacio[/] para seleccionar" + "[green] Enter:[/] confirmar selección" + "[darkred] Cancelar:[/] Enter sin seleccionar[/]")
+                .AddChoices(comicsList)
+                .NotRequired());
+
+
+            if (isAddOperation)
             {
-                foreach (var comic in newComics)
+                var alreadyInList = selectedPersonalComics.Where(c => loggedUser.PersonalComics.Any(pc => pc.Name == c.Name)).ToList();
+                var newComics = selectedPersonalComics.Where(c => !loggedUser.PersonalComics.Any(pc => pc.Name == c.Name)).ToList();
+
+                if (alreadyInList.Any())
                 {
-                    Comic personalComic = new Comic(
-                       comic.Name,
-                       comic.Author,
-                       comic.Publisher,
-                       comic.YearPublished,
-                       comic.Price,
-                       comic.IsForAdults,
-                       comic.Genres,
-                       comic.Type
-                   );
-                    personalComic.MarkAsAdded();
-                    loggedUser.PersonalComics.Add(personalComic);
+                    AnsiConsole.MarkupLine($"[darkorange]Los siguientes cómics ya están en tu lista: {string.Join(", ", alreadyInList.Select(c => $"'{c.Name}'"))}[/]");
                 }
 
-                AnsiConsole.MarkupLine($"[green]Se han añadido a tu lista personal: {string.Join(", ", newComics.Select(c => $"'{c.Name}'"))}[/]");
-                JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+                if (newComics.Any())
+                {
+                    foreach (var comic in newComics)
+                    {
+                        Comic personalComic = new Comic(
+                        comic.Name,
+                        comic.Author,
+                        comic.Publisher,
+                        comic.YearPublished,
+                        comic.Price,
+                        comic.IsForAdults,
+                        comic.Genres,
+                        comic.Type
+                    );
+                        personalComic.MarkAsAdded();
+                        loggedUser.PersonalComics.Add(personalComic);
+                    }
+
+                    AnsiConsole.MarkupLine($"[green]Se han añadido a tu lista personal: {string.Join(", ", newComics.Select(c => $"'{c.Name}'"))}[/]");
+                    JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+                }
+            }
+            else
+            {
+                if (selectedPersonalComics.Any())
+                {
+                    var sureDelete = AnsiConsole.Prompt(
+                    new TextPrompt<bool>("[yellow4]Seguro que quieres eliminar?[/]")
+                        .AddChoice(true)
+                        .AddChoice(false)
+                        .DefaultValue(false)
+                        .WithConverter(choice => choice ? "si" : "no"));
+
+                    if (!sureDelete)
+                    {
+                        return;
+                    }
+
+                    foreach (var comic in selectedPersonalComics)
+                    {
+                        loggedUser.PersonalComics.Remove(comic!);
+                    }
+
+                    AnsiConsole.MarkupLine($"[green]Se han eliminado de tu lista personal: {string.Join(", ", selectedPersonalComics.Select(c => $"'{c!.Name}'"))}[/]");
+                    JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+                }
             }
         }
-        else
+        catch (InvalidUserException ex) 
         {
-            if (selectedPersonalComics.Any())
-            {
-                var sureDelete = AnsiConsole.Prompt(
-                new TextPrompt<bool>("[yellow4]Seguro que quieres eliminar?[/]")
-                    .AddChoice(true)
-                    .AddChoice(false)
-                    .DefaultValue(false)
-                    .WithConverter(choice => choice ? "si" : "no"));
-                
-                if (!sureDelete)
-                {
-                    return;
-                }
-
-                foreach (var comic in selectedPersonalComics)
-                {
-                    loggedUser.PersonalComics.Remove(comic!);
-                }
-
-                AnsiConsole.MarkupLine($"[green]Se han eliminado de tu lista personal: {string.Join(", ", selectedPersonalComics.Select(c => $"'{c!.Name}'"))}[/]");
-                JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
-            }
+            _logger.LogError("Error al gestionar lista personal de comics: {Message}", ex.Message);
+            var messageError = $"[darkred]InvalidUserException:[/] {ex.Message}";
+            AnsiConsole.MarkupLine(messageError);
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
+            AnsiConsole.MarkupLine(messageError);
         }
     }
-
-
-
 
     // Mostrar los cómics del usuario
     public static void ShowUserComics(User user)
@@ -327,10 +346,14 @@ class UserService
     }
 
 
-    public static void PutUserData() {
-
-        if (currentUser != null)
+    public void PutUserData()
+    {
+        try
         {
+            if (currentUser == null)
+            {
+                throw new InvalidUserException("No hay un usuario en sesión.");
+            }
             currentUser.ShowUserInformation();
 
             var modifyOption = AnsiConsole.Prompt(
@@ -345,7 +368,7 @@ class UserService
             switch (modifyOption)
             {
                 case "Email":
-                string newMail;
+                    string newMail;
                     while (true)
                     {
                         newMail = AskValidInput("Correo:", ValidationUtils.IsValidMail, "El correo no es válido");
@@ -357,21 +380,37 @@ class UserService
                         AnsiConsole.MarkupLine("[darkred]Error:[/] Ya existe un usuario con este mail");
                     }
                     currentUser.Mail = newMail;
-                    break;  
-                case "Password":
-                    string newPassword = AskValidInput("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):", ValidationUtils.IsValidPassword, "La contraseña no es válida");
-                    currentUser.Password = newPassword;
                     break;
+                case "Password":
+                    string newPassword;
+                    while (true)
+                    {
+                        newPassword = AskValidInput("Contraseña (Debe contener mínimo un número, una mayúscula y mínimo 8 carácteres):", ValidationUtils.IsValidPassword, "La contraseña no es válida");
+                        break;
+                    }
+                        currentUser.Password = newPassword;
+                        break;
                 case "Teléfono":
                     string newTelephone = AnsiConsole.Ask<string>("[yellow4]Nuevo teléfono:[/]");
                     currentUser.Telephone = newTelephone;
                     break;
             }
-
-
+            
             AnsiConsole.MarkupLine("[green]Usuario modificado correctamente[/]");
             currentUser.ShowUserInformation();
             JsonUtils.SaveDataToJson(users, Constants.UsersFileName);
+        }
+        catch (InvalidUserException ex)
+        {
+            _logger.LogError("Error al modificar usuario: {Message}", ex.Message);
+            var messageError = $"[darkred]InvalidUserException:[/] {ex.Message}";
+            AnsiConsole.MarkupLine(messageError);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
+            var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
+            AnsiConsole.MarkupLine(messageError);
         }
     }
 

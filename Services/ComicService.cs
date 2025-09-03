@@ -3,21 +3,22 @@ namespace Services;
 using Models;
 using Utils;
 using Spectre.Console;
-
+using Microsoft.Extensions.Logging;
 
 class ComicService
 {
+    private readonly ILogger<ComicService> _logger;
     
     public static List<Comic> comics = JsonUtils.LoadDataJson<Comic>(Constants.ComicsFileName) ?? new List<Comic>();
 
 
-    public ComicService()
+    public ComicService(ILogger<ComicService> logger)
     {
-          
+        _logger = logger;
     }
 
 
-    public static void AddComic() 
+    public void AddComic() 
     {
         try
         {
@@ -91,11 +92,13 @@ class ComicService
         }
         catch (InvalidComicException ex) 
         {
+            _logger.LogError("Error al añadir cómic: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidComicException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch(Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
@@ -122,7 +125,7 @@ class ComicService
     }
 
     
-    public static void SearchComic()
+    public void SearchComic()
     {
 
         if (comics == null || comics.Count == 0)
@@ -146,11 +149,13 @@ class ComicService
         }
         catch (InvalidComicException ex) 
         {
+            _logger.LogError("Error al buscar cómic: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidComicException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+             _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
@@ -159,7 +164,7 @@ class ComicService
 
 
 
-    public static void DeleteComic()
+    public void DeleteComic()
     {
         if (comics == null || comics.Count == 0)
         {
@@ -210,11 +215,13 @@ class ComicService
         }
         catch(InvalidComicException ex)
         {
+            _logger.LogError("Error al eliminar cómic: {Message}", ex.Message);
             var messageError = $"[darkred]InvalidComicException:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }
         catch (Exception ex)
         {
+            _logger.LogError("Error inesperado: {Message}", ex.Message);
             var messageError = $"[darkred]ExceptionError:[/] {ex.Message}";
             AnsiConsole.MarkupLine(messageError);
         }

@@ -4,20 +4,26 @@ using Spectre.Console;
 
 class MenuApp
 {
+    private readonly GenreService _genreService;
+    private readonly UserService _userService;
+    private readonly ComicService _comicService;
 
     private bool exit = false;
     private bool back = false;
 
 
-    public MenuApp()
+    public MenuApp(GenreService genreService, UserService userService, ComicService comicService)
     {
+        _genreService = genreService;
+        _userService = userService;
+        _comicService = comicService;
         
         AnsiConsole.Write(
             new FigletText("Comic Manager")
             .LeftJustified()
             .Color(Color.LightSalmon1));
     }
-
+    
     public void ShowMenu()
     {
         //int option = 0;
@@ -168,7 +174,7 @@ class MenuApp
         if (UserService.currentUser == null)
         {
             options["Iniciar Sesión"] = UserService.Login;
-            options["Registrarse"] = UserService.AddUser;
+            options["Registrarse"] = _userService.AddUser;
         }
         else
         {
@@ -194,13 +200,13 @@ class MenuApp
 
         {
             { "Listar géneros", GenreService.ShowAllGenres },
-            { "Buscar género", GenreService.SearchGenre },
+            { "Buscar género", _genreService.SearchGenre },
         };
 
         if (UserService.currentUser?.IsAdmin == true)
         {
-            options["Añadir género"] = GenreService.AddGenre;
-            options["Eliminar género"] = GenreService.DeleteGenre;
+            options["Añadir género"] = _genreService.AddGenre;
+            options["Eliminar género"] = _genreService.DeleteGenre;
         }
 
         {
@@ -217,16 +223,16 @@ class MenuApp
 
         {
             { "Listar cómics", ComicService.ShowAllComics },
-            { "Buscar cómic", ComicService.SearchComic},
+            { "Buscar cómic", _comicService.SearchComic},
         };
 
         if (UserService.currentUser != null)
         {
-            options["Añadir cómic"] = ComicService.AddComic;
+            options["Añadir cómic"] = _comicService.AddComic;
 
             if (UserService.currentUser.IsAdmin) 
             {
-                options["Eliminar cómic"] = ComicService.DeleteComic;
+                options["Eliminar cómic"] = _comicService.DeleteComic;
             }
         }
             
@@ -243,10 +249,10 @@ class MenuApp
         var options = new Dictionary<string, Action>
 
         {
-            { "Añadir usuario", UserService.AddUser },
+            { "Añadir usuario", _userService.AddUser },
             { "Listar usuarios", UserService.ShowAllUsers },
-            { "Buscar usuario", UserService.SearchUser },
-            { "Eliminar usuario", UserService.DeleteUser},
+            { "Buscar usuario", _userService.SearchUser },
+            { "Eliminar usuario", _userService.DeleteUser},
             { "Volver al menú principal", BackMenu}
         };
             
@@ -259,11 +265,11 @@ class MenuApp
         var options = new Dictionary<string, Action>
 
         {
-            { "Añadir cómic a la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, true) },
-            { "Eliminar cómic de la lista personal", () => UserService.ManageComicsInUserList(UserService.currentUser!, false) },
+            { "Añadir cómic a la lista personal", () => _userService.ManageComicsInUserList(UserService.currentUser!, true) },
+            { "Eliminar cómic de la lista personal", () => _userService.ManageComicsInUserList(UserService.currentUser!, false) },
             { "Ver mi lista personal de cómics",() => UserService.ShowUserComics(UserService.currentUser!)},
             { "Ver mis datos personales", UserService.ViewUserData },
-            { "Modificar datos personales", UserService.PutUserData },
+            { "Modificar datos personales", _userService.PutUserData },
             { "Volver al menú principal", BackMenu}
 
         };
