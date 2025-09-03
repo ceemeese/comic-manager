@@ -29,6 +29,7 @@ ENV LANGUAGE=es_ES:es
 ENV LC_ALL=es_ES.UTF-8
 #Declaración de path para la lectura/escritura del json
 ENV DATA_PATH=/app/data
+ENV LOG_PATH=/app/logs
 #Ruta del volumen persistente
 VOLUME ["/app/data"]
 #Puerto donde escucha la app
