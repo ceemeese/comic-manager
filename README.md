@@ -17,15 +17,15 @@ Incluye funcionalidades como la gestión de usuarios, administración de cómics
 
 
 # 🛠️ Tecnologías utilizadas
-💻 **C# y .NET**
-🎨 **Spectre.Console** (Interfaz visual en consola)
-📂 **JSON** para almacenamiento de datos
-📝 **Logger** para centralización de logs
-📝 **Serilog** para registro de errores
+💻 **C# y .NET**\
+🎨 **Spectre.Console** (Interfaz visual en consola)\
+📂 **JSON** para almacenamiento de datos\
+📝 **Logger** para centralización de logs\
+📝 **Serilog** para registro de errores\
 🐳 **Docker** para contenerización:
-    - Configuración de puerto personalizado
-    - Volumen para acceso a ficheros de la aplicación y logs  
-    - Variables de entorno de los path de los volúmenes
+   >- Configuración de puerto personalizado
+   >- Volumen para acceso a ficheros de la aplicación y logs  
+   >- Variables de entorno de los path de los volúmenes
 
 ## 🐋 Uso con Docker
 
